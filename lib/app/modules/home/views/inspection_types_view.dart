@@ -185,6 +185,10 @@ class InspectionTypesView extends GetView<InspectionTypesController> {
                 controller.toggleInspectionType(title);
                 if (title == 'الفحص المعماري') {
                   Get.toNamed(Routes.ARCHITECTURAL_INSPECTION);
+                } else if (title == 'الفحص الإنشائي') {
+                  Get.toNamed(Routes.STRUCTURAL_INSPECTION);
+                } else if (title == 'الفحص الجيوتكنيكي') {
+                  Get.toNamed(Routes.GEOTECHNICAL_INSPECTION);
                 }
               }
             },
