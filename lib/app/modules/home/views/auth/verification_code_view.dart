@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'new_password_view.dart';
 
-class LoginView extends GetView {
-  const LoginView({Key? key}) : super(key: key);
+class VerificationCodeView extends GetView {
+  const VerificationCodeView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,50 +30,60 @@ class LoginView extends GetView {
               const SizedBox(height: 20),
               const Center(
                 child: Text(
-                  'تسجيل الدخول',
+                  'ادخل رمز التأكيد المرسل الى بريدك\nالالكتروني',
+                  textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
                     color: Colors.black87,
                   ),
                 ),
               ),
               const SizedBox(height: 40),
-              TextFormField(
-                textAlign: TextAlign.right,
-                decoration: InputDecoration(
-                  hintText: 'الايميل او رقم الهاتف',
-                  hintStyle: const TextStyle(color: Colors.black38),
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                    borderSide: BorderSide.none,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(
+                  4,
+                  (index) => Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 5),
+                    width: 50,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: index == 0 ? const Color(0xFF96E6B3) : Colors.white,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: index == 0
+                        ? const Center(
+                            child: Text(
+                              '5',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          )
+                        : null,
                   ),
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                 ),
               ),
               const SizedBox(height: 20),
-              TextFormField(
-                textAlign: TextAlign.right,
-                obscureText: true,
-                decoration: InputDecoration(
-                  hintText: 'كلمة السر',
-                  hintStyle: const TextStyle(color: Colors.black38),
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                    borderSide: BorderSide.none,
+              Center(
+                child: TextButton(
+                  onPressed: () {},
+                  child: const Text(
+                    'لم يصلني أي رمز تأكيد - إعادة الارسال',
+                    style: TextStyle(
+                      color: Colors.black54,
+                      fontSize: 14,
+                    ),
                   ),
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                 ),
               ),
-              const SizedBox(height: 20),
+              const Spacer(),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () => Get.to(() => const NewPasswordView()),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF96E6B3),
                     padding: const EdgeInsets.symmetric(vertical: 15),
@@ -81,24 +92,11 @@ class LoginView extends GetView {
                     ),
                   ),
                   child: const Text(
-                    'تسجيل الدخول',
+                    'SEND',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 15),
-              Center(
-                child: TextButton(
-                  onPressed: () {},
-                  child: const Text(
-                    'هل نسيت كلمة السر؟',
-                    style: TextStyle(
-                      color: Color(0xFF96E6B3),
-                      decoration: TextDecoration.underline,
                     ),
                   ),
                 ),
