@@ -55,6 +55,7 @@ dev_dependencies:
 flutter:
   assets:
     - images/
+    
   uses-material-design: true
 
   # To add custom fonts to your application, add a fonts section here,

@@ -7,6 +7,7 @@ import 'package:ersei/app/modules/home/views/geotechnical_inspection_view.dart';
 import 'package:ersei/app/modules/home/views/mechanical_inspection_view.dart';
 import 'package:ersei/app/modules/home/views/electrical_inspection_view.dart';
 import 'package:ersei/app/modules/home/views/survey_works_view.dart';
+import 'package:ersei/app/modules/home/views/report_success_view.dart';
 import 'package:get/get.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/bindings/create_project_binding.dart';
@@ -17,6 +18,7 @@ import '../modules/home/bindings/geotechnical_inspection_binding.dart';
 import '../modules/home/bindings/mechanical_inspection_binding.dart';
 import '../modules/home/bindings/electrical_inspection_binding.dart';
 import '../modules/home/bindings/survey_works_binding.dart';
+import '../modules/home/bindings/report_success_binding.dart';
 
 part 'app_routes.dart';
 
@@ -70,6 +72,11 @@ class AppPages {
       name: Routes.SURVEY_WORKS,
       page: () => const SurveyWorksView(),
       binding: SurveyWorksBinding(),
+    ),
+    GetPage(
+      name: _Paths.REPORT_SUCCESS,
+      page: () => const ReportSuccessView(),
+      binding: ReportSuccessBinding(),
     ),
   ];
 }

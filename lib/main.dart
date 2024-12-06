@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: Routes.SURVEY_WORKS,
+      initialRoute: Routes.REPORT_SUCCESS,
       getPages: AppPages.routes,
       home: const HomeView(),
     );

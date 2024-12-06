@@ -11,6 +11,8 @@ abstract class Routes {
   static const MECHANICAL_INSPECTION = _Paths.MECHANICAL_INSPECTION;
   static const ELECTRICAL_INSPECTION = _Paths.ELECTRICAL_INSPECTION;
   static const SURVEY_WORKS = _Paths.SURVEY_WORKS;
+  // ignore: constant_identifier_names
+  static const REPORT_SUCCESS = _Paths.REPORT_SUCCESS;
 }
 
 abstract class _Paths {
@@ -24,4 +26,6 @@ abstract class _Paths {
   static const MECHANICAL_INSPECTION = '/mechanical-inspection';
   static const ELECTRICAL_INSPECTION = '/electrical-inspection';
   static const SURVEY_WORKS = '/survey-works';
+  // ignore: constant_identifier_names
+  static const REPORT_SUCCESS = '/report-success';
 }
