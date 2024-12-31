@@ -1,7 +1,9 @@
 import 'package:ersei/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controllers/create_project_controller.dart';
+
+import '../../controllers/create_project_controller.dart';
+
 
 class CreateProjectView extends GetView<CreateProjectController> {
   const CreateProjectView({Key? key}) : super(key: key);
@@ -137,7 +139,7 @@ class CreateProjectView extends GetView<CreateProjectController> {
           context: context,
           initialDate: controller.selectedDate.value,
           firstDate: DateTime(2000),
-          lastDate: DateTime(2025),
+          lastDate: DateTime(2026),
         );
         if (picked != null) {
           controller.updateDate(picked);

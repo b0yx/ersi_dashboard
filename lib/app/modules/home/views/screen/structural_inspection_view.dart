@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controllers/architectural_inspection_controller.dart';
+import '../../controllers/structural_inspection_controller.dart';
 import 'package:image_picker/image_picker.dart';
 
-class ArchitecturalInspectionView extends GetView<ArchitecturalInspectionController> {
-  const ArchitecturalInspectionView({Key? key}) : super(key: key);
+class StructuralInspectionView extends GetView<StructuralInspectionController> {
+  const StructuralInspectionView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class ArchitecturalInspectionView extends GetView<ArchitecturalInspectionControl
           ),
         ],
         title: const Text(
-          'الفحص المعماري',
+          'الفحص الإنشائي',
           style: TextStyle(
             color: Colors.black87,
             fontSize: 20,
@@ -41,7 +41,7 @@ class ArchitecturalInspectionView extends GetView<ArchitecturalInspectionControl
             children: [
               _buildPlanMatchingSection(),
               const SizedBox(height: 20),
-              _buildMaterialsSection(),
+              _buildStructuralElementsSection(),
             ],
           ),
         ),
@@ -112,7 +112,7 @@ class ArchitecturalInspectionView extends GetView<ArchitecturalInspectionControl
     );
   }
 
-  Widget _buildMaterialsSection() {
+  Widget _buildStructuralElementsSection() {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -130,7 +130,7 @@ class ArchitecturalInspectionView extends GetView<ArchitecturalInspectionControl
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           const Text(
-            '2- فحص المواد',
+            '2- فحص عناصر الهيكل الإنشائي',
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
@@ -138,15 +138,43 @@ class ArchitecturalInspectionView extends GetView<ArchitecturalInspectionControl
             ),
           ),
           const SizedBox(height: 20),
-          _buildMaterialItem('الجدران', ['داخلي', 'خارجي']),
+          _buildStructuralItem(
+            'A- فحص القواعد',
+            hasVerticalAlignment: false,
+            hasAxisTest: false,
+          ),
           const SizedBox(height: 15),
-          _buildMaterialItem('الأبواب', ['داخلي', 'خارجي']),
+          _buildStructuralItem(
+            'B- فحص الجدار',
+            hasVerticalAlignment: false,
+            hasAxisTest: false,
+          ),
           const SizedBox(height: 15),
-          _buildMaterialItem('البلاط', ['أرضي', 'جدران']),
+          _buildStructuralItem(
+            'C- فحص الأعمدة',
+            hasVerticalAlignment: true,
+            hasAxisTest: true,
+          ),
           const SizedBox(height: 15),
-          _buildMaterialItem('التكسية', ['سقوف', 'جدران']),
+          _buildStructuralItem(
+            'D- فحص الجسور',
+            hasVerticalAlignment: false,
+            hasAxisTest: false,
+          ),
           const SizedBox(height: 15),
-          _buildMaterialItem('الديكور', ['سقوف', 'جدران']),
+          _buildStructuralItem(
+            'E- فحص الأسقف',
+            hasVerticalAlignment: false,
+            hasAxisTest: false,
+          ),
+          const SizedBox(height: 15),
+          _buildStructuralItem(
+            'F- فحص غرفة المصعد',
+            hasVerticalAlignment: false,
+            hasAxisTest: false,
+          ),
+          const SizedBox(height: 15),
+          _buildGrooveItem('G- فحص الأخاديد'),
         ],
       ),
     );
@@ -209,7 +237,10 @@ class ArchitecturalInspectionView extends GetView<ArchitecturalInspectionControl
     );
   }
 
-  Widget _buildMaterialItem(String title, List<String> types) {
+  Widget _buildStructuralItem(String title, {
+    required bool hasVerticalAlignment,
+    required bool hasAxisTest,
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
@@ -227,30 +258,19 @@ class ArchitecturalInspectionView extends GetView<ArchitecturalInspectionControl
             const Icon(Icons.check_box_outline_blank),
           ],
         ),
-        const SizedBox(height: 10),
-        Row(
-          children: types.map((type) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Row(
-                children: [
-                  Text(type),
-                  const SizedBox(width: 5),
-                  const Icon(Icons.check_box_outline_blank),
-                ],
-              ),
-            );
-          }).toList(),
-        ),
-        const SizedBox(height: 10),
-        Row(
-          children: [
-            Expanded(child: _buildDropdownField('نوع المواد', ['اسمنتي', 'خشبي', 'معدني'])),
-            const SizedBox(width: 10),
-            Expanded(child: _buildDropdownField('جودة العمل', ['جيد جداً', 'جيد', 'مقبول'])),
-          ],
-        ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 15),
+        _buildConcreteStrengthTest(),
+        const SizedBox(height: 15),
+        _buildReinforcementTest(),
+        if (hasVerticalAlignment) ...[
+          const SizedBox(height: 15),
+          _buildVerticalAlignmentTest(),
+        ],
+        if (hasAxisTest) ...[
+          const SizedBox(height: 15),
+          _buildAxisTest(),
+        ],
+        const SizedBox(height: 15),
         GridView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
@@ -283,10 +303,141 @@ class ArchitecturalInspectionView extends GetView<ArchitecturalInspectionControl
               decoration: BoxDecoration(
                 color: Colors.grey[200],
                 borderRadius: BorderRadius.circular(10),
-                image: const DecorationImage(
-                  image: AssetImage('images/test_image.jpg'),
-                  fit: BoxFit.cover,
+              ),
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildConcreteStrengthTest() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        const Text('فحص مقاومة الخرسانة باستخدام مطرقة الشميدس'),
+        const SizedBox(height: 10),
+        Row(
+          children: [
+            Expanded(
+              child: TextField(
+                textAlign: TextAlign.center,
+                decoration: InputDecoration(
+                  labelText: 'قراءة المطرقة',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                 ),
+                keyboardType: TextInputType.number,
+              ),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: TextField(
+                textAlign: TextAlign.center,
+                decoration: InputDecoration(
+                  labelText: 'مقاومة الخرسانة',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                keyboardType: TextInputType.number,
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildReinforcementTest() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        const Text('فحص كمية حديد التسليح'),
+        const SizedBox(height: 10),
+        _buildDropdownField('مطابق/غير مطابق', ['مطابق', 'غير مطابق']),
+      ],
+    );
+  }
+
+  Widget _buildVerticalAlignmentTest() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        const Text('فحص الاستقامة الرأسية'),
+        const SizedBox(height: 10),
+        _buildDropdownField('مطابق/غير مطابق', ['مطابق', 'غير مطابق']),
+      ],
+    );
+  }
+
+  Widget _buildAxisTest() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        const Text('فحص المحاور'),
+        const SizedBox(height: 10),
+        _buildDropdownField('مطابق/غير مطابق', ['مطابق', 'غير مطابق']),
+      ],
+    );
+  }
+
+  Widget _buildGrooveItem(String title) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Text(
+              title,
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(width: 10),
+            const Icon(Icons.check_box_outline_blank),
+          ],
+        ),
+        const SizedBox(height: 15),
+        const Text('طول الأخاديد'),
+        const SizedBox(height: 10),
+        _buildDropdownField('مطابق/غير مطابق', ['مطابق', 'غير مطابق']),
+        const SizedBox(height: 15),
+        GridView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 10,
+          ),
+          itemCount: 5,
+          itemBuilder: (context, index) {
+            if (index == 4) {
+              return Container(
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: IconButton(
+                  icon: const Icon(Icons.add_photo_alternate_outlined),
+                  onPressed: () async {
+                    final ImagePicker picker = ImagePicker();
+                    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+                    if (image != null) {
+                      // Handle image selection
+                    }
+                  },
+                ),
+              );
+            }
+            return Container(
+              decoration: BoxDecoration(
+                color: Colors.grey[200],
+                borderRadius: BorderRadius.circular(10),
               ),
             );
           },

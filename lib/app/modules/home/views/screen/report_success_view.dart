@@ -28,7 +28,7 @@ class ReportSuccessView extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Image.asset(
-                      'assets/images/ers.eilogo.png',
+                      'images/ers.eilogo.png',
                       height: 40,
                       errorBuilder: (context, error, stackTrace) {
                         return Container(
@@ -40,14 +40,7 @@ class ReportSuccessView extends StatelessWidget {
                       },
                     ),
                     const SizedBox(width: 10),
-                    const Text(
-                      'ERS·EI',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF96E6B3),
-                      ),
-                    ),
+
                   ],
                 ),
               ),

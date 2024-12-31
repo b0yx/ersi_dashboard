@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controllers/survey_works_controller.dart';
+import '../../controllers/survey_works_controller.dart';
 import 'dart:io';
 
 class SurveyWorksView extends GetView<SurveyWorksController> {

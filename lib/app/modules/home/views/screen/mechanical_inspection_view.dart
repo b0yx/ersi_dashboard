@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controllers/mechanical_inspection_controller.dart';
+import '../../controllers/mechanical_inspection_controller.dart';
 import 'package:image_picker/image_picker.dart';
 
 class MechanicalInspectionView extends GetView<MechanicalInspectionController> {

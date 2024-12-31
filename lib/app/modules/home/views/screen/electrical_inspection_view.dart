@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controllers/electrical_inspection_controller.dart';
+import '../../controllers/electrical_inspection_controller.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ElectricalInspectionView extends GetView<ElectricalInspectionController> {

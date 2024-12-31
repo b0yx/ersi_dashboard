@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controllers/inspection_types_controller.dart';
-import '../../../routes/app_pages.dart';
+import '../../controllers/inspection_types_controller.dart';
+import '../../../../routes/app_pages.dart';
 
 class InspectionTypesView extends GetView<InspectionTypesController> {
   const InspectionTypesView({Key? key}) : super(key: key);
