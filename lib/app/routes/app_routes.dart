@@ -4,6 +4,15 @@ abstract class Routes {
   Routes._();
   static const HOME = _Paths.HOME;
   static const WELLCOME_VIEW = _Paths.WELLCOME_VIEW;
+
+  //AUTH
+  static const LOGINVIEW =_Paths.LOGINVIEW;
+  static const SIGNUPVIEW =_Paths.SIGNUPVIEW;
+  static const RESETPASSWORD = _Paths.RESETPASSWORD;
+  static const NEWPASSWORD = _Paths.NEWPASSWORD;
+  static const VERIFICATIONCODEVIEW = _Paths.VERIFICATIONCODEVIEW;
+
+
   static const CREATE_PROJECT = _Paths.CREATE_PROJECT;
   static const INSPECTION_TYPES = _Paths.INSPECTION_TYPES;
   static const ARCHITECTURAL_INSPECTION = _Paths.ARCHITECTURAL_INSPECTION;
@@ -20,6 +29,16 @@ abstract class _Paths {
   _Paths._();
   static const HOME = '/home';
   static const WELLCOME_VIEW = '/wellcome_view';
+
+  //AUTH
+  static const LOGINVIEW = '/login_view';
+  static const SIGNUPVIEW = '/signup_view';
+  static const RESETPASSWORD = '/reset_password_view';
+  static const NEWPASSWORD = '/new_password_view';
+  static const VERIFICATIONCODEVIEW = '/verification_code_view';
+
+
+
   static const CREATE_PROJECT = '/create-project';
   static const INSPECTION_TYPES = '/inspection-types';
   static const ARCHITECTURAL_INSPECTION = '/architectural-inspection';

@@ -1,3 +1,10 @@
+import 'package:ersei/app/modules/home/bindings/auth/newpassword_binding.dart';
+import 'package:ersei/app/modules/home/bindings/auth/resetpassword_binding.dart';
+import 'package:ersei/app/modules/home/bindings/auth/verificationcode_binding.dart';
+import 'package:ersei/app/modules/home/views/auth/new_password_view.dart';
+import 'package:ersei/app/modules/home/views/auth/reset_password_view.dart';
+import 'package:ersei/app/modules/home/views/auth/signup_view.dart';
+import 'package:ersei/app/modules/home/views/auth/verification_code_view.dart';
 import 'package:ersei/app/modules/home/views/screen/home_view.dart';
 import 'package:ersei/app/modules/home/views/screen/create_project_view.dart';
 import 'package:ersei/app/modules/home/views/screen/inspection_types_view.dart';
@@ -10,6 +17,7 @@ import 'package:ersei/app/modules/home/views/screen/survey_works_view.dart';
 import 'package:ersei/app/modules/home/views/screen/report_success_view.dart';
 import 'package:ersei/app/modules/home/views/screen/wellcome_view.dart';
 import 'package:get/get.dart';
+import '../modules/home/bindings/auth/signup_binding.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/bindings/create_project_binding.dart';
 import '../modules/home/bindings/inspection_types_binding.dart';
@@ -21,6 +29,7 @@ import '../modules/home/bindings/electrical_inspection_binding.dart';
 import '../modules/home/bindings/survey_works_binding.dart';
 import '../modules/home/bindings/report_success_binding.dart';
 import '../modules/home/bindings/wellcome_binding.dart';
+import '../modules/home/views/auth/login_view.dart';
 
 part 'app_routes.dart';
 
@@ -30,6 +39,33 @@ class AppPages {
   static const INITIAL = Routes.HOME;
 
   static final routes = [
+
+    //AUTH
+    GetPage(
+      name: _Paths.LOGINVIEW,
+      page: () =>  const LoginView(),
+      binding: HomeBinding(),
+    ),
+    GetPage(
+      name: _Paths.SIGNUPVIEW,
+      page: () =>  const SignupView(),
+      binding: SignBindings(),
+    ),
+    GetPage(
+      name: _Paths.RESETPASSWORD,
+      page: () =>  const ResetPasswordView(),
+      binding: ResetPasswordBindings(),
+    ),
+    GetPage(
+      name: _Paths.VERIFICATIONCODEVIEW,
+      page: () =>  const VerificationCodeView(),
+      binding: VerificationCodeBinding(),
+    ),
+    GetPage(
+      name: _Paths.NEWPASSWORD,
+      page: () =>  const NewPasswordView(),
+      binding: NewPasswordBindings(),
+    ),
     GetPage(
       name: _Paths.HOME,
       page: () =>  HomeView(),

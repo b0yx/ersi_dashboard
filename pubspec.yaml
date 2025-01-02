@@ -33,7 +33,7 @@ dependencies:
   get: ^4.6.6
   image_picker: ^1.0.7
   path_provider: ^2.1.2
-  shared_preferences: ^2.3.4
+  shared_preferences: ^2.2.3
   http: ^1.2.0
   cupertino_icons: ^1.0.6
 
