@@ -10,7 +10,7 @@ class CustomElevatedButton extends StatelessWidget {
   const CustomElevatedButton({
     Key? key,
     required this.label,
-    required this.icon,
+     this.icon,
     required this.backgroundColor,
     required this.textColor,
     required this.onPressed,

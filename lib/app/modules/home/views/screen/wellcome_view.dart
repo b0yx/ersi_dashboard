@@ -1,16 +1,16 @@
 import 'package:ersei/app/core/constant/colors.dart';
 import 'package:ersei/app/core/constant/imagesassets.dart';
+import 'package:ersei/app/modules/home/controllers/wellcomview_controller.dart';
 import 'package:ersei/app/modules/home/views/widget/customelevetbutton.dart';
 import 'package:ersei/app/modules/home/views/widget/custometext.dart';
 import 'package:ersei/app/modules/home/views/widget/custometextbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controllers/home_controller.dart';
-import '../auth/login_view.dart';
-import '../auth/signup_view.dart';
 
 class WellcomeView extends GetView<HomeController> {
   WellcomeView({super.key});
+  final WellcomeViewControllerImp controllerImp =Get.find();
   final customtextbutton = CustomTextButton();
 
   @override
@@ -53,7 +53,7 @@ class WellcomeView extends GetView<HomeController> {
                           icon: Icons.start,
                           label: 'هيا بنا',
                           textColor: Colors.white,
-                          onPressed: () => Get.to(() => const SignupView()),
+                          onPressed: controllerImp.sigin,
                         ),
                       ),
                       SizedBox(height: screenHeight * 0.02),
@@ -62,7 +62,7 @@ class WellcomeView extends GetView<HomeController> {
                         children: [
                           customtextbutton.textButton(
                             label: 'قم بتسجيل الدخول',
-                            onPressed: () => Get.to(() => const LoginView()),
+                            onPressed:controllerImp.login ,
                           ),
                           SizedBox(width: screenWidth * 0.02),
                           CustomText(

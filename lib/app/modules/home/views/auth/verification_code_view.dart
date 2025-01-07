@@ -1,3 +1,4 @@
+import 'package:ersei/app/core/constant/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'new_password_view.dart';
@@ -7,8 +8,10 @@ class VerificationCodeView extends GetView {
 
   @override
   Widget build(BuildContext context) {
+    // final screenHeight = MediaQuery.of(context).size.height;
+    // final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: const Color(0xFFF1F9F4),
+      backgroundColor: ColorsApp.backgroundforapp,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20.0),

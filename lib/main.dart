@@ -1,15 +1,10 @@
 import 'package:ersei/app/core/loclization/translition.dart';
-import 'package:ersei/app/modules/home/views/screen/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'app/core/services/services.dart';
 import 'app/routes/app_pages.dart';
 
-
-
-
-void main() async{
-
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initialServices();
 
@@ -29,13 +24,8 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: Routes.LOGINVIEW,
-      getPages: AppPages.routes,
-      home: HomeView(),
+      initialRoute: Routes.WELLCOME_VIEW, // المسار المبدئي
+      getPages: AppPages.routes, // تحديد الروابط مع الـ Bindings
     );
   }
 }
-
-
-
-//

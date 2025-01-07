@@ -1,13 +1,26 @@
+import 'package:ersei/app/core/constant/colors.dart';
+import 'package:ersei/app/core/constant/imagesassets.dart';
+import 'package:ersei/app/modules/home/views/widget/custometext.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../controllers/auth/signup_controller.dart';
+import '../widget/customelevetbutton.dart';
+import '../widget/customiconbutton.dart';
+import '../widget/customtextformfield.dart';
+
 class SignupView extends GetView {
-  const SignupView({Key? key}) : super(key: key);
+   SignupView({super.key});
+
+  final SinginControllerImp controllerImp =Get.find();
 
   @override
   Widget build(BuildContext context) {
+
+    // final screenHeight = MediaQuery.of(context).size.height;
+    // final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: const Color(0xFFF1F9F4),
+      backgroundColor: ColorsApp.backgroundforapp,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -15,136 +28,97 @@ class SignupView extends GetView {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                IconButton(
+                CustomIconButton(
+                  icon: Icons.arrow_back_ios_new,
                   onPressed: () => Get.back(),
-                  icon: const Icon(Icons.arrow_back_ios),
-                  color: Colors.black54,
+                  color: Colors.grey,
                 ),
                 const SizedBox(height: 10),
                 Center(
                   child: Image.asset(
-                    'images/ers.eilogo.png',
+                    ImageAssets.applogo,
                     height: 60,
                   ),
                 ),
                 const SizedBox(height: 20),
-                const Center(
-                  child: Text(
-                    'إنشاء حساب',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black87,
-                    ),
+                 Center(
+                  child:
+                  CustomText(
+                    maxLine: 1,
+                    text: 'إنشاء حساب',
+                    fontSize: 26, // حجم ديناميكي للنص
+                    alignment: Alignment.center,
+                    fontWeight: FontWeight.bold,
                   ),
+
                 ),
                 const SizedBox(height: 10),
-                const Center(
-                  child: Text(
-                    'ادخل البيانات المطلوبة ليتم إنشاء الحساب',
-                    style: TextStyle(
-                      color: Colors.black54,
-                      fontSize: 14,
-                    ),
-                  ),
+                 Center(
+                  child:CustomText(maxLine: 1,
+                    text: 'أدخل البيانات المطلوبة ليتم إنشاء الحساب',
+                    fontSize: 12,
+                    color: Colors.black38,
+                    alignment: Alignment.center,
+                  )
                 ),
                 const SizedBox(height: 30),
-                TextFormField(
-                  textAlign: TextAlign.right,
-                  decoration: InputDecoration(
-                    hintText: 'الاسم',
-                    hintStyle: const TextStyle(color: Colors.black38),
-                    filled: true,
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                      borderSide: BorderSide.none,
-                    ),
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                  ),
+                const CustomTextFormField(
+                  hintText: 'الأسم ',
+                  filled: true,
+                  textalign: TextAlign.right,
+                  fillColor: Colors.white,
+                  hintstyle: TextStyle(color: Colors.black38),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                  controller: null,
                 ),
                 const SizedBox(height: 15),
-                TextFormField(
-                  textAlign: TextAlign.right,
-                  decoration: InputDecoration(
-                    hintText: 'الايميل',
-                    hintStyle: const TextStyle(color: Colors.black38),
-                    filled: true,
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                      borderSide: BorderSide.none,
-                    ),
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                  ),
+                const CustomTextFormField(
+                  hintText: 'الأيميل  ',
+                  filled: true,
+                  textalign: TextAlign.right,
+                  fillColor: Colors.white,
+                  hintstyle: TextStyle(color: Colors.black38),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                  controller: null,
                 ),
                 const SizedBox(height: 15),
-                TextFormField(
-                  textAlign: TextAlign.right,
-                  decoration: InputDecoration(
-                    hintText: 'الهاتف',
-                    hintStyle: const TextStyle(color: Colors.black38),
-                    filled: true,
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                      borderSide: BorderSide.none,
-                    ),
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                  ),
+                const CustomTextFormField(
+                  hintText: 'الهاتف ',
+                  filled: true,
+                  textalign: TextAlign.right,
+                  fillColor: Colors.white,
+                  hintstyle: TextStyle(color: Colors.black38),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                  controller: null,
                 ),
                 const SizedBox(height: 15),
-                TextFormField(
-                  textAlign: TextAlign.right,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    hintText: 'كلمة السر',
-                    hintStyle: const TextStyle(color: Colors.black38),
-                    filled: true,
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                      borderSide: BorderSide.none,
-                    ),
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                  ),
+                const CustomTextFormField(
+                  hintText: 'كلمة السر ',
+                  filled: true,
+                  textalign: TextAlign.right,
+                  fillColor: Colors.white,
+                  hintstyle: TextStyle(color: Colors.black38),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                  controller: null,
                 ),
                 const SizedBox(height: 15),
-                TextFormField(
-                  textAlign: TextAlign.right,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    hintText: 'تأكيد كلمة السر',
-                    hintStyle: const TextStyle(color: Colors.black38),
-                    filled: true,
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                      borderSide: BorderSide.none,
-                    ),
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                  ),
+                const CustomTextFormField(
+                  hintText: 'تأكيد كلمة السر ',
+                  filled: true,
+                  textalign: TextAlign.right,
+                  fillColor: Colors.white,
+                  hintstyle: TextStyle(color: Colors.black38),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                  controller: null,
                 ),
                 const SizedBox(height: 30),
                 SizedBox(
                   width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF96E6B3),
-                      padding: const EdgeInsets.symmetric(vertical: 15),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                    ),
-                    child: const Text(
-                      'SIGN UP',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                  child: CustomElevatedButton(
+                    label: 'إنشاء',
+                    backgroundColor: ColorsApp.greencolorapp,
+                    textColor: Colors.white,
+                    onPressed: controller.creataccoutn,
                   ),
                 ),
               ],

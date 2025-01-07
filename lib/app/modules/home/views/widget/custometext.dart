@@ -7,16 +7,18 @@ class CustomText extends StatelessWidget {
   final double fontSize;
 
   final Color color;
-
+  final FontWeight? fontWeight;
   final Alignment alignment;
 
   final int maxLine;
   final double height;
 
+
   CustomText({
     this.text = '',
     this.fontSize = 16,
     this.color = Colors.black,
+    this.fontWeight ,
     this.alignment = Alignment.topLeft,
     required this.maxLine,
     this.height = 1,
@@ -32,6 +34,7 @@ class CustomText extends StatelessWidget {
           color: color,
           height: height,
           fontSize: fontSize,
+          fontWeight:null ,
         ),
         maxLines: maxLine,
       ),

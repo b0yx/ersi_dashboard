@@ -1,3 +1,4 @@
+import 'package:ersei/app/modules/home/bindings/auth/login_binding.dart';
 import 'package:ersei/app/modules/home/bindings/auth/newpassword_binding.dart';
 import 'package:ersei/app/modules/home/bindings/auth/resetpassword_binding.dart';
 import 'package:ersei/app/modules/home/bindings/auth/verificationcode_binding.dart';
@@ -43,12 +44,12 @@ class AppPages {
     //AUTH
     GetPage(
       name: _Paths.LOGINVIEW,
-      page: () =>  const LoginView(),
-      binding: HomeBinding(),
+      page: () =>   LoginView(),
+      binding: LoginViewBindings(),
     ),
     GetPage(
       name: _Paths.SIGNUPVIEW,
-      page: () =>  const SignupView(),
+      page: () =>   SignupView(),
       binding: SignBindings(),
     ),
     GetPage(
