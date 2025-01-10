@@ -3,20 +3,21 @@ import 'package:get/get.dart';
 
  abstract class WellcomeViewController extends GetxController {
 
-  sigin();
+
   login();
+  letsgo();
 
 }
 
 class WellcomeViewControllerImp extends WellcomeViewController{
   @override
-  sigin() {
-   Get.toNamed(Routes.SIGNUPVIEW);
+  login() {
+    Get.toNamed(Routes.LOGINVIEW);
   }
 
   @override
-  login() {
-    Get.toNamed(Routes.LOGINVIEW);
+  letsgo() {
+    Get.toNamed(Routes.SIGNUPVIEW);
   }
 
 }

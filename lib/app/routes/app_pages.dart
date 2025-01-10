@@ -50,7 +50,7 @@ class AppPages {
     GetPage(
       name: _Paths.SIGNUPVIEW,
       page: () =>   SignupView(),
-      binding: SignBindings(),
+      binding: SignupBindings(),
     ),
     GetPage(
       name: _Paths.RESETPASSWORD,
@@ -59,7 +59,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.VERIFICATIONCODEVIEW,
-      page: () =>  const VerificationCodeView(),
+      page: () =>   VerificationCodeView(),
       binding: VerificationCodeBinding(),
     ),
     GetPage(
@@ -69,12 +69,12 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.HOME,
-      page: () =>  HomeView(),
+      page: () => HomeView(),
       binding: HomeBinding(),
     ),
     GetPage(
       name: _Paths.WELLCOME_VIEW,
-      page: () =>   WellcomeView(),
+      page: () =>  WellcomeView(),
       binding: WellcomeViewBinding(),
     ),
     GetPage(
