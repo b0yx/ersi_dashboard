@@ -1,10 +1,11 @@
 import 'package:get/get.dart';
+import '../../controllers/auth/signup_controller.dart';
 
-class SignBindings extends Bindings {
+class SignupBindings extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<SignBindings>(
-          () => SignBindings(),
+    Get.lazyPut<SignupControllerImp>(
+          () => SignupControllerImp(),
     );
   }
 }

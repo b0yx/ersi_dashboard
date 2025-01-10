@@ -1,17 +1,17 @@
 import 'package:ersei/app/core/constant/colors.dart';
 import 'package:ersei/app/core/constant/imagesassets.dart';
-import 'package:ersei/app/modules/home/controllers/wellcomview_controller.dart';
 import 'package:ersei/app/modules/home/views/widget/customelevetbutton.dart';
 import 'package:ersei/app/modules/home/views/widget/custometext.dart';
 import 'package:ersei/app/modules/home/views/widget/custometextbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../controllers/home_controller.dart';
+import '../../controllers/wellcomview_controller.dart';
 
-class WellcomeView extends GetView<HomeController> {
+class WellcomeView extends GetView {
   WellcomeView({super.key});
-  final WellcomeViewControllerImp controllerImp =Get.find();
-  final customtextbutton = CustomTextButton();
+
+  // تأكد من تسجيل الـ Controller في مكان مناسب
+  final WellcomeViewControllerImp controllerImp = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -53,16 +53,16 @@ class WellcomeView extends GetView<HomeController> {
                           icon: Icons.start,
                           label: 'هيا بنا',
                           textColor: Colors.white,
-                          onPressed: controllerImp.sigin,
+                          onPressed: controllerImp.letsgo,
                         ),
                       ),
                       SizedBox(height: screenHeight * 0.02),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          customtextbutton.textButton(
+                          CustomTextButton().textButton(
                             label: 'قم بتسجيل الدخول',
-                            onPressed:controllerImp.login ,
+                            onPressed: controllerImp.login,
                           ),
                           SizedBox(width: screenWidth * 0.02),
                           CustomText(

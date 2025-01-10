@@ -1,3 +1,4 @@
+import 'package:ersei/app/core/constant/colors.dart';
 import 'package:ersei/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,7 +12,7 @@ class CreateProjectView extends GetView<CreateProjectController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF1F9F4),
+      backgroundColor: ColorsApp.backgroundforapp,
       body: SafeArea(
         child: LayoutBuilder(
           builder: (context, constraints) {

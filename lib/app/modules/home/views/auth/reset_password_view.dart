@@ -1,14 +1,15 @@
 import 'package:ersei/app/core/constant/colors.dart';
 import 'package:ersei/app/core/constant/imagesassets.dart';
+import 'package:ersei/app/modules/home/controllers/auth/reset_password_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../../routes/app_pages.dart';
 import '../widget/customelevetbutton.dart';
 import '../widget/custometext.dart';
 import '../widget/customtextformfield.dart';
 
-class ResetPasswordView extends GetView {
+class ResetPasswordView extends GetView<ResetPasswordControllerImp> {
   const ResetPasswordView({super.key});
+
 
   @override
   Widget build(BuildContext context) {
@@ -60,20 +61,22 @@ class ResetPasswordView extends GetView {
                   ),
                 ),
                 const SizedBox(height: 30),
-               const CustomTextFormField(textalign: TextAlign.right,
-                  hintstyle:TextStyle(color: Colors.black38),
-                  contentPadding:EdgeInsets.symmetric(horizontal: 20, vertical: 16) ,
+                CustomTextFormField(textalign: TextAlign.right,
+                  hintstyle:const TextStyle(color: Colors.black38),
+                  contentPadding:const EdgeInsets.symmetric(horizontal: 20, vertical: 16) ,
                   hintText: 'الهاتف',
                   filled: true,
-                  fillColor:Colors.white, controller: null ,
+                  fillColor:Colors.white,
+                 controller: controller.phone ,
                 ),
                 const SizedBox(height: 15),
-                const CustomTextFormField(textalign: TextAlign.right,
-                  hintstyle:TextStyle(color: Colors.black38),
-                  contentPadding:EdgeInsets.symmetric(horizontal: 20, vertical: 16) ,
+                 CustomTextFormField(textalign: TextAlign.right,
+                  hintstyle:const TextStyle(color: Colors.black38),
+                  contentPadding:const EdgeInsets.symmetric(horizontal: 20, vertical: 16) ,
                   hintText: 'الايميل',
                   filled: true,
-                  fillColor:Colors.white, controller: null ,
+                  fillColor:Colors.white,
+                  controller: controller.email ,
                 ),
                 const SizedBox(height: 30),
                 SizedBox(
@@ -82,9 +85,7 @@ class ResetPasswordView extends GetView {
                     label: 'التالي',
                     backgroundColor: ColorsApp.greencolorapp,
                     textColor: Colors.white,
-                    onPressed: () {
-                      Get.until((route) => route.settings.name == Routes.VERIFICATIONCODEVIEW);
-                    },
+                    onPressed: controller.verificationcodrpassword,
                   ),
                 ),
               ],
