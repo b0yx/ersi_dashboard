@@ -25,6 +25,7 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       initialRoute: Routes.VERIFICATIONCODEVIEW, // المسار المبدئي
+
       getPages: AppPages.routes, // تحديد الروابط مع الـ Bindings
     );
   }

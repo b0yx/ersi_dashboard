@@ -3,6 +3,7 @@ import 'package:ersei/app/core/constant/imagesassets.dart';
 import 'package:ersei/app/modules/home/views/widget/custometext.dart';
 import 'package:ersei/app/modules/home/views/widget/custometextbutton.dart';
 import 'package:ersei/app/modules/home/views/widget/customicon.dart';
+import 'package:ersei/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -101,10 +102,8 @@ class HomeView extends GetView {
               Center(
                 child:customtextbutton.textButton(label: 'فحص جديد',
                     icon:customIcons.icon(Icons.add_circle_outline),
-                    onPressed: () {
-                          // () => Get.toNamed(Routes.CREATE_PROJECT,);
-
-                    }
+                    onPressed: () => Get.toNamed(Routes.CREATE_PROJECT,)
+        
                 // TextButton(
                 //   onPressed: () => Get.toNamed(Routes.CREATE_PROJECT),
                 //   child: Row(
