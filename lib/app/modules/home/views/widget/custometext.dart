@@ -12,9 +12,10 @@ class CustomText extends StatelessWidget {
 
   final int maxLine;
   final double height;
+  final TextAlign textAlign; // محاذاة النص (يمين، يسار، وسط...)
 
 
-  CustomText({
+  const CustomText({
     this.text = '',
     this.fontSize = 16,
     this.color = Colors.black,
@@ -22,6 +23,7 @@ class CustomText extends StatelessWidget {
     this.alignment = Alignment.topLeft,
     required this.maxLine,
     this.height = 1,
+    this.textAlign = TextAlign.start, // القيمة الافتراضية
   });
 
   @override
