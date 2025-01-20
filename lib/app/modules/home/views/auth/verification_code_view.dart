@@ -4,12 +4,10 @@ import 'package:ersei/app/modules/home/views/widget/custometext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:get/get.dart';
-import '../../controllers/auth/verification_code_controller.dart';
 import '../widget/custometextbutton.dart';
 
 
-class VerificationCodeView extends GetView<VerificationCodeControllerImp> {
-
+class VerificationCodeView extends GetView {
   VerificationCodeView({super.key});
 
   final customTextButton = CustomTextButton();
@@ -59,9 +57,11 @@ class VerificationCodeView extends GetView<VerificationCodeControllerImp> {
                   fillColor:Colors.white ,
                   clearText: true,
                   filled: true,
+
+
+
                   onCodeChanged: (String code) {},
                   onSubmit: (String verificationCode) {
-                   controller.checkverfiycode();
                     // showDialog(
                     //   context: context,
                     //   builder: (context) {
