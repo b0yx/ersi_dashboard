@@ -25,100 +25,104 @@ class CreateProjectView extends GetView<CreateProjectController> {
     return Scaffold(
       backgroundColor: ColorsApp.backgroundforapp,
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CustomHeader(
-                onBackPressed: () => Get.back(),
-                logoPath: ImageAssets.applogo,
-              ),
-              const SizedBox(height: 20),
-              const Center(
-                child: CustomText(
-                  text: 'إنشاء مشروع',
-                  fontSize: 24,
-                  maxLine: 1,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
+        child: ListView(
+          children:[ Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomHeader(
+                  onBackPressed: () => Get.back(),
+                  logoPath: ImageAssets.applogo,
                 ),
-              ),
-              const SizedBox(height: 30),
-              CustomTextFormField(
-                hintText: 'اسم المشروع',
-                textalign: TextAlign.right,
-                controller: TextEditingController(),
-                contentPadding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                hintstyle: const TextStyle(color: Colors.grey),
-                keyboardType:
-                    TextInputType.text, // لتحديد لوحة المفاتيح المناسبة
-                fillColor: Colors.white, // تحديد خلفية الحقل باللون الأبيض
-                filled: true, // تأكيد أن الخلفية مليئة
-                borders: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15),
-                  borderSide: BorderSide.none,
+                const SizedBox(height: 20),
+                const Center(
+                  child: CustomText(
+                    text: 'إنشاء مشروع',
+                    fontSize: 24,
+                    maxLine: 1,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 15),
-              CustomTextFormField(
-                contentPadding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                hintText: 'اسم جهة استلام التقرير',
-                textalign: TextAlign.right,
-                controller: TextEditingController(),
-                hintstyle: const TextStyle(color: Colors.grey),
-                keyboardType: TextInputType.text,
-                fillColor: Colors.white, // تحديد خلفية الحقل باللون الأبيض
-                filled: true, // تأكيد أن الخلفية مليئة
-                borders: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15),
-                  borderSide: BorderSide.none,
+                const SizedBox(height: 30),
+                CustomTextFormField(
+                  hintText: 'اسم المشروع',
+                  textAlign: TextAlign.right,
+                  controller: TextEditingController(),
+                  contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  hintStyle: const TextStyle(color: Colors.grey),
+                  keyboardType:
+                      TextInputType.text, // لتحديد لوحة المفاتيح المناسبة
+                  fillColor: Colors.white, // تحديد خلفية الحقل باللون الأبيض
+                  filled: true,
+                  // تأكيد أن الخلفية مليئة
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    borderSide: BorderSide.none,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 15),
-              CustomTextFormField(
-                hintText: 'رقم الهاتف',
-                textalign: TextAlign.right,
-                controller: TextEditingController(),
-                contentPadding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                hintstyle: const TextStyle(color: Colors.grey),
-                keyboardType: TextInputType.phone,
-                fillColor: Colors.white, // تحديد خلفية الحقل باللون الأبيض
-                filled: true,
-                borders: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15),
-                  borderSide: BorderSide.none,
+                const SizedBox(height: 15),
+                CustomTextFormField(
+                  contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  hintText: 'اسم جهة استلام التقرير',
+                  textAlign: TextAlign.right,
+                  controller: TextEditingController(),
+                  hintStyle: const TextStyle(color: Colors.grey),
+                  keyboardType: TextInputType.text,
+                  fillColor: Colors.white, // تحديد خلفية الحقل باللون الأبيض
+                  filled: true, // تأكيد أن الخلفية مليئة
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    borderSide: BorderSide.none,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 15),
-              CustomDatePicker(
-                selectedDate: controller.selectedDate.value,
-                onDateChanged: controller.updateDate,
-              ),
-              const SizedBox(height: 15),
-              CustomDropdownField(
-                title: 'الغرض من الفحص',
-                onTap: _showPurposeSelection,
-              ),
-              const SizedBox(height: 15),
-              CustomDropdownField(
-                title: 'نوع المنشأة',
-                onTap: _showBuildingTypeSelection,
-              ),
-              const Spacer(),
-              CustomElevatedButton(
-                label: 'NEXT',
-                backgroundColor: const Color(0xFF96E6B3),
-                textColor: Colors.white,
-                onPressed: () => Get.toNamed(Routes.INSPECTION_TYPES),
-              ),
-              const SizedBox(height: 20),
-            ],
+                const SizedBox(height: 15),
+                CustomTextFormField(
+                  hintText: 'رقم الهاتف',
+                  textAlign: TextAlign.right,
+                  controller: TextEditingController(),
+                  contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  hintStyle: const TextStyle(color: Colors.grey),
+                  keyboardType: TextInputType.phone,
+                  fillColor: Colors.white, // تحديد خلفية الحقل باللون الأبيض
+                  filled: true,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                    borderSide: BorderSide.none,
+                  ),
+                ),
+                const SizedBox(height: 15),
+                CustomDatePicker(
+                  selectedDate: controller.selectedDate.value,
+                  onDateChanged: controller.updateDate,
+                ),
+                const SizedBox(height: 15),
+                CustomDropdownField(
+                  title: 'الغرض من الفحص',
+                  onTap: _showPurposeSelection,
+                ),
+                const SizedBox(height: 15),
+                CustomDropdownField(
+                  title: 'نوع المنشأة',
+                  onTap: _showBuildingTypeSelection,
+                ),
+                const Spacer(),
+                CustomElevatedButton(
+                  label: 'NEXT',
+                  backgroundColor: const Color(0xFF96E6B3),
+                  textColor: Colors.white,
+                  onPressed: () => Get.toNamed(Routes.INSPECTION_TYPES),
+                ),
+                const SizedBox(height: 20),
+              ],
+            ),
           ),
-        ),
+
+        ]),
       ),
     );
   }

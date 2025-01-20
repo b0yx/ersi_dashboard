@@ -23,6 +23,10 @@ abstract class Routes {
   static const SURVEY_WORKS = _Paths.SURVEY_WORKS;
   // ignore: constant_identifier_names
   static const REPORT_SUCCESS = _Paths.REPORT_SUCCESS;
+
+  //test
+  static const TESTVIEW =_Paths.TESTVIEW;
+
 }
 
 abstract class _Paths {
@@ -49,4 +53,8 @@ abstract class _Paths {
   static const SURVEY_WORKS = '/survey-works';
   // ignore: constant_identifier_names
   static const REPORT_SUCCESS = '/report-success';
+
+  //test
+  static const TESTVIEW = '/test_view';
+
 }

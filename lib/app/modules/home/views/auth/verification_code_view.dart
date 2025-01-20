@@ -9,6 +9,7 @@ import '../widget/custometextbutton.dart';
 
 
 class VerificationCodeView extends GetView<VerificationCodeControllerImp> {
+
   VerificationCodeView({super.key});
 
   final customTextButton = CustomTextButton();
@@ -58,12 +59,9 @@ class VerificationCodeView extends GetView<VerificationCodeControllerImp> {
                   fillColor:Colors.white ,
                   clearText: true,
                   filled: true,
-
-
-
                   onCodeChanged: (String code) {},
                   onSubmit: (String verificationCode) {
-                    controller.checkverfiycode;
+                   controller.checkverfiycode();
                     // showDialog(
                     //   context: context,
                     //   builder: (context) {

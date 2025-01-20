@@ -1,5 +1,6 @@
 import 'package:ersei/app/routes/app_pages.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 abstract class LoginController extends GetxController {
@@ -8,6 +9,8 @@ abstract class LoginController extends GetxController {
 }
 
 class LoginControllerImp extends LoginController{
+
+  GlobalKey<FormState> formstate =GlobalKey<FormState>();
 
   late TextEditingController email ;
   late TextEditingController password;
@@ -22,8 +25,13 @@ class LoginControllerImp extends LoginController{
 
   @override
   login() {
-
-    Get.toNamed(Routes.HOME);
+    var formdata = formstate.currentState;
+    if(formdata!.validate()){
+      print('valid');
+    }else {
+      print('not valid');
+    }
+    // Get.toNamed(Routes.HOME);
 
 
   }
