@@ -1,4 +1,5 @@
 import 'package:ersei/app/core/loclization/translition.dart';
+import 'package:ersei/app/modules/home/bindings/initialbindings.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'app/core/services/services.dart';
@@ -24,8 +25,8 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: Routes.VERIFICATIONCODEVIEW, // المسار المبدئي
-
+      initialRoute: Routes.SIGNUPVIEW, // المسار المبدئي
+      initialBinding: InitialBinding(),
       getPages: AppPages.routes, // تحديد الروابط مع الـ Bindings
     );
   }

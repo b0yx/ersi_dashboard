@@ -17,6 +17,7 @@ import 'package:ersei/app/modules/home/views/screen/electrical_inspection_view.d
 import 'package:ersei/app/modules/home/views/screen/survey_works_view.dart';
 import 'package:ersei/app/modules/home/views/screen/report_success_view.dart';
 import 'package:ersei/app/modules/home/views/screen/wellcome_view.dart';
+import 'package:ersei/app/testpage/test_view.dart';
 import 'package:get/get.dart';
 import '../modules/home/bindings/auth/signup_binding.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -40,6 +41,10 @@ class AppPages {
   static const INITIAL = Routes.HOME;
 
   static final routes = [
+
+    GetPage(
+        name: _Paths.TESTVIEW,
+        page: () =>TestView() ),
 
     //AUTH
     GetPage(
