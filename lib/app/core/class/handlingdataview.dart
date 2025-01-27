@@ -67,6 +67,28 @@ class HandlingDataView extends StatelessWidget {
             fit: BoxFit.contain,
           ),
         );
+
+        break;
+      case StatusRequest.erorr:
+        content = Center(
+          child: Lottie.asset(
+            ImageAssets.error,
+            width: 100,
+            height: 100,
+            fit: BoxFit.contain,
+          ),
+        );
+        break;
+      case StatusRequest.invalidVerificationCode:
+        content = Center(
+          child: Lottie.asset(
+            ImageAssets.invalidVerification,
+            width: 100,
+            height: 100,
+            fit: BoxFit.contain,
+          ),
+        );
+
         break;
       default:
         content = widget;

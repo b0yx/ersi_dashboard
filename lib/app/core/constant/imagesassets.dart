@@ -12,6 +12,8 @@
   static const String noInternet ="$rootLottie/nointernet.json";
   static const String failure ="$rootLottie/failure.json";
   static const String noData ="$rootLottie/nodata.json";
+  static const String error ="$rootLottie/error.json";
+  static const String invalidVerification ="$rootLottie/Invalidverificationcode.json";
 
 
 

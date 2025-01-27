@@ -9,6 +9,8 @@ import 'package:ersei/app/modules/home/views/widget/customtextformfield.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../core/class/handlingdataview.dart';
+import '../../../../core/class/statusrequest.dart';
 import '../../../../core/functions/functioninput.dart';
 
 
@@ -62,62 +64,65 @@ class LoginView extends GetView {
                 ),
                 SizedBox(height: screenHeight * 0.05),
 
-                 Form(
-                   key:controller.formstate ,
-                   child:
-                   SingleChildScrollView(
-                     child: Column(
-                       children: [
-                         CustomTextFormField(
-                           validator: (val){
-                             return validInput(val!, 5, 100, "phone");
-                           },
-                          hintText: 'الايميل او رقم الهاتف ',
+                 GetBuilder<LoginControllerImp>(
+                    builder: (controller) => controller.statuesRequest == StatusRequest.loading
+                           ? const Center(child: HandlingDataView(
+                           statusRequest: StatusRequest.loading, widget: Center()),
+                         ) : Form(
+                    key:controller.formstate ,
+                    child:
+                    Column(
+                      children: [
+                        CustomTextFormField(
+                          validator: (val){
+                            return validInput(val!, 8, 50, "phone");
+                          },
+                         hintText: 'الايميل او رقم الهاتف ',
+                         filled: true,
+                         textAlign: TextAlign.right,
+                         fillColor: Colors.white,
+                         hintStyle:const TextStyle(color: Colors.black38),
+                         contentPadding:const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                         controller: controller.phone,
+                                        ),
+
+                                    SizedBox(height: screenHeight * 0.02),
+                        CustomTextFormField(
+                          validator: (val){
+                            return validInput(val!, 8, 16, "phone");
+                          },
+                          hintText: 'كلمة المرور ',
+                          obscureText: true,
                           filled: true,
                           textAlign: TextAlign.right,
                           fillColor: Colors.white,
                           hintStyle:const TextStyle(color: Colors.black38),
                           contentPadding:const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                          controller: controller.email,
-                                         ),
-
-                                     SizedBox(height: screenHeight * 0.02),
-                         CustomTextFormField(
-                           validator: (val){
-                             return validInput(val!, 5, 100, "phone");
-                           },
-                           hintText: 'كلمة المرور ',
-                           filled: true,
-                           textAlign: TextAlign.right,
-                           fillColor: Colors.white,
-                           hintStyle:const TextStyle(color: Colors.black38),
-                           contentPadding:const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                           controller: controller.email,
-                         ),
-                                     SizedBox(height: screenHeight * 0.03),
-                                     SizedBox(
-                      width: double.infinity,
-                      child: CustomElevatedButton(
-                        label: 'تسجيل الدخول',
-                        backgroundColor: ColorsApp.greencolorapp,
-                        textColor: Colors.white,
-                        onPressed:controller.login,
-                      ),
-                                     ),
-                                     SizedBox(height: screenHeight * 0.02),
-                                     Center(
-                      child:customtextbutton.textButton(
-                          label: 'هل نسيت كلمة السر ؟',
-                          onPressed:controller.forgetpassword,
+                          controller: controller.password,
+                        ),
+                                    SizedBox(height: screenHeight * 0.03),
+                                    SizedBox(
+                     width: double.infinity,
+                     child: CustomElevatedButton(
+                       label: 'تسجيل الدخول',
+                       backgroundColor: ColorsApp.greencolorapp,
+                       textColor: Colors.white,
+                       onPressed:controller.login,
+                     ),
+                                    ),
+                                    SizedBox(height: screenHeight * 0.02),
+                                    Center(
+                     child:customtextbutton.textButton(
+                         label: 'هل نسيت كلمة السر ؟',
+                         onPressed:controller.forgetpassword,
 
 
-                      )
-                                     )
-                       ],
-                                     ),
-                   ),
-                 ),
-              ],
+                     )
+                                    )
+                      ],
+                                    ),
+                  ),
+                                  )],
             ),
           ),
         ),

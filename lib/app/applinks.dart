@@ -7,7 +7,8 @@ class AppLink{
   static const String testView = '$server/test.php';
 
   static const String login = '$server/auth/login.php';
-  static const String verifyCode = '$server/auth/verifycode.php';
+  // static const String verifyCode = '$server/auth/forgetpassword/verifycode.php';
+  static const String verifySignCode = '$server/auth/verifycode.php';
   static const String forgetPassword = '$server/auth/forgetpassword/forgetpassword.php';
   static const String newPassword = '$server/auth/forgetpassword/newpassword.php';
   static const String verifyPassword = '$server/auth/forgetpassword/verfycodeforgetpassword.php';
