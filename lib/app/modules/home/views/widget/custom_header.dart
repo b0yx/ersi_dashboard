@@ -1,3 +1,4 @@
+import 'package:ersei/app/core/constant/imagesassets.dart';
 import 'package:flutter/material.dart';
 
 class CustomHeader extends StatelessWidget {
@@ -22,7 +23,7 @@ class CustomHeader extends StatelessWidget {
         const Expanded(
           child: Center(
             child: Image(
-              image: AssetImage('images/ers.eilogo.png'),
+              image: AssetImage(ImageAssets.applogo),
               height: 60,
             ),
           ),

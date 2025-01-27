@@ -4,6 +4,8 @@ import 'package:ersei/app/modules/home/views/widget/custometext.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:get/get.dart';
+import '../../../../core/class/statusrequest.dart';
+import '../../controllers/auth/verification_code_controller.dart';
 import '../widget/custometextbutton.dart';
 
 
@@ -42,7 +44,7 @@ class VerificationCodeView extends GetView {
                   ),
                 ),
                 SizedBox(height: screenHeight * 0.03),
-                Center(
+                  const Center(
                   child: CustomText(
                     text: 'ادخل رمز التأكيد المرسل \n الى بريدك الالكتروني',
                     alignment: Alignment.center,
@@ -50,59 +52,40 @@ class VerificationCodeView extends GetView {
                   ),
                 ),
                 SizedBox(height: screenHeight * 0.05),
-                OtpTextField(
-                  numberOfFields: 4,
-                  // borderColor: ColorsApp.greencolorapp,
-                  // showFieldAsBox: true,
-                  fillColor:Colors.white ,
-                  clearText: true,
-                  filled: true,
 
+                   SizedBox(height: screenHeight * 0.05),
+                GetBuilder<VerificationCodeControllerImp>(
+                  builder: (controller) {
+                    if (controller.statuesRequest == StatusRequest.loading) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
 
-
-                  onCodeChanged: (String code) {},
-                  onSubmit: (String verificationCode) {
-                    // showDialog(
-                    //   context: context,
-                    //   builder: (context) {
-                    //     return AlertDialog(
-                    //       title: const Text("Verification Code"),
-                    //       content: Text('Code entered is $verificationCode'),
-                    //     );
-                    //   },
-                    // );
+                    return OtpTextField(
+                      numberOfFields: 5,
+                      borderColor: ColorsApp.greencolorapp,
+                      showFieldAsBox: true,
+                      fillColor: Colors.white,
+                      clearText: true,
+                      filled: true,
+                      onCodeChanged: (String code) {},
+                      onSubmit: (String verificationCode) {
+                        controller.verificationCodePassword(verificationCode);
+                      },
+                    );
                   },
                 ),
-                SizedBox(height: screenHeight * 0.03),
-                Center(
+                                            SizedBox(height: screenHeight * 0.03),
+                                             Center(
                   child: customTextButton.textButton(
                     label: 'لم يصلني أي رمز تأكيد - إعادة الارسال',
 
                     onPressed: () {},
                   ),
                 ),
-                SizedBox(height: screenHeight * 0.03),
-                // SizedBox(
-                //   width: double.infinity,
-                //   child: ElevatedButton(
-                //     onPressed: () => Get.to(() => const NewPasswordView()),
-                //     style: ElevatedButton.styleFrom(
-                //       backgroundColor: const Color(0xFF96E6B3),
-                //       padding: EdgeInsets.symmetric(vertical: screenHeight * 0.02),
-                //       shape: RoundedRectangleBorder(
-                //         borderRadius: BorderRadius.circular(15),
-                //       ),
-                //     ),
-                //     child: const Text(
-                //       'SEND',
-                //       style: TextStyle(
-                //         color: Colors.white,
-                //         fontSize: 18,
-                //         fontWeight: FontWeight.bold,
-                //       ),
-                //     ),
-                //   ),
-                // ),
+                                               SizedBox(height: screenHeight * 0.03),
+
               ],
             ),
           ),

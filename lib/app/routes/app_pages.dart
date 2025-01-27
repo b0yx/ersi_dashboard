@@ -1,10 +1,12 @@
 import 'package:ersei/app/modules/home/bindings/auth/login_binding.dart';
 import 'package:ersei/app/modules/home/bindings/auth/newpassword_binding.dart';
 import 'package:ersei/app/modules/home/bindings/auth/resetpassword_binding.dart';
+import 'package:ersei/app/modules/home/bindings/auth/verification_code_signup_binding.dart';
 import 'package:ersei/app/modules/home/bindings/auth/verificationcode_binding.dart';
 import 'package:ersei/app/modules/home/views/auth/new_password_view.dart';
 import 'package:ersei/app/modules/home/views/auth/reset_password_view.dart';
 import 'package:ersei/app/modules/home/views/auth/signup_view.dart';
+import 'package:ersei/app/modules/home/views/auth/verification_code_signup_view.dart';
 import 'package:ersei/app/modules/home/views/auth/verification_code_view.dart';
 import 'package:ersei/app/modules/home/views/screen/home_view.dart';
 import 'package:ersei/app/modules/home/views/screen/create_project_view.dart';
@@ -44,7 +46,7 @@ class AppPages {
 
     GetPage(
         name: _Paths.TESTVIEW,
-        page: () =>TestView() ),
+        page: () =>const TestView() ),
 
     //AUTH
     GetPage(
@@ -67,6 +69,13 @@ class AppPages {
       page: () =>   VerificationCodeView(),
       binding: VerificationCodeBinding(),
     ),
+
+    GetPage(
+      name: _Paths.VERIFICATIONSIGNCODEVIEW,
+      page: () =>   VerificationCodeSignupView(),
+      binding: VerificationCodeSignupBinding(),
+    ),
+
     GetPage(
       name: _Paths.NEWPASSWORD,
       page: () =>  const NewPasswordView(),

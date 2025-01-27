@@ -1,7 +1,13 @@
+import 'package:ersei/app/core/services/services.dart';
 import 'package:ersei/app/routes/app_pages.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../../core/class/statusrequest.dart';
+import '../../../../core/functions/handlingdatacontroller.dart';
+import '../../../../core/functions/showerrordialog.dart';
+import '../../../../core/functions/showsuccessdialog.dart';
+import '../../../../data/datasource/remot/auth/login_remote.dart';
 
 abstract class LoginController extends GetxController {
   login();
@@ -14,6 +20,15 @@ class LoginControllerImp extends LoginController{
 
   late TextEditingController email ;
   late TextEditingController password;
+  late TextEditingController phone;
+
+  StatusRequest? statuesRequest ;
+
+
+  LoginData loginData =LoginData(Get.find());
+  MyServices myServices =Get.find();
+
+
 
 
   @override
@@ -24,11 +39,108 @@ class LoginControllerImp extends LoginController{
   }
 
   @override
-  login() {
+ login() async {
     var formdata = formstate.currentState;
     if(formdata!.validate()){
-      print('valid');
-    }else {
+      statuesRequest = StatusRequest.loading;
+      update();
+      var response = await loginData.postData(phone.text,password.text);
+      print("=============================================== $response");
+      statuesRequest=handlingData(response);
+      print("=============================================== $statuesRequest");
+      if(statuesRequest == StatusRequest.success){
+        if(response['stutes'] == "success"){
+
+          myServices.sharedPreferences.setString('id', response['data'][0]['id'].toString());
+          myServices.sharedPreferences.setString("name",  response['data'][0]['name']);
+          myServices.sharedPreferences.setString("phone",  response['data'][0]['phone']);
+          myServices.sharedPreferences.setString("email",  response['data'][0]['email']);
+          myServices.sharedPreferences.setString("step", '2');
+          // myServices.sharedPreferences.setString('phone',  response['data']['phone]);
+          // myServices.sharedPreferences.setString('email',  response['data']['email']);
+
+
+          Map<String, dynamic> userData = {
+
+            "phone": phone.text,
+            "email": email.text,
+            "password": password.text,
+
+          };
+
+          showSuccessDialog('Success', 'Login successfully.' ,Routes.HOME,map: userData);
+          // Get.defaultDialog(
+          //   title: 'Successfully ',
+          //               middleText: 'The account has been created successfully.',
+          //
+          //               actions: [
+          //                 const HandlingDataView(
+          //                   statusRequest: StatusRequest.success,
+          //                   widget: Card(),
+          //                 ),
+          //
+          //               ],
+          //               confirm: ElevatedButton(
+          //                 onPressed: () {
+          //                   Get.offAll(Routes.HOME);
+          //                 },
+          //                 child: const Text('go to the home page'),
+          //               ),
+          //             );
+          // update();
+          // Get.to(Routes.HOME);
+          update();
+
+        }
+        else{
+
+          Get.defaultDialog(title: "Error" ,
+              middleText: "Phone , Email or password  incorrect ") ;
+          update();
+
+          statuesRequest=StatusRequest.failure;
+
+        }
+        update();
+
+      }
+      else if  (statuesRequest == StatusRequest.offlinefailure)
+      {
+        showErrorDialog('error', 'You are offline',StatusRequest.offlinefailure,goBackTo:Routes.WELLCOME_VIEW );
+        //
+        // Get.defaultDialog(
+        //             title: 'Error ',
+        //             middleText: 'You are offline',
+        //
+        //
+        //             actions: [
+        //               const HandlingDataView(
+        //                 statusRequest: StatusRequest.offlinefailure,
+        //                 widget: Card(),
+        //               ),
+        //             ],
+        //             confirm: ElevatedButton(
+        //               onPressed: () {
+        //                 Get.offAll(Routes.WELLCOME_VIEW);
+        //               },
+        //               child: const Text('Back'),
+        //             ),
+        //           );
+        update();
+
+
+
+      }else{
+
+        showErrorDialog('Error ', ' server try again later',StatusRequest.failure,goBackTo: Routes.WELLCOME_VIEW);
+
+        update();
+
+
+      }
+
+    }
+    else {
       print('not valid');
     }
     // Get.toNamed(Routes.HOME);
@@ -39,6 +151,7 @@ class LoginControllerImp extends LoginController{
   @override
   void onInit (){
     email =TextEditingController();
+    phone =TextEditingController();
     password =TextEditingController();
     super.onInit();
   }
@@ -47,6 +160,7 @@ class LoginControllerImp extends LoginController{
   void onClose(){
     email.dispose();
     password.dispose();
+    phone.dispose();
     super.dispose();
   }
 

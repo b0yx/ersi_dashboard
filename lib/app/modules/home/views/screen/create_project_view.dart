@@ -1,20 +1,18 @@
 import 'package:ersei/app/core/constant/colors.dart';
 
-import 'package:ersei/app/core/constant/imagesassets.dart';
 
 
-import 'package:ersei/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../controllers/create_project_controller.dart';
 import '../widget/custometext.dart';
+import '../widget/customiconbutton.dart';
 import '../widget/customtextformfield.dart';
 import '../widget/custom_date_picker.dart';
 import '../widget/custom_dropdown.dart';
 import '../widget/customelevetbutton.dart';
 import '../widget/custom_bottom_sheet.dart';
-import '../widget/custom_header.dart';
 
 class CreateProjectView extends GetView<CreateProjectController> {
   const CreateProjectView({Key? key}) : super(key: key);
@@ -31,9 +29,10 @@ class CreateProjectView extends GetView<CreateProjectController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CustomHeader(
-                  onBackPressed: () => Get.back(),
-                  logoPath: ImageAssets.applogo,
+                CustomIconButton(
+                  icon: Icons.arrow_back_ios_new,
+                  onPressed:  () => Get.back(),
+                  color: Colors.grey,
                 ),
                 const SizedBox(height: 20),
                 const Center(
@@ -42,6 +41,7 @@ class CreateProjectView extends GetView<CreateProjectController> {
                     fontSize: 24,
                     maxLine: 1,
                     fontWeight: FontWeight.bold,
+                    alignment: Alignment.center,
                     color: Colors.black87,
                   ),
                 ),
@@ -51,7 +51,7 @@ class CreateProjectView extends GetView<CreateProjectController> {
                   textAlign: TextAlign.right,
                   controller: TextEditingController(),
                   contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                   hintStyle: const TextStyle(color: Colors.grey),
                   keyboardType:
                       TextInputType.text, // لتحديد لوحة المفاتيح المناسبة
@@ -66,7 +66,7 @@ class CreateProjectView extends GetView<CreateProjectController> {
                 const SizedBox(height: 15),
                 CustomTextFormField(
                   contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                   hintText: 'اسم جهة استلام التقرير',
                   textAlign: TextAlign.right,
                   controller: TextEditingController(),
@@ -85,7 +85,7 @@ class CreateProjectView extends GetView<CreateProjectController> {
                   textAlign: TextAlign.right,
                   controller: TextEditingController(),
                   contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                   hintStyle: const TextStyle(color: Colors.grey),
                   keyboardType: TextInputType.phone,
                   fillColor: Colors.white, // تحديد خلفية الحقل باللون الأبيض
@@ -110,12 +110,21 @@ class CreateProjectView extends GetView<CreateProjectController> {
                   title: 'نوع المنشأة',
                   onTap: _showBuildingTypeSelection,
                 ),
-                const Spacer(),
-                CustomElevatedButton(
-                  label: 'NEXT',
-                  backgroundColor: const Color(0xFF96E6B3),
-                  textColor: Colors.white,
-                  onPressed: () => Get.toNamed(Routes.INSPECTION_TYPES),
+                // CustomElevatedButton(
+                //   label: 'NEXT',
+                //   backgroundColor: const Color(0xFF96E6B3),
+                //   textColor: Colors.white,
+                //   onPressed: () => Get.toNamed(Routes.INSPECTION_TYPES),
+                // ),
+                const SizedBox(height: 15),
+                SizedBox(
+                  width: double.infinity,
+                  child: CustomElevatedButton(
+                    label: 'التالي',
+                    backgroundColor: ColorsApp.greencolorapp,
+                    textColor: Colors.white,
+                    onPressed:() =>{},
+                  ),
                 ),
                 const SizedBox(height: 20),
               ],

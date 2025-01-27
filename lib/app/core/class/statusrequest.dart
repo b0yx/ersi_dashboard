@@ -5,5 +5,7 @@ enum StatusRequest{
   serverfailure,
   offlinefailure,
   serverException,
-  none
+  none,
+  erorr,
+  invalidVerificationCode
 }

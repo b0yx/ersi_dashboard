@@ -1,213 +1,3 @@
-
-
-import 'package:ersei/app/routes/app_pages.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-
-import '../../../../core/class/statusrequest.dart';
-import '../../../../core/functions/handlingdatacontroller.dart';
-import '../../../../core/functions/showerrordialog.dart';
-import '../../../../core/functions/showsuccessdialog.dart';
-import '../../../../data/datasource/remot/auth/forgetpassword/verification_forget_remote.dart';
-
-abstract class VerificationCodeController extends GetxController {
-  Future<void> verificationCodePassword(String verificationCode);
-}
-
-class VerificationCodeControllerImp extends VerificationCodeController {
-  GlobalKey<FormState> formstate = GlobalKey<FormState>();
-
-  String? email;
-  StatusRequest? statuesRequest;
-
-  VerificationPassword verificationPassword =VerificationPassword(Get.find());
-
-  @override
-  Future<void> verificationCodePassword(String verificationCode) async {
-    if (email == null || email!.isEmpty) {
-      showErrorDialog(
-        'Error',
-        'Email not found. Please try again.',
-        StatusRequest.failure,
-      );
-      return;
-    }
-
-    statuesRequest = StatusRequest.loading;
-    update();
-
-    var response = await verificationPassword.postData(email!,verificationCode );
-    print("Response: $response");
-
-    statuesRequest = handlingData(response);
-
-    if (statuesRequest == StatusRequest.success) {
-      if (response['stutes'] == "success") {
-        showSuccessDialog('Success', 'Account activated successfully', Routes.NEWPASSWORD);
-
-      } else {
-        showErrorDialog('Error', 'Invalid verification code', StatusRequest.erorr);
-      }
-    } else if (statuesRequest == StatusRequest.offlinefailure) {
-      showErrorDialog('Error', 'You are offline', StatusRequest.offlinefailure, goBackTo: Routes.WELLCOME_VIEW);
-    } else {
-      showErrorDialog('Error', 'Server failure. Try again later.', StatusRequest.failure, goBackTo: Routes.WELLCOME_VIEW);
-    }
-
-    update();
-  }
-
-  @override
-  void onInit() {
-    email = Get.arguments?['email'];
-    super.onInit();
-  }
-}
-
-// import 'package:ersei/app/routes/app_pages.dart';
-// import 'package:flutter/cupertino.dart';
-// import 'package:get/get.dart';
-//
-// import '../../../../core/class/statusrequest.dart';
-// import '../../../../core/functions/handlingdatacontroller.dart';
-// import '../../../../core/functions/showerrordialog.dart';
-// import '../../../../core/functions/showsuccessdialog.dart';
-// import '../../../../data/datasource/remot/auth/forgetpassword/verification_forget_remote.dart';
-//
-// abstract class VerificationCodeController extends GetxController {
-//
-//  Future<void>verificationForget(verificationCode);
-// }
-//
-// class VerificationCodeControllerImp extends VerificationCodeController{
-//
-//   GlobalKey<FormState> formstate =GlobalKey<FormState>();
-//
-//   // late TextEditingController name;
-//  String? email;
-//  String? phone;
-//   // late TextEditingController password;
-//   // late TextEditingController confirmpassword;
-//
-//   StatusRequest? statuesRequest ;
-//
-//
-//   VerificationPassword verificationPassword =VerificationPassword(Get.find());
-//
-//   List data = [];
-//   // late TextEditingController phone;
-//
-//
-//   @override
-//   Future<void>verificationForget(String verificationCode) async {
-//     if (email == null || email!.isEmpty) {
-//       showErrorDialog(
-//         'Error',
-//         'Email not found. Please try again.',
-//         StatusRequest.failure,
-//       );
-//       return;
-//     }
-//
-//     statuesRequest = StatusRequest.loading;
-//     update();
-//
-//     var response = await verificationPassword.postData(email!,verificationCode );
-//     print("Response: $response");
-//
-//     statuesRequest = handlingData(response);
-//
-//     if (statuesRequest == StatusRequest.success) {
-//       if (response['stutes'] == "success") {
-//         showSuccessDialog('Success', 'Account activated successfully', Routes.LOGINVIEW);
-//         Future.delayed(const Duration(seconds: 2), () {
-//           Get.offAllNamed(Routes.HOME);
-//         });
-//       } else {
-//         showErrorDialog('Error', 'Invalid verification code', StatusRequest.erorr);
-//       }
-//     } else if (statuesRequest == StatusRequest.offlinefailure) {
-//       showErrorDialog('Error', 'You are offline', StatusRequest.offlinefailure, goBackTo: Routes.WELLCOME_VIEW);
-//     } else {
-//       showErrorDialog('Error', 'Server failure. Try again later.', StatusRequest.failure, goBackTo: Routes.WELLCOME_VIEW);
-//     }
-//
-//     update();
-//   }
-//   // verificationForget(verificationCode)async {
-//   //
-//   //   // if (email.isEmpty) {
-//   //   //   print("Error from line 42 : Email is null or empty.");
-//   //   //   Get.defaultDialog(
-//   //   //     title: "Error",
-//   //   //     middleText: "Email not found. Please try again.",
-//   //   //   );
-//   //   //   return;
-//   //   // }
-//   //
-//   //   var formdata=formstate.currentState;
-//   //   if(formdata!.validate()){
-//   //     statuesRequest = StatusRequest.loading;
-//   //     update();
-//   //     var response = await verificationPassword.postData( email!, phone!, verificationCode);
-//   //     print("=============================================== $response");
-//   //     print('this is email from controller verifiy$email');
-//   //     statuesRequest=handlingData(response);
-//   //     print("=============================================== $statuesRequest");
-//   //     if(statuesRequest == StatusRequest.success){
-//   //       if(response['stutes'] == "success"){
-//   //         showSuccessDialog('Success', 'Account activated successfully', Routes.NEWPASSWORD);
-//   //         update();
-//   //
-//   //       }
-//   //       else{
-//   //
-//   //         // Get.defaultDialog(title: "Error" ,
-//   //         //     middleText: "Phone Number Or Email Already Exists") ;
-//   //
-//   //         showErrorDialog('error', 'Invalid verification code', StatusRequest.erorr);
-//   //
-//   //         statuesRequest=StatusRequest.failure;
-//   //
-//   //       }
-//   //       update();
-//   //
-//   //     }
-//   //     else if  (statuesRequest == StatusRequest.offlinefailure)
-//   //     {
-//   //       showErrorDialog('error', 'You are offline',StatusRequest.offlinefailure,goBackTo:Routes.WELLCOME_VIEW );
-//   //       update();
-//   //     }else{
-//   //       showErrorDialog('Error ', ' server failure try again later',StatusRequest.failure,goBackTo: Routes.WELLCOME_VIEW);
-//   //       update();
-//   //     }
-//   //
-//   //   }
-//   //   // Get.delete<SinupControllerAuthImp>();
-//   //   else{
-//   //     print("Not valid");
-//   //   }
-//   // }
-//
-//
-//
-//   @override
-//   void onInit() {
-//     email = Get.arguments?['email'];
-//     super.onInit();
-//   }
-//
-//
-//   @override
-//   void onClose(){
-//
-//     super.dispose();
-//   }
-//
-//
-//
-// }
-
 // import 'package:ersei/app/core/functions/showsuccessdialog.dart';
 // import 'package:ersei/app/data/datasource/remot/auth/verification_signup_remote.dart';
 // import 'package:ersei/app/routes/app_pages.dart';
@@ -431,4 +221,68 @@ class VerificationCodeControllerImp extends VerificationCodeController {
 //
 //
 // }
+
+import 'package:ersei/app/data/datasource/remot/auth/verification_signup_remote.dart';
+import 'package:ersei/app/routes/app_pages.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../../../../core/class/statusrequest.dart';
+import '../../../../core/functions/handlingdatacontroller.dart';
+import '../../../../core/functions/showerrordialog.dart';
+import '../../../../core/functions/showsuccessdialog.dart';
+
+abstract class VerificationCodeSignupController extends GetxController {
+  Future<void> checkVerificationCode(String verificationCode);
+}
+
+class VerificationCodeSignupControllerImp extends VerificationCodeSignupController {
+  GlobalKey<FormState> formstate = GlobalKey<FormState>();
+
+  String? email;
+  StatusRequest? statuesRequest;
+
+  VerificationSignupData verificationSignupData = VerificationSignupData(Get.find());
+
+  @override
+  Future<void> checkVerificationCode(String verificationCode) async {
+    if (email == null || email!.isEmpty) {
+      showErrorDialog(
+        'Error',
+        'Email not found. Please try again.',
+        StatusRequest.failure,
+      );
+      return;
+    }
+
+    statuesRequest = StatusRequest.loading;
+    update();
+
+    var response = await verificationSignupData.postData(email!,verificationCode );
+    print("Response: $response");
+
+    statuesRequest = handlingData(response);
+
+    if (statuesRequest == StatusRequest.success) {
+      if (response['stutes'] == "success") {
+        showSuccessDialog('Success', 'Account activated successfully', Routes.LOGINVIEW);
+      } else {
+        showErrorDialog('Error', 'Invalid verification code', StatusRequest.erorr);
+      }
+    } else if (statuesRequest == StatusRequest.offlinefailure) {
+      showErrorDialog('Error', 'You are offline', StatusRequest.offlinefailure, goBackTo: Routes.WELLCOME_VIEW);
+    } else {
+      showErrorDialog('Error', 'Server failure. Try again later.', StatusRequest.failure, goBackTo: Routes.WELLCOME_VIEW);
+    }
+
+    update();
+  }
+
+  @override
+  void onInit() {
+    email = Get.arguments?['email'];
+    super.onInit();
+  }
+}
+
 

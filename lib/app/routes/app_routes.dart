@@ -11,6 +11,7 @@ abstract class Routes {
   static const RESETPASSWORD = _Paths.RESETPASSWORD;
   static const NEWPASSWORD = _Paths.NEWPASSWORD;
   static const VERIFICATIONCODEVIEW = _Paths.VERIFICATIONCODEVIEW;
+  static const VERIFICATIONSIGNCODEVIEW=_Paths.VERIFICATIONSIGNCODEVIEW;
 
 
   static const CREATE_PROJECT = _Paths.CREATE_PROJECT;
@@ -40,7 +41,7 @@ abstract class _Paths {
   static const RESETPASSWORD = '/reset_password_view';
   static const NEWPASSWORD = '/new_password_view';
   static const VERIFICATIONCODEVIEW = '/verification_code_view';
-
+  static const VERIFICATIONSIGNCODEVIEW ='/verification_code_signup_view';
 
 
   static const CREATE_PROJECT = '/create-project';

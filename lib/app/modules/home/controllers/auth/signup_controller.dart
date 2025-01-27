@@ -1,15 +1,16 @@
 
 import 'package:ersei/app/core/class/statusrequest.dart';
 import 'package:ersei/app/core/functions/handlingdatacontroller.dart';
+import 'package:ersei/app/core/functions/showerrordialog.dart';
+import 'package:ersei/app/core/functions/showsuccessdialog.dart';
 import 'package:ersei/app/data/datasource/remot/auth/signup_remote.dart';
 import 'package:ersei/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../core/class/handlingdataview.dart';
 
 abstract class SignupController extends GetxController {
-  creataccoutn();
+  // creataccoutn();
   signup();
 }
 
@@ -22,18 +23,18 @@ class SignupControllerImp extends SignupController{
   late TextEditingController password;
   late TextEditingController confirmpassword;
 
-  late StatusRequest statuesRequest ;
+   StatusRequest? statuesRequest ;
 
 
   SignupData signupData =SignupData(Get.find());
 
   List data = [];
 
-  @override
-  creataccoutn() {
-
-    Get.offAll(Routes.HOME);
-  }
+  // @override
+  // creataccoutn() {
+  //
+  //   Get.offAll(Routes.HOME);
+  // }
   @override
 
 
@@ -43,32 +44,40 @@ class SignupControllerImp extends SignupController{
     if(formdata!.validate()){
       statuesRequest = StatusRequest.loading;
       update();
-
       var response = await signupData.postData(name.text,phone.text,email.text,password.text);
       print("=============================================== $response");
       statuesRequest=handlingData(response);
       print("=============================================== $statuesRequest");
       if(statuesRequest == StatusRequest.success){
-
         if(response['stutes'] == "success"){
-          Get.defaultDialog(
-            title: 'Successfully ',
-                        middleText: 'The account has been created successfully.',
 
-                        actions: [
-                          const HandlingDataView(
-                            statusRequest: StatusRequest.success,
-                            widget: Card(),
-                          ),
+          Map<String, dynamic> userData = {
+            "name": name.text,
+            "email": email.text,
+          };
 
-                        ],
-                        confirm: ElevatedButton(
-                          onPressed: () {
-                            Get.offAll(Routes.HOME);
-                          },
-                          child: const Text('go to the home page'),
-                        ),
-                      );
+          showSuccessDialog('Success', 'The account has been created successfully.' ,Routes.VERIFICATIONSIGNCODEVIEW,map: userData);
+          // Get.defaultDialog(
+          //   title: 'Successfully ',
+          //               middleText: 'The account has been created successfully.',
+          //
+          //               actions: [
+          //                 const HandlingDataView(
+          //                   statusRequest: StatusRequest.success,
+          //                   widget: Card(),
+          //                 ),
+          //
+          //               ],
+          //               confirm: ElevatedButton(
+          //                 onPressed: () {
+          //                   Get.offAll(Routes.HOME);
+          //                 },
+          //                 child: const Text('go to the home page'),
+          //               ),
+          //             );
+          // update();
+          // Get.to(Routes.HOME);
+          update();
           
         }
         else{
@@ -81,7 +90,41 @@ class SignupControllerImp extends SignupController{
         }
         update();
 
-      }else{}
+      }
+      else if  (statuesRequest == StatusRequest.offlinefailure)
+      {
+        showErrorDialog('error', 'You are offline',StatusRequest.offlinefailure,goBackTo:Routes.WELLCOME_VIEW );
+        //
+        // Get.defaultDialog(
+        //             title: 'Error ',
+        //             middleText: 'You are offline',
+        //
+        //
+        //             actions: [
+        //               const HandlingDataView(
+        //                 statusRequest: StatusRequest.offlinefailure,
+        //                 widget: Card(),
+        //               ),
+        //             ],
+        //             confirm: ElevatedButton(
+        //               onPressed: () {
+        //                 Get.offAll(Routes.WELLCOME_VIEW);
+        //               },
+        //               child: const Text('Back'),
+        //             ),
+        //           );
+                   update();
+
+
+
+      }else{
+
+        showErrorDialog('Error ', ' server try again later',StatusRequest.failure,goBackTo: Routes.WELLCOME_VIEW);
+
+        update();
+
+
+      }
 
     }
     // Get.delete<SinupControllerAuthImp>();

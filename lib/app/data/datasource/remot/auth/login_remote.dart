@@ -1,17 +1,15 @@
 
 import 'package:ersei/app/applinks.dart';
 import 'package:ersei/app/core/class/crud.dart';
-class SignupData{
+class LoginData{
   Crud crud ;
-  SignupData(this.crud);
+  LoginData(this.crud);
 
 
-  postData(String name,phone,String email , String password)async{
-    var response = await crud.postData(AppLink.signUp, {
-
-      'name':name ,
+  postData(phone , String password)async{
+    var response = await crud.postData(AppLink.login, {
       'phone':phone,
-      'email':email,
+
       'password':password,
 
     });
