@@ -9,7 +9,7 @@ import '../../controllers/auth/verification_code_controller.dart';
 import '../widget/custometextbutton.dart';
 
 
-class VerificationCodeView extends GetView {
+class VerificationCodeView extends GetView<VerificationCodeControllerImp> {
   VerificationCodeView({super.key});
 
   final customTextButton = CustomTextButton();
@@ -60,9 +60,7 @@ class VerificationCodeView extends GetView {
                       return const Center(
                         child: CircularProgressIndicator(),
                       );
-                    }
-
-                    return OtpTextField(
+                    } return OtpTextField(
                       numberOfFields: 5,
                       borderColor: ColorsApp.greencolorapp,
                       showFieldAsBox: true,
@@ -74,13 +72,14 @@ class VerificationCodeView extends GetView {
                         controller.verificationCodePassword(verificationCode);
                       },
                     );
+                  onCodeChanged: (String code) {},
+                  onSubmit: (String verificationCode) {
+                    controller.checkverfiycode;
                   },
-                ),
-                                            SizedBox(height: screenHeight * 0.03),
+                ), SizedBox(height: screenHeight * 0.03),
                                              Center(
                   child: customTextButton.textButton(
                     label: 'لم يصلني أي رمز تأكيد - إعادة الارسال',
-
                     onPressed: () {},
                   ),
                 ),
