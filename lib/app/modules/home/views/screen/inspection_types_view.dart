@@ -1,3 +1,4 @@
+import 'package:ersei/app/core/constant/imagesassets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controllers/inspection_types_controller.dart';
@@ -20,7 +21,7 @@ class InspectionTypesView extends GetView<InspectionTypesController> {
         actions: [
           IconButton(
             icon: const Icon(Icons.home, color: Colors.black54),
-            onPressed: () => Get.offAllNamed('/home'),
+            onPressed: () => Routes.HOME,
           ),
         ],
         title: const Text(
@@ -40,7 +41,7 @@ class InspectionTypesView extends GetView<InspectionTypesController> {
             children: [
               _buildInspectionType(
                 'الفحص المعماري',
-                'images/test_image.jpg',
+                ImageAssets.applogo,
                 [
                   'Study of architectural plans',
                   'Architectural finishes inspection and study',
@@ -126,7 +127,7 @@ class InspectionTypesView extends GetView<InspectionTypesController> {
           ),
           child: ExpansionTile(
             leading: Image.asset(
-              imagePath,
+              ImageAssets.applogo,
               width: 50,
               height: 50,
               fit: BoxFit.cover,
