@@ -1,18 +1,13 @@
 import 'package:ersei/app/core/constant/colors.dart';
-
-
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import '../../../../routes/app_pages.dart';
 import '../../controllers/create_project_controller.dart';
 import '../widget/custometext.dart';
 import '../widget/customiconbutton.dart';
 import '../widget/customtextformfield.dart';
-import '../widget/custom_date_picker.dart';
 import '../widget/custom_dropdown.dart';
 import '../widget/customelevetbutton.dart';
-import '../widget/custom_bottom_sheet.dart';
 
 class CreateProjectView extends GetView<CreateProjectController> {
   const CreateProjectView({Key? key}) : super(key: key);
@@ -96,19 +91,23 @@ class CreateProjectView extends GetView<CreateProjectController> {
                   ),
                 ),
                 const SizedBox(height: 15),
-                CustomDatePicker(
-                  selectedDate: controller.selectedDate.value,
-                  onDateChanged: controller.updateDate,
+                // CustomDatePicker(
+                //   selectedDate: controller.selectedDate.value,
+                //   onDateChanged: controller.updateDate,
+                // ),
+                const SizedBox(height: 15),
+                CustomDropdownField(
+                  title:'الغرض من الفحص' ,
+                  items: [],
+                  selectedItem: '',
+                  onChanged: (String value) {  },
                 ),
                 const SizedBox(height: 15),
                 CustomDropdownField(
-                  title: 'الغرض من الفحص',
-                  onTap: _showPurposeSelection,
-                ),
-                const SizedBox(height: 15),
-                CustomDropdownField(
-                  title: 'نوع المنشأة',
-                  onTap: _showBuildingTypeSelection,
+                  title:'الغرض من الفحص' ,
+                  items: ['فحص الصيانة الدورية ','فحص السلامة للمبنى',],
+                  selectedItem: 'فحص الصيانة الدورية',
+                  onChanged: (String value) {  },
                 ),
                 // CustomElevatedButton(
                 //   label: 'NEXT',
@@ -123,7 +122,7 @@ class CreateProjectView extends GetView<CreateProjectController> {
                     label: 'التالي',
                     backgroundColor: ColorsApp.greencolorapp,
                     textColor: Colors.white,
-                    onPressed:() =>{},
+                    onPressed:() => Routes.INSPECTION_TYPES,
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -135,28 +134,29 @@ class CreateProjectView extends GetView<CreateProjectController> {
       ),
     );
   }
+  //
+  // void _showPurposeSelection() {
+  //   Get.bottomSheet(
+  //     CustomBottomSheet(
+  //       options: ['فحص سلامة المبنى', 'فحص الصيانة الدورية'],
+  //       onSelect: (selected) {
+  //         controller.updatePurpose(selected);
+  //         Get.back();
+  //       },
+  //     ),
+  //   );
+  // }
+  //
+  // void _showBuildingTypeSelection() {
+  //   Get.bottomSheet(
+  //     CustomBottomSheet(
+  //       options: ['سكني', 'تجاري', 'صناعي'],
+  //       onSelect: (selected) {
+  //         controller.updateBuildingType(selected);
+  //         Get.back();
+  //       },
+  //     ),
+  //   );
+  // }
 
-  void _showPurposeSelection() {
-    Get.bottomSheet(
-      CustomBottomSheet(
-        options: ['فحص سلامة المبنى', 'فحص الصيانة الدورية'],
-        onSelect: (selected) {
-          controller.updatePurpose(selected);
-          Get.back();
-        },
-      ),
-    );
-  }
-
-  void _showBuildingTypeSelection() {
-    Get.bottomSheet(
-      CustomBottomSheet(
-        options: ['سكني', 'تجاري', 'صناعي'],
-        onSelect: (selected) {
-          controller.updateBuildingType(selected);
-          Get.back();
-        },
-      ),
-    );
-  }
 }

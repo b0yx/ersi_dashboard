@@ -1,19 +1,24 @@
 import 'package:get/get.dart';
 
 class CreateProjectController extends GetxController {
-  var selectedDate = DateTime.now().obs;
-  var purposeOfInspection = ''.obs;
-  var buildingType = ''.obs;
+
+}
+class CreateProjectControllerImp extends CreateProjectController{
+
+  var selectedDate = DateTime.now();
+  var purposeOfInspection = '';
+  var buildingType = '';
 
   void updateDate(DateTime date) {
-    selectedDate.value = date;
+    selectedDate = date;
   }
 
   void updatePurpose(String purpose) {
-    purposeOfInspection.value = purpose;
+    purposeOfInspection = purpose;
   }
 
   void updateBuildingType(String type) {
-    buildingType.value = type;
+    buildingType = type;
   }
+
 }

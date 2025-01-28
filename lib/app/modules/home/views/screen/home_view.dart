@@ -7,9 +7,12 @@ import 'package:ersei/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class HomeView extends GetView {
+import '../../controllers/home_controller.dart';
+
+class HomeView extends GetView<HomeControllerImp> {
    final customIcons = CustomIcons(defaultSize: 20,defaultColor: ColorsApp.greencolorapp);
    final customtextbutton = CustomTextButton();
+   // final HomeControllerImp controllerImp = Get.find();
 
   HomeView({super.key});
 
@@ -31,28 +34,18 @@ class HomeView extends GetView {
                 ),
               ),
               const SizedBox(height: 20),
-              CustomText(maxLine: 1,text: 'مرحبا بعودتك اسماعيل  ',
+              CustomText(maxLine: 1,
+                text: '${controller.userName} مرحبا بعودتك ',
                 fontSize: 30,
                 alignment: Alignment.center,),
-              // const Text(
-              //   'مرحبا بعودتك اسماعيل',
-              //   style: TextStyle(
-              //     fontSize: 24,
-              //     fontWeight: FontWeight.bold,
-              //     color: Colors.black87,
-              //   ),
-              //   textAlign: TextAlign.end,
-              // ),
+
               const SizedBox(height: 20),
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-
-                  const SizedBox(width: 5),
-                  const Icon(Icons.history,color:ColorsApp.greencolorapp ,),
+                  SizedBox(width: 5),
+                  Icon(Icons.history,color:ColorsApp.greencolorapp ,),
                   CustomText(maxLine: 1,text: 'التقارير الاخيرة',),
-
-
                 ],
               ),
               const SizedBox(height: 20),

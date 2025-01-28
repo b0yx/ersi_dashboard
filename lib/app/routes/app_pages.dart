@@ -103,7 +103,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.ARCHITECTURAL_INSPECTION,
-      page: () => const ArchitecturalInspectionView(),
+      page: () =>  ArchitecturalInspectionView(),
       binding: ArchitecturalInspectionBinding(),
     ),
     GetPage(
