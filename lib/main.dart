@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: Routes.CREATE_PROJECT, // المسار المبدئي
+      initialRoute: Routes.ARCHITECTURAL_INSPECTION, // المسار المبدئي
       initialBinding: InitialBinding(),
       getPages: AppPages.routes, // تحديد الروابط مع الـ Bindings
     );

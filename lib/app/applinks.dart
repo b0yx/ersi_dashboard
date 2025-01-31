@@ -14,7 +14,7 @@ class AppLink{
   static const String verifyPassword = '$server/auth/forgetpassword/verfycodeforgetpassword.php';
 
 //createproject//
-  static const String createProject = '$server/createproject/createproject.php';
+  static const String createProject = '$server/createproject.php';
   
 
 }

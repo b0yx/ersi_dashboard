@@ -97,17 +97,21 @@ class CreateProjectView extends GetView<CreateProjectController> {
                 // ),
                 const SizedBox(height: 15),
                 CustomDropdownField(
-                  title:'الغرض من الفحص' ,
-                  items: [],
-                  selectedItem: '',
-                  onChanged: (String value) {  },
+
+                  dropdownLabel: 'نوع المنشأة',
+                  selectedDropdownItem: 'خاصة',
+                  dropdownItems: ['حكومية','خاصة'],
+                  onDropdownChanged: (value) {
+                  },
                 ),
                 const SizedBox(height: 15),
                 CustomDropdownField(
-                  title:'الغرض من الفحص' ,
-                  items: ['فحص الصيانة الدورية ','فحص السلامة للمبنى',],
-                  selectedItem: 'فحص الصيانة الدورية',
-                  onChanged: (String value) {  },
+
+                  dropdownLabel: 'الغرض من الفحص',
+                  selectedDropdownItem: 'فحص الصيانة الدورية',
+                  dropdownItems: ['فحص الصيانة الدورية','فحص السلامة'],
+                  onDropdownChanged: (value) {
+                  },
                 ),
                 // CustomElevatedButton(
                 //   label: 'NEXT',
