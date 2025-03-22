@@ -20,6 +20,7 @@ import 'package:ersei/app/modules/home/views/screen/survey_works_view.dart';
 import 'package:ersei/app/modules/home/views/screen/report_success_view.dart';
 import 'package:ersei/app/modules/home/views/screen/wellcome_view.dart';
 import 'package:ersei/app/testpage/test_view.dart';
+
 import 'package:get/get.dart';
 import '../modules/home/bindings/auth/signup_binding.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -46,7 +47,15 @@ class AppPages {
 
     GetPage(
         name: _Paths.TESTVIEW,
-        page: () =>const TestView() ),
+        page: () => TestView()
+    ),
+
+
+
+    // GetPage(
+    //     name: _Paths.EXAMVIEW,
+    //     page: () => Examview()
+    // ),
 
     //AUTH
     GetPage(
@@ -108,7 +117,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.STRUCTURAL_INSPECTION,
-      page: () => const StructuralInspectionView(),
+      page: () =>  StructuralInspectionView(),
       binding: StructuralInspectionBinding(),
     ),
     GetPage(
@@ -123,7 +132,7 @@ class AppPages {
     ),
     GetPage(
       name: Routes.ELECTRICAL_INSPECTION,
-      page: () => const ElectricalInspectionView(),
+      page: () =>  ElectricalInspectionView(),
       binding: ElectricalInspectionBinding(),
     ),
     GetPage(

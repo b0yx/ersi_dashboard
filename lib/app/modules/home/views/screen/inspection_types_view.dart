@@ -1,8 +1,8 @@
+
 import 'package:ersei/app/core/constant/imagesassets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controllers/inspection_types_controller.dart';
-import '../../../../routes/app_pages.dart';
 
 class InspectionTypesView extends GetView<InspectionTypesController> {
   const InspectionTypesView({Key? key}) : super(key: key);
@@ -10,7 +10,7 @@ class InspectionTypesView extends GetView<InspectionTypesController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF1F9F4),
+      backgroundColor: Colors.grey[200],
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -21,181 +21,70 @@ class InspectionTypesView extends GetView<InspectionTypesController> {
         actions: [
           IconButton(
             icon: const Icon(Icons.home, color: Colors.black54),
-            onPressed: () => Routes.HOME,
+            onPressed: () => Get.offAllNamed('/home'),
           ),
         ],
         title: const Text(
-          'الفحص الجزئي',
-          style: TextStyle(
-            color: Colors.black87,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
+          "أنواع الفحص",
+          style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            children: [
-              _buildInspectionType(
-                'الفحص المعماري',
-                ImageAssets.applogo,
-                [
-                  'Study of architectural plans',
-                  'Architectural finishes inspection and study',
-                  'Overall evaluation of the architectural examination',
-                  'General Notes',
-                ],
-              ),
-              const SizedBox(height: 15),
-              _buildInspectionType(
-                'الفحص الإنشائي',
-                'images/test_image.jpg',
-                [],
-              ),
-              const SizedBox(height: 15),
-              _buildInspectionType(
-                'الفحص الجيوتكنيكي',
-                'images/test_image.jpg',
-                [],
-              ),
-              const SizedBox(height: 15),
-              _buildInspectionType(
-                'الفحص الميكانيكي',
-                'images/test_image.jpg',
-                [],
-              ),
-              const SizedBox(height: 15),
-              _buildInspectionType(
-                'الفحص الكهربائي',
-                'images/test_image.jpg',
-                [],
-              ),
-              const SizedBox(height: 30),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    // Navigate to next page
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF96E6B3),
-                    padding: const EdgeInsets.symmetric(vertical: 15),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                itemCount: controller.inspectionTypes.length,
+                itemBuilder: (context, index) {
+                  final type = controller.inspectionTypes[index];
+                  final title = type['title'] as String;
+                  return Card(
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    elevation: 2,
-                  ),
-                  child: const Text(
-                    'NEXT',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
+                    child: ListTile(
+                      leading: Image.asset(
+                      ImageAssets.applogo,
+                        width: 50,
+                        height: 50,
+                      ),
+                      title: Text(
+                        title,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      trailing: Obx(() => Icon(
+                        controller.isSelected(title)
+                            ? Icons.check_box
+                            : Icons.check_box_outline_blank,
+                        color: controller.isSelected(title) ? Colors.green : Colors.grey,
+                      )),
+                      onTap: () {
+                        controller.toggleInspectionType(title);
+                      },
                     ),
-                  ),
-                ),
+                  );
+                },
               ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildInspectionType(
-      String title, String imagePath, List<String> details) {
-    return Obx(() {
-      final isSelected = controller.isSelected(title);
-      return Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(15),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: 5,
-              offset: const Offset(0, 2),
+            ),
+            Obx(() => Text(
+              "نوع الفحص: ${controller.getInspectionCategory()}",
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            )),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: controller.startNavigation,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 50),
+              ),
+              child: const Text("التالي", style: TextStyle(color: Colors.white, fontSize: 16)),
             ),
           ],
         ),
-        child: Theme(
-          data: Theme.of(Get.context!).copyWith(
-            dividerColor: Colors.transparent,
-          ),
-          child: ExpansionTile(
-            leading: Image.asset(
-              ImageAssets.applogo,
-              width: 50,
-              height: 50,
-              fit: BoxFit.cover,
-            ),
-            title: Text(
-              title,
-              textAlign: TextAlign.right,
-              style: const TextStyle(
-                color: Colors.black87,
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            trailing: Container(
-              width: 24,
-              height: 24,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: const Color(0xFF96E6B3),
-                  width: 2,
-                ),
-                color: isSelected ? const Color(0xFF96E6B3) : Colors.white,
-              ),
-              child: isSelected
-                  ? const Icon(
-                      Icons.check,
-                      size: 16,
-                      color: Colors.white,
-                    )
-                  : null,
-            ),
-            children: [
-              if (details.isNotEmpty)
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: details
-                        .map((detail) => Padding(
-                              padding: const EdgeInsets.only(bottom: 8.0),
-                              child: Text(
-                                detail,
-                                style: const TextStyle(
-                                  color: Colors.black54,
-                                  fontSize: 14,
-                                ),
-                              ),
-                            ))
-                        .toList(),
-                  ),
-                ),
-            ],
-            onExpansionChanged: (expanded) {
-              if (expanded) {
-                controller.toggleInspectionType(title);
-                if (title == 'الفحص المعماري') {
-                  Get.toNamed(Routes.ARCHITECTURAL_INSPECTION);
-                } else if (title == 'الفحص الإنشائي') {
-                  Get.toNamed(Routes.STRUCTURAL_INSPECTION);
-                } else if (title == 'الفحص الجيوتكنيكي') {
-                  Get.toNamed(Routes.GEOTECHNICAL_INSPECTION);
-                }
-              }
-            },
-          ),
-        ),
-      );
-    });
+      ),
+    );
   }
 }

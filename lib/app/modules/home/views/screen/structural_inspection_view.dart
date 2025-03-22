@@ -1,448 +1,206 @@
+import 'package:ersei/app/core/constant/colors.dart';
+import 'package:ersei/app/modules/home/views/widget/customelevetbutton.dart';
+import 'package:ersei/app/modules/home/views/widget/custometext.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../../routes/app_pages.dart';
+import '../../controllers/inspection_types_controller.dart';
 import '../../controllers/structural_inspection_controller.dart';
-import 'package:image_picker/image_picker.dart';
+import '../widget/custom_checkbox.dart';
+import '../widget/custom_dropdown.dart';
+import '../widget/custom_image_with_muldropdownlist.dart';
+import '../widget/custom_img_with_inputform.dart';
 
-class StructuralInspectionView extends GetView<StructuralInspectionController> {
-  const StructuralInspectionView({Key? key}) : super(key: key);
+class StructuralInspectionView extends GetView<StructuralInspectionControllerImp> {
+  StructuralInspectionView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final List<String> remainingPages = Get.arguments?['remainingPages'] ?? [];
+    final String inspectionCategory = Get.arguments?['inspectionCategory'] ?? "غير محدد";
     return Scaffold(
-      backgroundColor: const Color(0xFFF1F9F4),
+      backgroundColor: ColorsApp.backgroundforapp,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Colors.black54),
-          onPressed: () => Get.back(),
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.home, color: Colors.black54),
-            onPressed: () => Get.offAllNamed('/home'),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios, color: Colors.black54),
+            onPressed: () => Get.back(),
           ),
-        ],
-        title: const Text(
-          'الفحص الإنشائي',
-          style: TextStyle(
-            color: Colors.black87,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        centerTitle: true,
-      ),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.home, color: Colors.black54),
+              onPressed: () => Get.offAllNamed(Routes.HOME),
+            ),
+          ],
+          title: const CustomText(
+            maxLine: 1,
+            alignment: Alignment.center,
+            text: 'الفحص الانشائي ',
+          )),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildPlanMatchingSection(),
               const SizedBox(height: 20),
-              _buildStructuralElementsSection(),
+              // نموذج form1 لحقل "قراءة المطرقة / مقاومة الخرسانة"
+              // CustomImageMulFormWithInputForm(
+              //   formName: '  الخرسانة ',
+              //   sectionName: "القياسات",
+              //   inputController: controller.hammerInputControllers.putIfAbsent("form2", () => TextEditingController()),
+              //   outputRx: controller.hammerOutputRxMap.putIfAbsent("form2", () => ''.obs),
+              //   inputKey: "قراءة المطرقة",
+              //   outputKey: "مقاومة الخرسانة",
+              //   onInputChanged: (value) {
+              //     controller.updateInputValue("form2", "قراءة المطرقة", value);
+              //   },
+              //   firstImageLabel: "صورة 1",
+              //   secondImageLabel: "صورة 2",
+              //   firstImagePath:controller.inspectionData['form1_مخطط'],
+              //   secondImagePath: controller.inspectionData['form2_منفذ'],
+              //   onPickFirstImage: () =>
+              //       controller.pickImage(context, 'form1', 'منفذ'),
+              //   onPickSecondImage: () =>
+              //       controller.pickImage(context, 'form1', 'منفذ'),
+              //   dropdowns: [
+              //     CustomDropdownField(
+              //       dropdownLabel: 'نوع البلاط',
+              //       dropdownItems: ['ممتاز', 'جيد', 'متوسط', 'سيء'],
+              //       selectedDropdownItem: controller
+              //           .inspectionData['form1_نوع البلاط'] ??
+              //           'جيد',
+              //       onDropdownChanged: (value) {
+              //         if (value != null) {
+              //           controller.updateValue(
+              //               'form1', 'نوع البلاط', value);
+              //         }
+              //       },
+              //     ),
+              //   ],
+              //   checkboxes: [
+              //     CustomCheckboxField(
+              //       label: 'ميول',
+              //       isChecked:
+              //       controller.inspectionData['form1_ميول'] ?? false,
+              //       onChanged: (value) {
+              //         if (value != null) {
+              //           controller.updateValue('form1', 'ميول', value);
+              //         }
+              //       },
+              //     ),
+              //   ],
+              // ),
+              const SizedBox(height: 20),
+              // نموذج form2 لحقل "قراءة المطرقة / مقاومة الخرسانة"
+              Obx(() =>CustomImageMulFormWithInputForm(
+                formName: '  الخرسانة ',
+                sectionName: "القياسات",
+                firstImageLabel: "صورة 1",
+                secondImageLabel: "صورة 2",
+                firstImagePath:controller.inspectionData['form1_مخطط'],
+                secondImagePath: controller.inspectionData['form2_منفذ'],
+                onPickFirstImage: () =>
+                    controller.pickImage(context, 'form1', 'مخطط'),
+                onPickSecondImage: () =>
+                    controller.pickImage(context, 'form2', 'منفذ'),
+                inputController: controller.hammerInputControllers.putIfAbsent("form2", () => TextEditingController()),
+                outputRx: controller.hammerOutputRxMap.putIfAbsent("form2", () => ''.obs),
+                inputKey: "قراءة المطرقة",
+                outputKey: "مقاومة الخرسانة",
+                onInputChanged: (value) {
+                  controller.updateInputValue("form2", "قراءة المطرقة", value);
+                },
+                dropdowns: [
+                  CustomDropdownField(
+                    dropdownLabel: 'نوع البلاط',
+                    dropdownItems: ['ممتاز', 'جيد', 'متوسط', 'سيء'],
+                    selectedDropdownItem: controller
+                        .inspectionData['form1_نوع البلاط'] ??
+                        'جيد',
+                    onDropdownChanged: (value) {
+                      if (value != null) {
+                        controller.updateValue(
+                            'form1', 'نوع البلاط', value);
+                      }
+                    },
+                  ),
+                ],
+                checkboxes: [
+                  CustomCheckboxField(
+                    label: 'ميول',
+                    isChecked:
+                    controller.inspectionData['form1_ميول'] ?? false,
+                    onChanged: (value) {
+                      if (value != null) {
+                        controller.updateValue('form1', 'ميول', value);
+                      }
+                    },
+                  ),
+                ],
+              )),
+              const SizedBox(height: 20),
+              // CustomImageMulFormWithInputForm(
+              //   formName: 'قراءة المطرقة / مقاومة الخرسانة - النموذج 2',
+              //   sectionName: "القياسات",
+              //   firstImageLabel: "",
+              //   secondImageLabel: "",
+              //   firstImagePath: null,
+              //   secondImagePath: null,
+              //   onPickFirstImage: () {},
+              //   onPickSecondImage: () {},
+              //   inputController: controller.hammerInputControllers.putIfAbsent("form3", () => TextEditingController()),
+              //   outputRx: controller.hammerOutputRxMap.putIfAbsent("form3", () => ''.obs),
+              //   inputKey: "قراءة المطرقة",
+              //   outputKey: "مقاومة الخرسانة",
+              //   onInputChanged: (value) {
+              //     controller.updateInputValue("form3", "قراءة المطرقة", value);
+              //   },
+              // ),
+              // const SizedBox(height: 20),
+              // // مثال لحقل آخر لنفس النموذج form1 (مثلاً "مقاومة الأعمدة")
+              // Obx(() => CustomImageMulForm(
+              //   formName: "فحص المواد - النموذج 1",
+              //   sectionName: "البلاط الأرضي",
+              //   firstImageLabel: "صورة المخطط",
+              //   secondImageLabel: "صورة المنفذ",
+              //   firstImagePath:
+              //   controller.inspectionData['form1_مخطط'],
+              //   secondImagePath:
+              //   controller.inspectionData['form1_منفذ'],
+              //   onPickFirstImage: () =>
+              //       controller.pickImage(context, 'form1', 'مخطط'),
+              //   onPickSecondImage: () =>
+              //       controller.pickImage(context, 'form1', 'منفذ'),
+              //
+              // )),
+              // const SizedBox(height: 20),
+              // يمكن إضافة المزيد من النماذج باستخدام مفاتيح فريدة لكل منها
+              const SizedBox(height: 20),
             ],
           ),
         ),
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: ElevatedButton(
-          onPressed: () {
-            // Navigate to next page
-          },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFF96E6B3),
-            padding: const EdgeInsets.symmetric(vertical: 15),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
-          ),
-          child: const Text(
-            'NEXT',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildPlanMatchingSection() {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 5,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          const Text(
-            '1- مطابقة المخطط مع المنفذ',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: Colors.black87,
-            ),
-          ),
-          const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              _buildImageUploadButton('إضافة صورة المنفذ'),
-              _buildImageUploadButton('إضافة صورة المخطط'),
-            ],
-          ),
-          const SizedBox(height: 20),
-          _buildDropdownField('نسبة التطابق', ['جيد جداً', 'جيد', 'مقبول', 'سيء']),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildStructuralElementsSection() {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 5,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          const Text(
-            '2- فحص عناصر الهيكل الإنشائي',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: Colors.black87,
-            ),
-          ),
-          const SizedBox(height: 20),
-          _buildStructuralItem(
-            'A- فحص القواعد',
-            hasVerticalAlignment: false,
-            hasAxisTest: false,
-          ),
-          const SizedBox(height: 15),
-          _buildStructuralItem(
-            'B- فحص الجدار',
-            hasVerticalAlignment: false,
-            hasAxisTest: false,
-          ),
-          const SizedBox(height: 15),
-          _buildStructuralItem(
-            'C- فحص الأعمدة',
-            hasVerticalAlignment: true,
-            hasAxisTest: true,
-          ),
-          const SizedBox(height: 15),
-          _buildStructuralItem(
-            'D- فحص الجسور',
-            hasVerticalAlignment: false,
-            hasAxisTest: false,
-          ),
-          const SizedBox(height: 15),
-          _buildStructuralItem(
-            'E- فحص الأسقف',
-            hasVerticalAlignment: false,
-            hasAxisTest: false,
-          ),
-          const SizedBox(height: 15),
-          _buildStructuralItem(
-            'F- فحص غرفة المصعد',
-            hasVerticalAlignment: false,
-            hasAxisTest: false,
-          ),
-          const SizedBox(height: 15),
-          _buildGrooveItem('G- فحص الأخاديد'),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildImageUploadButton(String title) {
-    return Column(
-      children: [
-        Container(
-          width: 120,
-          height: 120,
-          decoration: BoxDecoration(
-            color: Colors.grey[200],
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: IconButton(
-            icon: const Icon(Icons.add_photo_alternate_outlined),
-            onPressed: () async {
-              final ImagePicker picker = ImagePicker();
-              final XFile? image = await picker.pickImage(source: ImageSource.gallery);
-              if (image != null) {
-                // Handle image selection
-              }
+          padding: const EdgeInsets.all(20.0),
+          child: CustomElevatedButton(
+            label: 'التالي',
+            backgroundColor: Colors.green,
+            textColor: Colors.white,
+            onPressed: () {
+              controller.submitForm();
+              final inspectionTypesController = Get.find<InspectionTypesController>();
+              inspectionTypesController.navigateToNextSelectedPage();
+              Get.toNamed(
+                remainingPages.removeAt(0),
+                arguments: {
+                  "remainingPages": remainingPages,
+                  "inspectionCategory": inspectionCategory,
+                },
+              );
             },
-          ),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          title,
-          style: const TextStyle(
-            fontSize: 14,
-            color: Colors.black54,
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildDropdownField(String title, List<String> options) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey[300]!),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: DropdownButton<String>(
-        isExpanded: true,
-        hint: Text(title),
-        value: null,
-        items: options.map((String value) {
-          return DropdownMenuItem<String>(
-            value: value,
-            child: Text(value),
-          );
-        }).toList(),
-        onChanged: (String? value) {
-          // Handle dropdown selection
-        },
-      ),
-    );
-  }
-
-  Widget _buildStructuralItem(String title, {
-    required bool hasVerticalAlignment,
-    required bool hasAxisTest,
-  }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Text(
-              title,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(width: 10),
-            const Icon(Icons.check_box_outline_blank),
-          ],
-        ),
-        const SizedBox(height: 15),
-        _buildConcreteStrengthTest(),
-        const SizedBox(height: 15),
-        _buildReinforcementTest(),
-        if (hasVerticalAlignment) ...[
-          const SizedBox(height: 15),
-          _buildVerticalAlignmentTest(),
-        ],
-        if (hasAxisTest) ...[
-          const SizedBox(height: 15),
-          _buildAxisTest(),
-        ],
-        const SizedBox(height: 15),
-        GridView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
-          ),
-          itemCount: 5,
-          itemBuilder: (context, index) {
-            if (index == 4) {
-              return Container(
-                decoration: BoxDecoration(
-                  color: Colors.grey[200],
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: IconButton(
-                  icon: const Icon(Icons.add_photo_alternate_outlined),
-                  onPressed: () async {
-                    final ImagePicker picker = ImagePicker();
-                    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
-                    if (image != null) {
-                      // Handle image selection
-                    }
-                  },
-                ),
-              );
-            }
-            return Container(
-              decoration: BoxDecoration(
-                color: Colors.grey[200],
-                borderRadius: BorderRadius.circular(10),
-              ),
-            );
-          },
-        ),
-      ],
-    );
-  }
-
-  Widget _buildConcreteStrengthTest() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        const Text('فحص مقاومة الخرسانة باستخدام مطرقة الشميدس'),
-        const SizedBox(height: 10),
-        Row(
-          children: [
-            Expanded(
-              child: TextField(
-                textAlign: TextAlign.center,
-                decoration: InputDecoration(
-                  labelText: 'قراءة المطرقة',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                keyboardType: TextInputType.number,
-              ),
-            ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: TextField(
-                textAlign: TextAlign.center,
-                decoration: InputDecoration(
-                  labelText: 'مقاومة الخرسانة',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                keyboardType: TextInputType.number,
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-
-  Widget _buildReinforcementTest() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        const Text('فحص كمية حديد التسليح'),
-        const SizedBox(height: 10),
-        _buildDropdownField('مطابق/غير مطابق', ['مطابق', 'غير مطابق']),
-      ],
-    );
-  }
-
-  Widget _buildVerticalAlignmentTest() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        const Text('فحص الاستقامة الرأسية'),
-        const SizedBox(height: 10),
-        _buildDropdownField('مطابق/غير مطابق', ['مطابق', 'غير مطابق']),
-      ],
-    );
-  }
-
-  Widget _buildAxisTest() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        const Text('فحص المحاور'),
-        const SizedBox(height: 10),
-        _buildDropdownField('مطابق/غير مطابق', ['مطابق', 'غير مطابق']),
-      ],
-    );
-  }
-
-  Widget _buildGrooveItem(String title) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Text(
-              title,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(width: 10),
-            const Icon(Icons.check_box_outline_blank),
-          ],
-        ),
-        const SizedBox(height: 15),
-        const Text('طول الأخاديد'),
-        const SizedBox(height: 10),
-        _buildDropdownField('مطابق/غير مطابق', ['مطابق', 'غير مطابق']),
-        const SizedBox(height: 15),
-        GridView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
-          ),
-          itemCount: 5,
-          itemBuilder: (context, index) {
-            if (index == 4) {
-              return Container(
-                decoration: BoxDecoration(
-                  color: Colors.grey[200],
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: IconButton(
-                  icon: const Icon(Icons.add_photo_alternate_outlined),
-                  onPressed: () async {
-                    final ImagePicker picker = ImagePicker();
-                    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
-                    if (image != null) {
-                      // Handle image selection
-                    }
-                  },
-                ),
-              );
-            }
-            return Container(
-              decoration: BoxDecoration(
-                color: Colors.grey[200],
-                borderRadius: BorderRadius.circular(10),
-              ),
-            );
-          },
-        ),
-      ],
+          )),
     );
   }
 }

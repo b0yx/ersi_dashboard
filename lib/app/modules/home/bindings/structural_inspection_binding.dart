@@ -4,8 +4,8 @@ import '../controllers/structural_inspection_controller.dart';
 class StructuralInspectionBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<StructuralInspectionController>(
-      () => StructuralInspectionController(),
+    Get.lazyPut<StructuralInspectionControllerImp>(
+      () => StructuralInspectionControllerImp(),
     );
   }
 }

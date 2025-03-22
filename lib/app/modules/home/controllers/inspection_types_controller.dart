@@ -1,75 +1,108 @@
 import 'package:get/get.dart';
-
-
 import '../../../routes/app_pages.dart';
+import '../../../core/constant/imagesassets.dart';
 
 class InspectionTypesController extends GetxController {
+  // قائمة بأنواع الفحص مع بياناتها (العنوان، صورة، والمسار)
   final RxList<Map<String, dynamic>> inspectionTypes = [
     {
       'title': 'الفحص المعماري',
-      'imagePath': 'images/test_image.jpg',
-      'details': [
-        'Study of architectural plans',
-        'Architectural finishes inspection and study',
-        'Overall evaluation of the architectural examination',
-        'General Notes',
-      ],
+      'imagePath': ImageAssets.applogo,
       'route': Routes.ARCHITECTURAL_INSPECTION,
     },
     {
       'title': 'الفحص الإنشائي',
-      'imagePath': 'images/test_image.jpg',
-      'details': [],
+      'imagePath': ImageAssets.applogo,
       'route': Routes.STRUCTURAL_INSPECTION,
     },
     {
       'title': 'الفحص الجيوتكنيكي',
-      'imagePath': 'images/test_image.jpg',
-      'details': [],
+      'imagePath': ImageAssets.applogo,
       'route': Routes.GEOTECHNICAL_INSPECTION,
     },
     {
       'title': 'الفحص الميكانيكي',
-      'imagePath': 'images/test_image.jpg',
-      'details': [],
+      'imagePath': ImageAssets.applogo,
       'route': Routes.MECHANICAL_INSPECTION,
     },
     {
       'title': 'الفحص الكهربائي',
-      'imagePath': 'images/test_image.jpg',
-      'details': [],
+      'imagePath': ImageAssets.applogo,
       'route': Routes.ELECTRICAL_INSPECTION,
     },
     {
       'title': 'الأعمال المساحية',
-      'imagePath': 'images/test_image.jpg',
-      'details': [],
+      'imagePath': ImageAssets.applogo,
       'route': Routes.SURVEY_WORKS,
     },
   ].obs;
 
-  RxList<String> selectedInspections = <String>[].obs;
+  /// قائمة لتخزين العناوين المختارة (يختارها المستخدم عند الضغط)
+  final RxList<String> selectedTypes = <String>[].obs;
 
-  // تحديد إذا كان الخيار محددًا
-  bool isSelected(String title) => selectedInspections.contains(title);
+  /// قائمة لتخزين مسارات الصفحات المختارة
+  List<String> selectedRoutes = [];
 
-  // تبديل حالة التحديد
+  /// مؤشر للتنقل بين الصفحات المختارة
+  int _currentPageIndex = 0;
+
+  /// تبديل اختيار نوع الفحص
   void toggleInspectionType(String title) {
-    if (selectedInspections.contains(title)) {
-      selectedInspections.remove(title);
+    if (selectedTypes.contains(title)) {
+      selectedTypes.remove(title);
     } else {
-      selectedInspections.add(title);
+      selectedTypes.add(title);
     }
   }
 
-  // تنفيذ التوجيه إلى الصفحات المختارة
-  void navigateToSelectedPages() async {
-    for (var inspection in selectedInspections) {
-      final route = inspectionTypes.firstWhere(
-              (type) => type['title'] == inspection)['route'];
-      if (route != null) {
-        await Get.toNamed(route);
-      }
+  /// التحقق مما إذا كان النوع مختارًا
+  bool isSelected(String title) => selectedTypes.contains(title);
+
+  /// استخراج مسارات الصفحات المختارة بناءً على العناوين المختارة
+  List<String> getSelectedRoutes() {
+    return inspectionTypes
+        .where((type) => selectedTypes.contains(type['title']))
+        .map((type) => type['route'] as String)
+        .toList();
+  }
+  String getInspectionCategory() {
+    return selectedTypes.isNotEmpty ? selectedTypes.join(', ') : 'لم يتم الاختيار';
+  }
+
+
+  /// بدء التنقل: استخراج المسارات المختارة، ثم ترتيبها عشوائيًا (يمكنك إزالة shuffle إذا أردت الترتيب حسب الاختيار)
+  void startNavigation() {
+    selectedRoutes = getSelectedRoutes();
+    if (selectedRoutes.isEmpty) {
+      Get.snackbar("تنبيه", "لم تقم بتحديد أي فحص");
+      return;
     }
+     // ترتيب عشوائي
+    _currentPageIndex = 0;
+    Get.toNamed(selectedRoutes[_currentPageIndex]);
+    _currentPageIndex++;
+  }
+
+  /// الانتقال إلى الصفحة التالية من القائمة المختارة
+  void navigateToNextSelectedPage() {
+    // إذا لم تكن القائمة مهيأة، نستخرجها الآن
+    if (selectedRoutes.isEmpty) {
+      selectedRoutes = getSelectedRoutes();
+    }
+    if (_currentPageIndex < selectedRoutes.length) {
+      Get.toNamed(selectedRoutes[_currentPageIndex]);
+      _currentPageIndex++;
+      print('Current index: $_currentPageIndex');
+    } else {
+      // عند انتهاء جميع الصفحات المختارة، ننتقل إلى صفحة التقرير النهائي
+      Get.toNamed(Routes.REPORT_SUCCESS);
+      _currentPageIndex = 0;
+    }
+  }
+
+  /// إعادة تعيين التنقل إذا دعت الحاجة
+  void resetNavigation() {
+    _currentPageIndex = 0;
+    selectedRoutes = [];
   }
 }

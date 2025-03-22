@@ -5,7 +5,7 @@ import 'package:ersei/app/modules/home/views/widget/custometext.dart';
 import 'package:flutter/material.dart';
 import 'custom_checkbox.dart';
 
-class CustomImageMulForm extends StatelessWidget {
+class CustomImageMulFormHorizontal extends StatelessWidget {
   final String formName;
   final String? sectionName;
   final String? firstImageLabel;
@@ -19,7 +19,7 @@ class CustomImageMulForm extends StatelessWidget {
   final List<CustomDropdownField> dropdowns;
   final List<CustomCheckboxField> checkboxes;
 
-  const CustomImageMulForm({
+  const CustomImageMulFormHorizontal({
     Key? key,
     required this.formName,
     this.sectionName,
@@ -83,27 +83,33 @@ class CustomImageMulForm extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           // عرض القوائم المنسدلة
-          ...dropdowns.map((dropdown) => Padding(
+          ...dropdowns.map((CustomDropdownField dropdown) => Padding(
             padding: const EdgeInsets.only(top: 10),
             child: dropdown,
           )),
           const SizedBox(height: 20),
-          // عرض مربعات الاختيار
-          ...checkboxes.map((checkbox) => Padding(
-            padding: const EdgeInsets.only(top: 10),
-            child:Row(
+          //check box عرض مربعات الاختيار
+          GridView.count(
+            shrinkWrap: true, // يمنع GridView من التمدد داخل Column
+            physics: NeverScrollableScrollPhysics(), // يمنع التمرير داخل GridView
+            crossAxisCount: 3, // عدد الأعمدة في الشبكة
+            crossAxisSpacing: 10, // المسافة الأفقية بين العناصر
+            mainAxisSpacing: 10, // المسافة العمودية بين العناصر
+            childAspectRatio: 4, // النسبة بين العرض والارتفاع للعناصر
+            children: checkboxes.map((checkbox) => Row(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 checkbox,
-                const SizedBox(width: 10),
+                const SizedBox(width: 5),
                 CustomText(
                   maxLine: 1,
                   alignment: Alignment.center,
                   color: ColorsApp.blackColor,
-                  text: checkbox.label,
+
                 ),
               ],
-            ),
-          )),
+            )).toList(),
+          ),
         ],
       ),
     );

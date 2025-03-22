@@ -1,317 +1,232 @@
+
+import 'package:ersei/app/core/constant/colors.dart';
+import 'package:ersei/app/modules/home/views/widget/customelevetbutton.dart';
+import 'package:ersei/app/modules/home/views/widget/custometext.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../../routes/app_pages.dart';
 import '../../controllers/electrical_inspection_controller.dart';
-import 'package:image_picker/image_picker.dart';
+import '../widget/custom_checkbox.dart';
+import '../widget/custom_dropdown.dart';
+import '../widget/custom_image_with_muldropdownlist.dart';
 
-class ElectricalInspectionView extends GetView<ElectricalInspectionController> {
-  const ElectricalInspectionView({Key? key}) : super(key: key);
+class ElectricalInspectionView extends GetView<ElectricalInspectionControllerImp> {
+  ElectricalInspectionView({super.key});
+
+
 
   @override
   Widget build(BuildContext context) {
+    final Map<String, dynamic> receivedData = Get.arguments ?? {};
+
     return Scaffold(
-      backgroundColor: const Color(0xFFF1F9F4),
+      backgroundColor: ColorsApp.backgroundforapp ,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Colors.black54),
-          onPressed: () => Get.back(),
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.home, color: Colors.black54),
-            onPressed: () => Get.offAllNamed('/home'),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios, color: Colors.black54),
+            onPressed: () => Get.back(),
           ),
-        ],
-        title: const Text(
-          'الفحص الكهربائي',
-          style: TextStyle(
-            color: Colors.black87,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        centerTitle: true,
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.home, color: Colors.black54),
+              onPressed: () => Get.offAllNamed(Routes.HOME),
+            ),
+          ],
+          title:const CustomText(
+            maxLine: 1,
+            alignment: Alignment.center,
+            text: 'الفحص المعماري ',
+          )
+
       ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildSystemSection(),
+
+
               const SizedBox(height: 20),
-              _buildInspectionSection('أ-الإضاءة', 
-                controller.lightingType, 
-                controller.lightingCondition,
-                controller.lightingDistribution),
+              //////البلاط الارضي فحص المواد
+              Obx(() => CustomImageMulForm(
+                formName: "فحص المواد - النموذج 1",
+                sectionName: "البلاط الأرضي",
+                firstImageLabel: "صورة المخطط",
+                secondImageLabel: "صورة المنفذ",
+                firstImagePath: controller.inspectionData['form1_مخطط'],
+                secondImagePath: controller.inspectionData['form1_منفذ'],
+                onPickFirstImage: () =>
+                    controller.pickImage(context, 'form1', 'مخطط'),
+                onPickSecondImage: () =>
+                    controller.pickImage(context, 'form1', 'منفذ'),
+                dropdowns: [
+                  CustomDropdownField(
+                    dropdownLabel: 'نوع البلاط',
+                    dropdownItems: ['ممتاز', 'جيد', 'متوسط', 'سيء'],
+                    selectedDropdownItem:
+                    controller.inspectionData['form1_نوع البلاط'] ?? 'جيد',
+                    onDropdownChanged: (value) {
+                      if (value != null) {
+                        controller.updateValue('form1', 'نوع البلاط', value);
+                      }
+                    },
+                  ),
+                ],
+                checkboxes: [
+                  CustomCheckboxField(
+                    label: 'ميول',
+                    isChecked:
+                    controller.inspectionData['form1_ميول'] ?? false,
+                    onChanged: (value) {
+                      if (value != null) {
+                        controller.updateValue('form1', 'ميول', value);
+                      }
+                    },
+                  ),
+                ],
+              )),
               const SizedBox(height: 20),
-              _buildSimpleSection('ب-نظام المسارات', controller.pathwayType),
+              //////////فحص المواد البلاط الجدران
+              Obx(() => CustomImageMulForm(
+                formName: "فحص المواد ",
+                sectionName: "البلاط للجدران",
+                firstImageLabel: "صورة المخطط",
+                secondImageLabel: "صورة المنفذ",
+                firstImagePath: controller.inspectionData['form2_مخطط'],
+                secondImagePath: controller.inspectionData['form2_منفذ'],
+                onPickFirstImage: () =>
+                    controller.pickImage(context, 'form2', 'مخطط'),
+                onPickSecondImage: () =>
+                    controller.pickImage(context, 'form2', 'منفذ'),
+                dropdowns: [
+                  CustomDropdownField(
+                    dropdownLabel: 'نوع البلاط',
+                    dropdownItems: ['ممتاز', 'جيد', 'متوسط', 'سيء'],
+                    selectedDropdownItem:
+                    controller.inspectionData['form2_نوع البلاط'] ?? 'جيد',
+                    onDropdownChanged: (value) {
+                      if (value != null) {
+                        controller.updateValue('form2', 'نوع البلاط', value);
+                      }
+                    },
+                  ),
+                ],
+                checkboxes: [
+                  CustomCheckboxField(
+                    label: 'ميول',
+                    isChecked:
+                    controller.inspectionData['form2_ميول'] ?? false,
+                    onChanged: (value) {
+                      if (value != null) {
+                        controller.updateValue('form2', 'ميول', value);
+                      }
+                    },
+                  ),
+                  CustomCheckboxField(
+                    label: 'خواء',
+                    isChecked:
+                    controller.inspectionData['form2_خواء'] ?? false,
+                    onChanged: (value) {
+                      if (value != null) {
+                        controller.updateValue('form2', 'خواء', value);
+                      }
+                    },
+                  ),
+                  CustomCheckboxField(
+                    label: 'ترويبة',
+                    isChecked:
+                    controller.inspectionData['form2_ترويبة'] ?? false,
+                    onChanged: (value) {
+                      if (value != null) {
+                        controller.updateValue('form2', 'ترويبة', value);
+                      }
+                    },
+                  ),
+                ],
+              )),
+              Obx(() => CustomImageMulForm(
+                formName: "فحص المواد ",
+                sectionName: "البلاط للجدران",
+                firstImageLabel: "صورة المخطط",
+                secondImageLabel: "صورة المنفذ",
+                firstImagePath: controller.inspectionData['form2_مخطط'],
+                secondImagePath: controller.inspectionData['form2_منفذ'],
+                onPickFirstImage: () =>
+                    controller.pickImage(context, 'form3', 'مخطط'),
+                onPickSecondImage: () =>
+                    controller.pickImage(context, 'form3', 'منفذ'),
+                dropdowns: [
+                  CustomDropdownField(
+                    dropdownLabel: 'نوع البلاط',
+                    dropdownItems: ['ممتاز', 'جيد', 'متوسط', 'سيء'],
+                    selectedDropdownItem:
+                    controller.inspectionData['vvv_نوع البلاط'] ?? 'جيد',
+                    onDropdownChanged: (value) {
+                      if (value != null) {
+                        controller.updateValue('vvv', 'نوع البلاط', value);
+                      }
+                    },
+                  ),
+                ],
+                checkboxes: [
+                  CustomCheckboxField(
+                    label: 'ميول',
+                    isChecked:
+                    controller.inspectionData['vvv_ميول'] ?? false,
+                    onChanged: (value) {
+                      if (value != null) {
+                        controller.updateValue('vvv', 'ميول', value);
+                      }
+                    },
+                  ),
+                  CustomCheckboxField(
+                    label: 'خواء',
+                    isChecked:
+                    controller.inspectionData['vvv_خواء'] ?? false,
+                    onChanged: (value) {
+                      if (value != null) {
+                        controller.updateValue('vvv', 'خواء', value);
+                      }
+                    },
+                  ),
+                  CustomCheckboxField(
+                    label: 'ترويبة',
+                    isChecked:
+                    controller.inspectionData['vvv_ترويبة'] ?? false,
+                    onChanged: (value) {
+                      if (value != null) {
+                        controller.updateValue('vvv', 'ترويبة', value);
+                      }
+                    },
+                  ),
+                ],
+              )),
+
               const SizedBox(height: 20),
-              _buildInspectionSection('ج-المنافذ',
-                controller.outletsType,
-                controller.outletsCondition,
-                controller.outletsDistribution),
-              const SizedBox(height: 20),
-              _buildInspectionSection('د-المفاتيح',
-                controller.switchesType,
-                controller.switchesCondition,
-                controller.switchesDistribution),
-              const SizedBox(height: 20),
-              _buildInspectionSection('ه-اللوحات الفرعية',
-                controller.subPanelsType,
-                controller.subPanelsCondition,
-                controller.subPanelsDistribution),
-              const SizedBox(height: 20),
-              _buildInspectionSection('و-القواطع',
-                controller.breakersType,
-                controller.breakersCondition,
-                controller.breakersDistribution),
-              const SizedBox(height: 20),
-              _buildInspectionSection('ز-اللوحات الرئيسية',
-                controller.mainPanelsType,
-                controller.mainPanelsCondition,
-                controller.mainPanelsDistribution),
-              const SizedBox(height: 20),
-              _buildWiringSection('ح-الأسلاك',
-                controller.wiringType,
-                controller.wiringSize,
-                controller.wiringConnection),
-              const SizedBox(height: 20),
-              _buildWiringSection('ط-الكيبلات الرئيسية',
-                controller.mainCablesType,
-                controller.mainCablesSize,
-                controller.mainCablesConnection),
-              const SizedBox(height: 20),
-              _buildSimpleSection('ي-نظام التأريض', controller.groundingSystem),
             ],
           ),
         ),
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: ElevatedButton(
-          onPressed: () {
-            // Navigate to next page
-          },
-          style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFF96E6B3),
-            padding: const EdgeInsets.symmetric(vertical: 15),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
-          ),
-          child: const Text(
-            'NEXT',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
+          padding: const EdgeInsets.all(20.0),
+          child:
+          CustomElevatedButton(
+            label: 'التالي',
+            backgroundColor: Colors.green,
+            textColor: Colors.white,
+            onPressed: () {
 
-  Widget _buildSystemSection() {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: _buildCardDecoration(),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          const Text(
-            'النظام المستخدم',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 15),
-          _buildDropdownButton(controller.systemType, ['كهربائي']),
-          const SizedBox(height: 15),
-          _buildImageGrid(),
-        ],
-      ),
-    );
-  }
+              controller.submitForm();
+              receivedData.addAll(controller.inspectionData);
+              print('==== recive data ========${receivedData.toString()}',);
+              print('==== recive data ========${controller.inspectionData}',);
+            },
 
-  Widget _buildInspectionSection(String title, RxString type, RxString condition, RxString distribution) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: _buildCardDecoration(),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 15),
-          _buildLabeledDropdown('نوعها', type, ['مطابق', 'غير مطابق']),
-          const SizedBox(height: 10),
-          _buildLabeledDropdown('حالتها', condition, ['مطابق', 'غير مطابق']),
-          const SizedBox(height: 10),
-          _buildLabeledDropdown('توزيعها', distribution, ['مطابق', 'غير مطابق']),
-          const SizedBox(height: 15),
-          _buildImageGrid(),
-        ],
+          )
       ),
-    );
-  }
-
-  Widget _buildWiringSection(String title, RxString type, RxString size, RxString connection) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: _buildCardDecoration(),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 15),
-          _buildLabeledDropdown('النوع', type, ['بوري']),
-          const SizedBox(height: 10),
-          _buildLabeledDropdown('الحجم', size, ['على قوة', 'القوة 2']),
-          const SizedBox(height: 10),
-          _buildLabeledDropdown('طريقة التوصيل', connection, ['مطابق', 'غير مطابق']),
-          const SizedBox(height: 15),
-          _buildImageGrid(),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildSimpleSection(String title, RxString value) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: _buildCardDecoration(),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 15),
-          _buildDropdownButton(value, ['كهربائي', 'كافي']),
-          const SizedBox(height: 15),
-          _buildImageGrid(),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildLabeledDropdown(String label, RxString value, List<String> items) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        Expanded(
-          child: _buildDropdownButton(value, items),
-        ),
-        const SizedBox(width: 10),
-        Text(label),
-      ],
-    );
-  }
-
-  Widget _buildDropdownButton(RxString value, List<String> items) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12),
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey[300]!),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Obx(
-        () => DropdownButton<String>(
-          value: value.value,
-          isExpanded: true,
-          underline: const SizedBox(),
-          items: items
-              .map((item) => DropdownMenuItem(
-                    value: item,
-                    child: Text(item),
-                  ))
-              .toList(),
-          onChanged: (newValue) {
-            if (newValue != null) value.value = newValue;
-          },
-        ),
-      ),
-    );
-  }
-
-  Widget _buildImageGrid() {
-    return GridView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
-      ),
-      itemCount: 3,
-      itemBuilder: (context, index) {
-        if (index == 2) {
-          return Container(
-            decoration: BoxDecoration(
-              color: Colors.grey[200],
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: IconButton(
-              icon: const Icon(
-                Icons.add_circle,
-                color: Color(0xFF96E6B3),
-                size: 30,
-              ),
-              onPressed: () async {
-                final ImagePicker picker = ImagePicker();
-                final XFile? image = await picker.pickImage(
-                  source: ImageSource.gallery,
-                );
-                if (image != null) {
-                  // Handle image
-                }
-              },
-            ),
-          );
-        }
-        return Container(
-          decoration: BoxDecoration(
-            color: Colors.grey[200],
-            borderRadius: BorderRadius.circular(10),
-            image: const DecorationImage(
-              image: AssetImage('assets/placeholder.png'),
-              fit: BoxFit.cover,
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  BoxDecoration _buildCardDecoration() {
-    return BoxDecoration(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(15),
-      boxShadow: [
-        BoxShadow(
-          color: Colors.black.withOpacity(0.05),
-          blurRadius: 5,
-          offset: const Offset(0, 2),
-        ),
-      ],
     );
   }
 }

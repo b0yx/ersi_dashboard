@@ -27,6 +27,7 @@ abstract class Routes {
 
   //test
   static const TESTVIEW =_Paths.TESTVIEW;
+  static const EXAMVIEW =_Paths.EXAMVIEW;
 
 }
 
@@ -44,18 +45,19 @@ abstract class _Paths {
   static const VERIFICATIONSIGNCODEVIEW ='/verification_code_signup_view';
 
 
-  static const CREATE_PROJECT = '/create-project';
-  static const INSPECTION_TYPES = '/inspection-types';
-  static const ARCHITECTURAL_INSPECTION = '/architectural-inspection';
-  static const STRUCTURAL_INSPECTION = '/structural-inspection';
-  static const GEOTECHNICAL_INSPECTION = '/geotechnical-inspection';
-  static const MECHANICAL_INSPECTION = '/mechanical-inspection';
-  static const ELECTRICAL_INSPECTION = '/electrical-inspection';
-  static const SURVEY_WORKS = '/survey-works';
+  static const CREATE_PROJECT = '/create_project_view';
+  static const INSPECTION_TYPES = '/inspection_types_view';
+  static const ARCHITECTURAL_INSPECTION = '/architectural_inspection_view';
+  static const STRUCTURAL_INSPECTION = '/structural_inspection_view';
+  static const GEOTECHNICAL_INSPECTION = '/geotechnical_inspection_view';
+  static const MECHANICAL_INSPECTION = '/mechanical_inspection_view';
+  static const ELECTRICAL_INSPECTION = '/electrical_inspection_view';
+  static const SURVEY_WORKS = '/survey_works_view';
   // ignore: constant_identifier_names
-  static const REPORT_SUCCESS = '/report-success';
+  static const REPORT_SUCCESS = '/report_success_view';
 
   //test
   static const TESTVIEW = '/test_view';
+  static const EXAMVIEW = '/examnation_view';
 
 }

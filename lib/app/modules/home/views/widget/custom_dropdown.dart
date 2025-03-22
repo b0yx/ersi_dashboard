@@ -98,7 +98,7 @@ class CustomDropdownField extends StatelessWidget {
             ),
           ),
 
-        // ✅ الحقول النصية مع الليبل بجانبها
+        //  الحقول النصية مع الليبل بجانبها
         if (textFields != null)
           ...textFields!.map((field) {
             return Padding(
@@ -109,7 +109,7 @@ class CustomDropdownField extends StatelessWidget {
                     width: screenWidth * 0.3, // عرض الليبل متكيف
                     child: Text(
                       field['label'] ?? '',
-                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
                     ),
                   ),
                   Expanded(
