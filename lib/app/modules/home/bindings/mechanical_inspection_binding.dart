@@ -4,8 +4,8 @@ import '../controllers/mechanical_inspection_controller.dart';
 class MechanicalInspectionBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<MechanicalInspectionController>(
-      () => MechanicalInspectionController(),
+    Get.lazyPut<MechanicalInspectionControllerImp>(
+      () => MechanicalInspectionControllerImp(),
     );
   }
 }

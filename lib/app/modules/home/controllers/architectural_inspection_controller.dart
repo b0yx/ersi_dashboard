@@ -96,46 +96,53 @@ class ArchitecturalInspectionControllerImp extends ArchitecturalInspectionContro
 
   // ------------------- Form Submission -------------------
   void submitForm() {
-    // Before submission, ensure that input fields are updated.
-    // For example, if you have TextEditingControllers in your view,
-    // call updateInputValue() for each before submitForm().
-
-    print("البيانات المدخلة:");
+    print("📌 البيانات المدخلة في الصفحة الحالية:");
     inspectionData.forEach((key, value) {
       print("$key: $value");
     });
 
+    // تحويل `reportData` إلى `Map<String, dynamic>` بشكل صريح
+    Map<String, dynamic> previousData =
+        (Get.arguments?['reportData'] as Map?)?.cast<String, dynamic>() ?? {};
+
+    // حساب الإجمالي والمتوسط
     int total = computeTotal();
     double average = computeAverage();
-    print("الإجمالي: $total");
-    print("المتوسط: $average");
+    print("✅ الإجمالي: $total");
+    print("✅ المتوسط: $average");
 
-    // Retrieve arguments from previous page (if any)
-    final Map<String, dynamic> args = Get.arguments ?? {};
-    List<String> remainingPages = [];
-    if (args.containsKey('remainingPages') && args['remainingPages'] != null) {
-      remainingPages = List<String>.from(args['remainingPages']);
-    }
-    final String inspectionCategory = args['inspectionCategory'] ?? 'غير محدد';
+    // دمج البيانات الحالية مع البيانات السابقة
+    previousData.addAll(inspectionData);
+    previousData['total'] = total;       // إضافة الإجمالي
+    previousData['average'] = average;   // إضافة المتوسط
 
-    // Navigate to the next page if available.
-    if (remainingPages.isNotEmpty && remainingPages.first.isNotEmpty) {
+    // استرجاع قائمة الصفحات المتبقية وتحويلها إلى `List<String>`
+    List<String> remainingPages =
+        (Get.arguments?['remainingPages'] as List?)?.cast<String>() ?? [];
+
+    // استرجاع نوع الفحص
+    final String inspectionCategory = Get.arguments?['inspectionCategory'] ?? 'غير محدد';
+
+    print("📌 البيانات المجمعة بعد التحديث:");
+    previousData.forEach((key, value) {
+      print("$key: $value");
+    });
+
+    // التحقق مما إذا كانت هناك صفحات متبقية للانتقال إليها
+    if (remainingPages.isNotEmpty) {
       final String nextRoute = remainingPages.removeAt(0);
+      print("🚀 الانتقال إلى الصفحة التالية: $nextRoute");
       Get.toNamed(nextRoute, arguments: {
+        'reportData': previousData,
         'remainingPages': remainingPages,
         'inspectionCategory': inspectionCategory,
       });
     } else {
-      // Otherwise, go to the final report screen.
+      print("✅ لا توجد صفحات متبقية، الانتقال إلى صفحة التقرير النهائي");
       Get.toNamed(Routes.REPORT_SUCCESS, arguments: {
+        'reportData': previousData,
         'inspectionCategory': inspectionCategory,
       });
     }
-  }
-
-  @override
-  void onClose() {
-    inspectionData.close();
-    super.onClose();
   }
 }

@@ -70,6 +70,15 @@ class CustomImageMulFormWithInputForm extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
           const SizedBox(height: 20),
+          CustomText(
+            maxLine: 1,
+            alignment: Alignment.center,
+            color: ColorsApp.greencolorapp,
+            text:sectionName ?? '',
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+          const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -94,7 +103,8 @@ class CustomImageMulFormWithInputForm extends StatelessWidget {
                   keyboardType: TextInputType.number,
                   inputFormatters: [LengthLimitingTextInputFormatter(2)],
                   decoration: InputDecoration(
-                    labelText: 'أدخل القيمة',
+                    labelText: 'قراءة المطرقة',
+                    labelStyle: const TextStyle(fontSize: 12),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -107,7 +117,8 @@ class CustomImageMulFormWithInputForm extends StatelessWidget {
                 child: Obx(() => TextFormField(
                   readOnly: true,
                   decoration: InputDecoration(
-                    labelText: 'النتيجة',
+                    labelText: 'مقاومة الخرسانة Mpa',
+                    labelStyle: const TextStyle(fontSize: 12),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),

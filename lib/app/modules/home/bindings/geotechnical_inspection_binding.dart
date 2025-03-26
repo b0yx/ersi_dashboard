@@ -4,8 +4,8 @@ import '../controllers/geotechnical_inspection_controller.dart';
 class GeotechnicalInspectionBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<GeotechnicalInspectionController>(
-      () => GeotechnicalInspectionController(),
+    Get.lazyPut<GeotechnicalInspectionControllerImp>(
+      () => GeotechnicalInspectionControllerImp(),
     );
   }
 }

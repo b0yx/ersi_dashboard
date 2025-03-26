@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../routes/app_pages.dart';
 import '../../controllers/architectural_inspection_controller.dart';
-import '../../controllers/inspection_types_controller.dart';
 import '../widget/custom_checkbox.dart';
 import '../widget/custom_dropdown.dart';
 import '../widget/custom_image_with_muldropdownlist.dart';
@@ -106,17 +105,18 @@ class ArchitecturalInspectionView
                   //مقاس البلك
                   CustomDropdownField(
                     dropdownLabel: 'مقاس البلك',
-                    dropdownItems: ['20', '15'],
+                    dropdownItems: ['15', '20'],
                     selectedDropdownItem: controller
-                        .inspectionData['Architectural.مقاس البلك'] ??
+                        .inspectionData['Architectural.form2_المقاس'] ??
                         'المقاس',
                     onDropdownChanged: (value) {
                       if (value != null) {
                         controller.updateValue(
-                            'Architectural.form2', 'نوع البلك', value);
+                            'Architectural.form2', 'المقاس', value);
                       }
                     },
                   ),
+
                   //استقامة الجدران
                   CustomDropdownField(
                     dropdownLabel: 'إستقامة الجدران',
@@ -210,14 +210,14 @@ class ArchitecturalInspectionView
                   //مقاس البلك
                   CustomDropdownField(
                     dropdownLabel: 'مقاس البلك',
-                    dropdownItems: ['20', '15'],
+                    dropdownItems: ['15', '20'],
                     selectedDropdownItem: controller
-                        .inspectionData['Architectural.form3_مقاس البلك'] ??
+                        .inspectionData['Architectural.form3_المقاس'] ??
                         'المقاس',
                     onDropdownChanged: (value) {
                       if (value != null) {
                         controller.updateValue(
-                            'Architectural.form3', 'نوع البلك', value);
+                            'Architectural.form3', 'المقاس', value);
                       }
                     },
                   ),
@@ -265,21 +265,7 @@ class ArchitecturalInspectionView
                   ),
 
                 ],
-                // checkboxes: [
-                //   CustomCheckboxField(
-                //     label: 'ميول',
-                //     isChecked:
-                //     controller.inspectionData['form1_ميول'] ?? false,
-                //     onChanged: (value) {
-                //       if (value != null) {
-                //         controller.updateValue('form1', 'ميول', value);
-                //       }
-                //     },
-                //   ),
-                //
-                //
-                //
-                // ],
+
               )),
               const SizedBox(height: 20),
               // نموذج فحص المواد - البلاط للجدران
@@ -723,8 +709,6 @@ class ArchitecturalInspectionView
             // بعد الانتهاء من تعبئة الصفحة الحالية، يتم الانتقال إلى الصفحة التالية من القائمة المختارة
             // ستستدعي دالة navigateToNextSelectedPage() الموجودة في InspectionTypesController
             // يمكن استدعاؤها من خلال Get.find<InspectionTypesController>()
-            final inspectionTypesController = Get.find<InspectionTypesController>();
-            inspectionTypesController.navigateToNextSelectedPage();
 
 
             // استلام المعاملات المرسلة من الشاشة السابقة

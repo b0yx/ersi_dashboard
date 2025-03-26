@@ -1,224 +1,107 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../controllers/survey_works_controller.dart';
-import 'dart:io';
+import '../../../../core/constant/colors.dart';
+import '../../../../routes/app_pages.dart';
 
-class SurveyWorksView extends GetView<SurveyWorksController> {
-  const SurveyWorksView({Key? key}) : super(key: key);
+
+import '../../controllers/survey_works_controller.dart';
+import '../widget/custom_dropdown.dart';
+import '../widget/custom_image_with_muldropdownlist.dart';
+import '../widget/customelevetbutton.dart';
+import '../widget/custometext.dart';
+
+class SurveyWorksInspectionView extends GetView<SurveyWorksInspectionControllerImp> {
+  const SurveyWorksInspectionView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF1F9F4),
+      backgroundColor: ColorsApp.backgroundforapp,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Colors.black54),
-          onPressed: () => Get.back(),
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.home, color: Colors.black54),
-            onPressed: () => Get.offAllNamed('/home'),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios, color: Colors.black54),
+            onPressed: () => Get.back(),
           ),
-        ],
-        title: const Text(
-          'الأعمال المساحية',
-          style: TextStyle(
-            color: Colors.black87,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        centerTitle: true,
-      ),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.home, color: Colors.black54),
+              onPressed: () => Get.offAllNamed(Routes.HOME),
+            ),
+          ],
+          title: const CustomText(
+            maxLine: 1,
+            alignment: Alignment.center,
+            text: 'الاعمال المساحية',
+          )),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
-            children: [
-              _buildLandArea(),
-              const SizedBox(height: 20),
-              _buildBuildingArea(),
-            ],
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 20),
+                // دراسة فحص التربة
+                Obx(() => CustomImageMulForm(
+                  formName: "مطابقة المخطط مع المنفذ 1",
+                  firstImageLabel: "صورة ",
+                  secondImageLabel: "صورة ",
+                  firstImagePath:
+                  controller.inspectionData['SurveyWorks.form1_التقرير مخطط'],
+                  secondImagePath:
+                  controller.inspectionData['SurveyWorks.form1_التقرير منفذ'],
+                  onPickFirstImage: () =>
+                      controller.pickImage(context, 'SurveyWorks.form1', 'التقرير مخطط'),
+                  onPickSecondImage: () =>
+                      controller.pickImage(context, 'SurveyWorks.form1', 'التقرير منفذ'),
+                  dropdowns: [
+                    CustomDropdownField(
+                      dropdownLabel: 'مساحة الأرض',
+                      dropdownItems: ['مطابق', 'غير مطابق'],
+                      selectedDropdownItem: controller
+                          .inspectionData['SurveyWorks.form1_مساحة الأرض'] ??
+                          'مساحة الأرض',
+                      onDropdownChanged: (value) {
+                        if (value != null) {
+                          controller.updateValue(
+                              'SurveyWorks.form1', 'مساحة الأرض', value);
+                        }
+                      },
+                    ),
+                    CustomDropdownField(
+                      dropdownLabel: 'مساحة المبنى',
+                      dropdownItems: ['مطابق', 'غير مطابق'],
+                      selectedDropdownItem: controller
+                          .inspectionData['SurveyWorks.form1_مساحة المبنى'] ??
+                          'مساحة المبنى',
+                      onDropdownChanged: (value) {
+                        if (value != null) {
+                          controller.updateValue(
+                              'SurveyWorks.form1', 'مساحة المبنى', value);
+                        }
+                      },
+                    ),
+                  ],
+                )),
+                const SizedBox(height: 20),
+
+              ]
           ),
+
         ),
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-        child: Row(
-          children: [
-            Expanded(
-              child: ElevatedButton(
-                onPressed: controller.saveAsDraft,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.grey[400],
-                  padding: const EdgeInsets.symmetric(vertical: 15),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                ),
-                child: const Text(
-                  'save as draft',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: ElevatedButton(
-                onPressed: controller.goToNext,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF96E6B3),
-                  padding: const EdgeInsets.symmetric(vertical: 15),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                ),
-                child: const Text(
-                  'NEXT',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
+          padding: const EdgeInsets.all(20.0),
+          child: CustomElevatedButton(
+            label: 'التالي',
+            backgroundColor: Colors.green,
+            textColor: Colors.white,
+            onPressed: () {
+              controller.submitForm();
+            },
+          )),
     );
   }
 
-  Widget _buildLandArea() {
-    return _buildCard(
-      title: 'مساحة الأرض',
-      value: controller.landArea,
-      images: controller.landImages,
-      onAddImage: controller.addLandImage,
-    );
-  }
-
-  Widget _buildBuildingArea() {
-    return _buildCard(
-      title: 'مساحة المبنى',
-      value: controller.buildingArea,
-      images: controller.buildingImages,
-      onAddImage: controller.addBuildingImage,
-    );
-  }
-
-  Widget _buildCard({
-    required String title,
-    required RxString value,
-    required RxList<String> images,
-    required Future<void> Function() onAddImage,
-  }) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 5,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey[300]!),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Obx(
-                  () => DropdownButton<String>(
-                    value: value.value,
-                    underline: const SizedBox(),
-                    items: ['مطابق', 'غير مطابق']
-                        .map((item) => DropdownMenuItem(
-                              value: item,
-                              child: Text(item),
-                            ))
-                        .toList(),
-                    onChanged: (newValue) {
-                      if (newValue != null) value.value = newValue;
-                    },
-                  ),
-                ),
-              ),
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 15),
-          Obx(() => GridView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                ),
-                itemCount: images.length + 1,
-                itemBuilder: (context, index) {
-                  if (index == images.length) {
-                    return _buildAddImageButton(onAddImage);
-                  }
-                  return _buildImageContainer(images[index]);
-                },
-              )),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildAddImageButton(Future<void> Function() onAddImage) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.grey[200],
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: IconButton(
-        icon: const Icon(
-          Icons.add_circle,
-          color: Color(0xFF96E6B3),
-          size: 30,
-        ),
-        onPressed: onAddImage,
-      ),
-    );
-  }
-
-  Widget _buildImageContainer(String imagePath) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.grey[200],
-        borderRadius: BorderRadius.circular(10),
-        image: DecorationImage(
-          image: FileImage(File(imagePath)),
-          fit: BoxFit.cover,
-        ),
-      ),
-    );
-  }
 }

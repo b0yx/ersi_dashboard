@@ -127,7 +127,7 @@ class AppPages {
     ),
     GetPage(
       name: Routes.MECHANICAL_INSPECTION,
-      page: () => const MechanicalInspectionView(),
+      page: () =>  MechanicalInspectionView(),
       binding: MechanicalInspectionBinding(),
     ),
     GetPage(
@@ -137,7 +137,7 @@ class AppPages {
     ),
     GetPage(
       name: Routes.SURVEY_WORKS,
-      page: () => const SurveyWorksView(),
+      page: () =>  const SurveyWorksInspectionView(),
       binding: SurveyWorksBinding(),
     ),
     GetPage(
