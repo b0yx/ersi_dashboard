@@ -1,0 +1,163 @@
+/* General Styles */
+body {
+  margin: 0;
+  width: 100%;
+  font-family: Arial, sans-serif;
+  direction: ltr;
+}
+
+/* Container */
+.container {
+  background-color: #27cba7;
+  padding: 1px;
+  color: white;
+  height: 100vh; /* يمتد لارتفاع الشاشة بالكامل */
+  width: 100%; /* يمتد لعرض الشاشة بالكامل */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+}
+
+/* Login Box */
+.login-box {
+  display: flex;
+  background-color: #44ecb1;
+  color: white;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  justify-content: space-between;
+  width: 90%; /* عرض الصندوق */
+  max-width: 1200px; /* أقصى عرض للصندوق */
+  height: 80%; /* ارتفاع الصندوق */
+  max-height: 600px; /* أقصى ارتفاع للصندوق */
+}
+
+/* Text Section */
+.text-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-direction: row;
+  width: 100%;
+  margin: 20px;
+  padding: 10px;
+  color: white;
+}
+
+.left-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 60%;
+  margin: 20px;
+  padding: 10px;
+}
+
+.welcome-text {
+  color: white;
+  text-align: right;
+  padding: 5px;
+}
+
+.welcome-text p {
+  margin: 0;
+  font-size: 1.2rem;
+  /* padding: 5px; */
+}
+
+.hello {
+  padding: 5px;
+  padding-right: 1.5rem;
+}
+
+.welcome-text h2 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+/* Form Section */
+.form-section {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex;
+  width: 100%;
+}
+
+.input-group {
+  margin-bottom: 1.5rem;
+  direction: rtl;
+}
+
+.input-group label {
+  display: block;
+  color: white;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+}
+
+.submit-button input {
+  background-color: white;
+  color: #27cba7;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 1.5rem;
+  cursor: pointer;
+  font-size: 1.25rem;
+  width: 30%;
+}
+
+.submit-button {
+  display: flex;
+  justify-content: center;
+}
+.submit-button input:hover {
+  background-color: #1fa588;
+}
+
+.image-section {
+  background-color: #fefcfc;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  margin-top: -63px;
+  margin-right: -78px;
+  margin-bottom: -40px;
+  margin-left: 10px;
+  border-radius: 1.5rem;
+  width: 35%;
+  height: 113%;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+}
+
+.image-section img {
+  width: 100%;
+  height: 110%;
+  margin-top: -3rem;
+  object-position: center; /* التركيز على الجزء المركزي */
+  object-fit: contain; /* الصورة ستغطي المساحة بالكامل مع اقتصاص الأجزاء الزائدة */
+  border-radius: 0.5rem;
+}
+
+.password-lables {
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  padding: 0;
+}
+
+.plain-link {
+  text-decoration: none;
+  color: black;
+}
