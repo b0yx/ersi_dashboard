@@ -1,5 +1,10 @@
 import 'package:get/get.dart';
 
+bool isArabicOnly(String input) {
+  final arabicRegex = RegExp(r'^[\u0600-\u06FF\s]+$');
+  return arabicRegex.hasMatch(input);
+}
+
 String? validInput(String val, int min, int max, String type) {
   // التحقق من نوع الحقل
   if (type == "username") {
@@ -7,6 +12,13 @@ String? validInput(String val, int min, int max, String type) {
       return 'اسم المستخدم غير صالح';
     }
   }
+
+  if (type == "samplename") {
+    if (!GetUtils.isAlphabetOnly(val) && !isArabicOnly(val)) {
+      return 'يرجى إدخال حروف فقط';
+    }
+  }
+
 
   if (type == "email") {
     if (!GetUtils.isEmail(val)) {
@@ -17,6 +29,12 @@ String? validInput(String val, int min, int max, String type) {
   if (type == "phone") {
     if (!GetUtils.isPhoneNumber(val)) {
       return 'رقم الهاتف غير صالح';
+    }
+  }
+
+  if (type == "password") {
+    if (!GetUtils.isUsername(val)) {
+      return 'كلمة المرور غير صالحة';
     }
   }
 

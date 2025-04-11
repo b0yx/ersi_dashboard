@@ -10,8 +10,7 @@ import '../widget/custom_dropdown.dart';
 import '../widget/custom_image_with_muldropdownlist.dart';
 import '../widget/inputform_horizntal.dart';
 
-class ArchitecturalInspectionView
-    extends GetView<ArchitecturalInspectionControllerImp> {
+class ArchitecturalInspectionView extends GetView<ArchitecturalInspectionControllerImp> {
   ArchitecturalInspectionView({super.key});
   @override
   Widget build(BuildContext context) {
@@ -49,9 +48,9 @@ class ArchitecturalInspectionView
                 firstImageLabel: "صورة المخطط",
                 secondImageLabel: "صورة المنفذ",
                 firstImagePath:
-                controller.inspectionData['Architectural.form1_مخطط'],
+                controller.inspectionData['Architectural.form1_مخطط']?['path'],
                 secondImagePath:
-                controller.inspectionData['Architectural.form1_منفذ'],
+                controller.inspectionData['Architectural.form1_منفذ']?['path'],
                 onPickFirstImage: () =>
                     controller.pickImage(context, 'Architectural.form1', 'مخطط'),
                 onPickSecondImage: () =>
@@ -80,9 +79,9 @@ class ArchitecturalInspectionView
                 firstImageLabel: "صورة 1",
                 secondImageLabel: "صورة 2",
                 firstImagePath:
-                controller.inspectionData['Architectural.form2_الجدران خارجي واحد'],
+                controller.inspectionData['Architectural.form2_الجدران خارجي واحد']?['path'],
                 secondImagePath:
-                controller.inspectionData['Architectural.form2_الجدران خارجي اثنين'],
+                controller.inspectionData['Architectural.form2_الجدران خارجي اثنين']?['path'],
                 onPickFirstImage: () =>
                     controller.pickImage(context, 'Architectural.form2', 'الجدران خارجي واحد'),
                 onPickSecondImage: () =>
@@ -185,9 +184,9 @@ class ArchitecturalInspectionView
                 firstImageLabel: "صورة 1",
                 secondImageLabel: "صورة 2",
                 firstImagePath:
-                controller.inspectionData['Architectural.form3_الجدران داخلي واحد'],
+                controller.inspectionData['Architectural.form3_الجدران داخلي واحد']?['path'],
                 secondImagePath:
-                controller.inspectionData['Architectural.form3_الجدران داخلي اثنين'],
+                controller.inspectionData['Architectural.form3_الجدران داخلي اثنين']?['path'],
                 onPickFirstImage: () =>
                     controller.pickImage(context, 'Architectural.form3', 'الجدران داخلي واحد'),
                 onPickSecondImage: () =>
@@ -275,9 +274,9 @@ class ArchitecturalInspectionView
                 firstImageLabel: "صورة 1",
                 secondImageLabel: "صورة 2",
                 firstImagePath:
-                controller.inspectionData['Architectural.form4_بلاط الجدران واحد'],
+                controller.inspectionData['Architectural.form4_بلاط الجدران واحد']?['path'],
                 secondImagePath:
-                controller.inspectionData['Architectural.form4_بلاط الجدران اثنين'],
+                controller.inspectionData['Architectural.form4_بلاط الجدران اثنين']?['path'],
                 onPickFirstImage: () =>
                     controller.pickImage(context, 'Architectural.form4', 'بلاط الجدران واحد'),
                 onPickSecondImage: () =>
@@ -356,9 +355,9 @@ class ArchitecturalInspectionView
                 firstImageLabel: "صورة 1",
                 secondImageLabel: "صورة 2",
                 firstImagePath:
-                controller.inspectionData['Architectural.form5_بلاط ارضي صورة واحد'],
+                controller.inspectionData['Architectural.form5_بلاط ارضي صورة واحد']?['path'],
                 secondImagePath:
-                controller.inspectionData['Architectural.form5_بلاط ارضي صورة اثنين'],
+                controller.inspectionData['Architectural.form5_بلاط ارضي صورة اثنين']?['path'],
                 onPickFirstImage: () =>
                     controller.pickImage(context, 'Architectural.form5', 'بلاط ارضي صورة واحد'),
                 onPickSecondImage: () =>
@@ -437,9 +436,9 @@ class ArchitecturalInspectionView
                 firstImageLabel: "صورة 1",
                 secondImageLabel: "صورة 2",
                 firstImagePath:
-                controller.inspectionData['Architectural.form6_ديكور سقف صورة واحد'],
+                controller.inspectionData['Architectural.form6_ديكور سقف صورة واحد']?['path'],
                 secondImagePath:
-                controller.inspectionData['Architectural.form6_ديكور سقف صورة اثنين'],
+                controller.inspectionData['Architectural.form6_ديكور سقف صورة اثنين']?['path'],
                 onPickFirstImage: () =>
                     controller.pickImage(context, 'Architectural.form6', 'ديكور سقف صورة واحد'),
                 onPickSecondImage: () =>
@@ -483,9 +482,9 @@ class ArchitecturalInspectionView
                 firstImageLabel: "صورة 1",
                 secondImageLabel: "صورة 2",
                 firstImagePath:
-                controller.inspectionData['Architectural.form7_ديكور جدار صورة واحد'],
+                controller.inspectionData['Architectural.form7_ديكور جدار صورة واحد']?['path'],
                 secondImagePath:
-                controller.inspectionData['Architectural.form7_ديكور جدار صورة اثنين'],
+                controller.inspectionData['Architectural.form7_ديكور جدار صورة اثنين']?['path'],
                 onPickFirstImage: () =>
                     controller.pickImage(context, 'Architectural.form7', 'ديكور جدار صورة واحد'),
                 onPickSecondImage: () =>
@@ -529,9 +528,9 @@ class ArchitecturalInspectionView
                 firstImageLabel: "صورة 1",
                 secondImageLabel: "صورة 2",
                 firstImagePath:
-                controller.inspectionData['Architectural.form8_اللياسة صورة واحد'],
+                controller.inspectionData['Architectural.form8_اللياسة صورة واحد']?['path'],
                 secondImagePath:
-                controller.inspectionData['Architectural.form8_اللياسة صورة اثنين'],
+                controller.inspectionData['Architectural.form8_اللياسة صورة اثنين']?['path'],
                 onPickFirstImage: () =>
                     controller.pickImage(context, 'Architectural.form8', 'اللياسة صورة واحد'),
                 onPickSecondImage: () =>
@@ -562,9 +561,9 @@ class ArchitecturalInspectionView
                 firstImageLabel: "صورة 1",
                 secondImageLabel: "صورة 2",
                 firstImagePath:
-                controller.inspectionData['Architectural.form9_الابواب الخارجي صورة واحد'],
+                controller.inspectionData['Architectural.form9_الابواب الخارجي صورة واحد']?['path'],
                 secondImagePath:
-                controller.inspectionData['Architectural.form9_الابواب الخارجي صورة اثنين'],
+                controller.inspectionData['Architectural.form9_الابواب الخارجي صورة اثنين']?['path'],
                 onPickFirstImage: () =>
                     controller.pickImage(context, 'Architectural.form9', 'الابواب الخارجي صورة واحد'),
                 onPickSecondImage: () =>
@@ -608,9 +607,9 @@ class ArchitecturalInspectionView
                 firstImageLabel: "صورة 1",
                 secondImageLabel: "صورة 2",
                 firstImagePath:
-                controller.inspectionData['Architectural.form10_الابواب داخلي صورة واحد'],
+                controller.inspectionData['Architectural.form10_الابواب داخلي صورة واحد']?['path'],
                 secondImagePath:
-                controller.inspectionData['Architectural.form10_الابواب داخلي صورة اثنين'],
+                controller.inspectionData['Architectural.form10_الابواب داخلي صورة اثنين']?['path'],
                 onPickFirstImage: () =>
                     controller.pickImage(context, 'Architectural.form10', 'الابواب داخلي صورة واحد'),
                 onPickSecondImage: () =>
@@ -654,9 +653,9 @@ class ArchitecturalInspectionView
                 firstImageLabel: "صورة 1",
                 secondImageLabel: "صورة 2",
                 firstImagePath:
-                controller.inspectionData['Architectural.form11_الشبابيك صورة واحد'],
+                controller.inspectionData['Architectural.form11_الشبابيك صورة واحد']?['path'],
                 secondImagePath:
-                controller.inspectionData['Architectural.form11_الشبابيك صورة اثنين'],
+                controller.inspectionData['Architectural.form11_الشبابيك صورة اثنين']?['path'],
                 onPickFirstImage: () =>
                     controller.pickImage(context, 'Architectural.form11', 'الشبابيك صورة واحد'),
                 onPickSecondImage: () =>

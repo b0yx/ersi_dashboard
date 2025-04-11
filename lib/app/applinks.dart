@@ -15,6 +15,8 @@ class AppLink{
 
 //createproject//
   static const String createProject = '$server/createproject.php';
+  static const String sendReportData = '$server/report.php';
+
   
 
 }

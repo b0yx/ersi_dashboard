@@ -50,9 +50,9 @@ class MechanicalInspectionView extends GetView<MechanicalInspectionControllerImp
                   firstImageLabel: "صورة المخطط",
                   secondImageLabel: "صورة المنفذ",
                   firstImagePath:
-                  controller.inspectionData['Mechanical.form1_مخطط'],
+                  controller.inspectionData['Mechanical.form1_مخطط']?['path'],
                   secondImagePath:
-                  controller.inspectionData['Mechanical.form1_منفذ'],
+                  controller.inspectionData['Mechanical.form1_منفذ']?['path'],
                   onPickFirstImage: () =>
                       controller.pickImage(context, 'Mechanical.form1', 'مخطط'),
                   onPickSecondImage: () =>
@@ -80,9 +80,9 @@ class MechanicalInspectionView extends GetView<MechanicalInspectionControllerImp
                   firstImageLabel: "صورة 1",
                   secondImageLabel: "صورة 2",
                   firstImagePath:
-                  controller.inspectionData['Mechanical.form2_اختبار الضغط صورة واحد'],
+                  controller.inspectionData['Mechanical.form2_اختبار الضغط صورة واحد']?['path'],
                   secondImagePath:
-                  controller.inspectionData['Mechanical.form2_اختبار الضغط صورة اثنين'],
+                  controller.inspectionData['Mechanical.form2_اختبار الضغط صورة اثنين']?['path'],
                   onPickFirstImage: () =>
                       controller.pickImage(context, 'Mechanical.form2', 'اختبار الضغط صورة واحد'),
                   onPickSecondImage: () =>
@@ -110,9 +110,9 @@ class MechanicalInspectionView extends GetView<MechanicalInspectionControllerImp
                   firstImageLabel: "صورة 1",
                   secondImageLabel: "صورة 2",
                   firstImagePath:
-                  controller.inspectionData['Mechanical.شبكة الصرف الصحي صورة واحد'],
+                  controller.inspectionData['Mechanical.form3_شبكة الصرف الصحي صورة واحد']?['path'],
                   secondImagePath:
-                  controller.inspectionData['Mechanical.شبكة الصرف الصحي صورة اثنين'],
+                  controller.inspectionData['Mechanical.form3_شبكة الصرف الصحي صورة اثنين']?['path'],
                   onPickFirstImage: () =>
                       controller.pickImage(context, 'Mechanical.form3', 'شبكة الصرف الصحي صورة واحد'),
                   onPickSecondImage: () =>
@@ -153,9 +153,9 @@ class MechanicalInspectionView extends GetView<MechanicalInspectionControllerImp
                   firstImageLabel: "صورة 1",
                   secondImageLabel: "صورة 2",
                   firstImagePath:
-                  controller.inspectionData['Mechanical.form4_مواصير التهوية صورة واحد'],
+                  controller.inspectionData['Mechanical.form4_مواصير التهوية صورة واحد']?['path'],
                   secondImagePath:
-                  controller.inspectionData['Mechanical.form4_مواصير التهوية صورة اثنين'],
+                  controller.inspectionData['Mechanical.form4_مواصير التهوية صورة اثنين']?['path'],
                   onPickFirstImage: () =>
                       controller.pickImage(context, 'Mechanical.form4', 'مواصير التهوية صورة واحد'),
                   onPickSecondImage: () =>
@@ -184,9 +184,9 @@ class MechanicalInspectionView extends GetView<MechanicalInspectionControllerImp
                   firstImageLabel: "صورة 1",
                   secondImageLabel: "صورة 2",
                   firstImagePath:
-                  controller.inspectionData['Mechanical.form5_شبكة تصريف مياة الامطار صورة واحد'],
+                  controller.inspectionData['Mechanical.form5_شبكة تصريف مياة الامطار صورة واحد']?['path'],
                   secondImagePath:
-                  controller.inspectionData['Mechanical.form5_شبكة تصريف مياة الامطار صورة اثنين'],
+                  controller.inspectionData['Mechanical.form5_شبكة تصريف مياة الامطار صورة اثنين']?['path'],
                   onPickFirstImage: () =>
                       controller.pickImage(context, 'Mechanical.form5', 'شبكة تصريف مياة الامطار صورة واحد'),
                   onPickSecondImage: () =>
@@ -216,9 +216,9 @@ class MechanicalInspectionView extends GetView<MechanicalInspectionControllerImp
                   firstImageLabel: "صورة 1",
                   secondImageLabel: "صورة 2",
                   firstImagePath:
-                  controller.inspectionData['Mechanical.form6_المواد الصحية صورة واحد'],
+                  controller.inspectionData['Mechanical.form6_المواد الصحية صورة واحد']?['path'],
                   secondImagePath:
-                  controller.inspectionData['Mechanical.form6_المواد الصحية صورة اثنين'],
+                  controller.inspectionData['Mechanical.form6_المواد الصحية صورة اثنين']?['path'],
                   onPickFirstImage: () =>
                       controller.pickImage(context, 'Mechanical.form6', 'المواد الصحية صورة واحد'),
                   onPickSecondImage: () =>
@@ -262,9 +262,9 @@ class MechanicalInspectionView extends GetView<MechanicalInspectionControllerImp
                   firstImageLabel: "صورة 1",
                   secondImageLabel: "صورة 2",
                   firstImagePath:
-                  controller.inspectionData['Mechanical.form7_خزانات السطح صورة واحد'],
+                  controller.inspectionData['Mechanical.form7_خزانات السطح صورة واحد']?['path'],
                   secondImagePath:
-                  controller.inspectionData['Mechanical.form7_خزانات السطح صورة اثنين'],
+                  controller.inspectionData['Mechanical.form7_خزانات السطح صورة اثنين']?['path'],
                   onPickFirstImage: () =>
                       controller.pickImage(context, 'Mechanical.form7', 'خزانات السطح صورة واحد'),
                   onPickSecondImage: () =>
@@ -306,9 +306,9 @@ class MechanicalInspectionView extends GetView<MechanicalInspectionControllerImp
                   firstImageLabel: "صورة 1",
                   secondImageLabel: "صورة 2",
                   firstImagePath:
-                  controller.inspectionData['Mechanical.form8_خزانات ارضية صورة واحد'],
+                  controller.inspectionData['Mechanical.form8_خزانات ارضية صورة واحد']?['path'],
                   secondImagePath:
-                  controller.inspectionData['Mechanical.form8_خزانات ارضية صورة اثنين'],
+                  controller.inspectionData['Mechanical.form8_خزانات ارضية صورة اثنين']?['path'],
                   onPickFirstImage: () =>
                       controller.pickImage(context, 'Mechanical.form8', 'خزانات ارضية صورة واحد'),
                   onPickSecondImage: () =>

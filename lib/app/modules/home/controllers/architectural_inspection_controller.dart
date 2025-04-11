@@ -1,7 +1,14 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:ersei/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:get/get.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart' as path;
+
+
 
 
 abstract class ArchitecturalInspectionController extends GetxController {}
@@ -37,10 +44,44 @@ class ArchitecturalInspectionControllerImp extends ArchitecturalInspectionContro
         ],
       ),
     );
+
     if (source != null) {
       final pickedImage = await picker.pickImage(source: source);
       if (pickedImage != null) {
-        inspectionData['${formKey}_$imageKey'] = pickedImage.path;
+        try {
+          // استخراج الامتداد من الصورة الأصلية
+          final extension = path.extension(pickedImage.path);
+
+          // توليد اسم جديد للصورة باستخدام formKey و imageKey
+          final fileName = '$formKey\_$imageKey$extension';
+
+          // تحديد المسار لحفظ الصورة
+          final appDir = await getApplicationDocumentsDirectory();
+          final photosDir = Directory(path.join(appDir.path, 'photos'));
+          if (!await photosDir.exists()) {
+            await photosDir.create(recursive: true);
+          }
+
+          final savedImagePath = path.join(photosDir.path, fileName);
+          final savedImage = await File(pickedImage.path).copy(savedImagePath);
+
+          // تحويل الصورة إلى base64
+          final imageBytes = await savedImage.readAsBytes();
+          final base64Image = base64Encode(imageBytes);
+          final base64WithHeader = "data:image/${extension.replaceFirst('.', '')};base64,$base64Image";
+
+          // تخزين البيانات
+          inspectionData['${formKey}_$imageKey'] = {
+            "path": savedImage.path,
+            "fileName": fileName,
+            "extension": extension,
+            "base64": base64WithHeader
+          };
+
+          print("✅ تم حفظ الصورة بنجاح باسم: $fileName");
+        } catch (e) {
+          print("❌ فشل حفظ الصورة: $e");
+        }
       }
     }
   }

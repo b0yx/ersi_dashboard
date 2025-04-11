@@ -1,7 +1,13 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:ersei/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:get/get.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart' as path;
+
 
 abstract class ElectricalInspectionController extends GetxController {}
 
@@ -38,10 +44,44 @@ class ElectricalInspectionControllerImp extends ElectricalInspectionController {
         ],
       ),
     );
+
     if (source != null) {
       final pickedImage = await picker.pickImage(source: source);
       if (pickedImage != null) {
-        inspectionData['${formKey}_$imageKey'] = pickedImage.path;
+        try {
+          // استخراج الامتداد من الصورة الأصلية
+          final extension = path.extension(pickedImage.path);
+
+          // توليد اسم جديد للصورة باستخدام formKey و imageKey
+          final fileName = '$formKey\_$imageKey$extension';
+
+          // تحديد المسار لحفظ الصورة
+          final appDir = await getApplicationDocumentsDirectory();
+          final photosDir = Directory(path.join(appDir.path, 'photos'));
+          if (!await photosDir.exists()) {
+            await photosDir.create(recursive: true);
+          }
+
+          final savedImagePath = path.join(photosDir.path, fileName);
+          final savedImage = await File(pickedImage.path).copy(savedImagePath);
+
+          // تحويل الصورة إلى base64
+          final imageBytes = await savedImage.readAsBytes();
+          final base64Image = base64Encode(imageBytes);
+          final base64WithHeader = "data:image/${extension.replaceFirst('.', '')};base64,$base64Image";
+
+          // تخزين البيانات
+          inspectionData['${formKey}_$imageKey'] = {
+            "path": savedImage.path,
+            "fileName": fileName,
+            "extension": extension,
+            "base64": base64WithHeader
+          };
+
+          print("✅ تم حفظ الصورة بنجاح باسم: $fileName");
+        } catch (e) {
+          print("❌ فشل حفظ الصورة: $e");
+        }
       }
     }
   }
@@ -97,42 +137,55 @@ class ElectricalInspectionControllerImp extends ElectricalInspectionController {
 
   // ------------------- Form Submission -------------------
   void submitForm() {
-    print("البيانات المدخلة:");
+    print("📌 البيانات المدخلة في الصفحة الحالية:");
     inspectionData.forEach((key, value) {
       print("$key: $value");
     });
 
+    // تحويل `reportData` إلى `Map<String, dynamic>` بشكل صريح
+    Map<String, dynamic> previousData =
+        (Get.arguments?['reportData'] as Map?)?.cast<String, dynamic>() ?? {};
+
+    // حساب الإجمالي والمتوسط
     int total = computeTotal();
     double average = computeAverage();
-    print("الإجمالي: $total");
-    print("المتوسط: $average");
+    print("✅ الإجمالي: $total");
+    print("✅ المتوسط: $average");
 
-    // استرجاع المعطيات القادمة من الصفحة السابقة
-    final Map<String, dynamic> args = Get.arguments ?? {};
-    List<String> remainingPages = [];
-    if (args.containsKey('remainingPages') && args['remainingPages'] != null) {
-      remainingPages = List<String>.from(args['remainingPages']);
-    }
-    final String inspectionCategory = args['inspectionCategory'] ?? 'غير محدد';
+    // دمج البيانات الحالية مع البيانات السابقة
+    previousData.addAll(inspectionData);
+    previousData['total'] = total;       // إضافة الإجمالي
+    previousData['average'] = average;   // إضافة المتوسط
 
-    // التأكد من وجود صفحات متبقية قبل إزالة العنصر
+    // استرجاع قائمة الصفحات المتبقية وتحويلها إلى `List<String>`
+    List<String> remainingPages =
+        (Get.arguments?['remainingPages'] as List?)?.cast<String>() ?? [];
+
+    // استرجاع نوع الفحص
+    final String inspectionCategory = Get.arguments?['inspectionCategory'] ?? 'غير محدد';
+
+    print("📌 البيانات المجمعة بعد التحديث:");
+    previousData.forEach((key, value) {
+      print("$key: $value");
+    });
+
+    // التحقق مما إذا كانت هناك صفحات متبقية للانتقال إليها
     if (remainingPages.isNotEmpty) {
       final String nextRoute = remainingPages.removeAt(0);
+      print("🚀 الانتقال إلى الصفحة التالية: $nextRoute");
       Get.toNamed(nextRoute, arguments: {
+        'reportData': previousData,
         'remainingPages': remainingPages,
         'inspectionCategory': inspectionCategory,
       });
     } else {
-      // إذا لم يتبق صفحات، الانتقال إلى شاشة التقرير النهائي
+      print("✅ لا توجد صفحات متبقية، الانتقال إلى صفحة التقرير النهائي");
       Get.toNamed(Routes.REPORT_SUCCESS, arguments: {
+        'reportData': previousData,
         'inspectionCategory': inspectionCategory,
       });
     }
   }
 
-  @override
-  void onClose() {
-    inspectionData.close();
-    super.onClose();
-  }
+
 }

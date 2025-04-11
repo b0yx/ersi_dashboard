@@ -89,7 +89,7 @@ class LoginView extends GetView {
                                     SizedBox(height: screenHeight * 0.02),
                         CustomTextFormField(
                           validator: (val){
-                            return validInput(val!, 8, 16, "phone");
+                            return validInput(val!, 8, 16, "password");
                           },
                           hintText: 'كلمة المرور ',
                           obscureText: true,

@@ -5,12 +5,14 @@ class CreateProjectData {
   Crud crud;
   CreateProjectData(this.crud);
 
-  postData(String projectName, String purpose, String buildingType, DateTime date) async {
+  postData(String projectName,String projectReportOwner ,String phone, String buildingType, String selectedPurposeForInspection, String userId ) async {
     var response = await crud.postData(AppLink.createProject, {
-      'projectName': projectName,
-      'purpose': purpose,
-      'buildingType': buildingType,
-      'date': date.toIso8601String(),
+      "projectName": projectName,
+      "projectReportOwner": projectReportOwner,
+      "phone": phone,
+      "buildingType": buildingType,
+      "selectedPurposeForInspection": selectedPurposeForInspection,
+      "userId": userId
     });
     return response.fold((l) => l, (r) => r);
   }

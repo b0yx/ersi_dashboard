@@ -102,7 +102,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.CREATE_PROJECT,
-      page: () => const CreateProjectView(),
+      page: () =>  const CreateProjectView(),
       binding: CreateProjectBinding(),
     ),
     GetPage(

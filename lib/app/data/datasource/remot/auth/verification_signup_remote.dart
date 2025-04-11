@@ -10,7 +10,7 @@ class VerificationSignupData{
 
 
       'email':email,
-      'verfiycode':verificationCode,
+      'users_verfiycode':verificationCode,
 
     });
     return response.fold((l) => l, (r) => r);

@@ -50,9 +50,9 @@ class ElectricalInspectionView extends GetView<ElectricalInspectionControllerImp
                   firstImageLabel: "صورة المخطط",
                   secondImageLabel: "صورة المنفذ",
                   firstImagePath:
-                  controller.inspectionData['Electrical.form1_مخطط'],
+                  controller.inspectionData['Electrical.form1_مخطط']?['path'],
                   secondImagePath:
-                  controller.inspectionData['Electrical.form1_منفذ'],
+                  controller.inspectionData['Electrical.form1_منفذ']?['path'],
                   onPickFirstImage: () =>
                       controller.pickImage(context, 'Electrical.form1', 'مخطط'),
                   onPickSecondImage: () =>
@@ -80,9 +80,9 @@ class ElectricalInspectionView extends GetView<ElectricalInspectionControllerImp
                   firstImageLabel: "صورة 1",
                   secondImageLabel: "صورة 2",
                   firstImagePath:
-                  controller.inspectionData['Electrical.form2_النظام المستخدم صورة واحد'],
+                  controller.inspectionData['Electrical.form2_النظام المستخدم صورة واحد']?['path'],
                   secondImagePath:
-                  controller.inspectionData['Electrical.form2_النظام المستخدم صورة اثنين'],
+                  controller.inspectionData['Electrical.form2_النظام المستخدم صورة اثنين']?['path'],
                   onPickFirstImage: () =>
                       controller.pickImage(context, 'Electrical.form2', 'النظام المستخدم صورة واحد'),
                   onPickSecondImage: () =>
@@ -110,9 +110,9 @@ class ElectricalInspectionView extends GetView<ElectricalInspectionControllerImp
                   firstImageLabel: "صورة 1",
                   secondImageLabel: "صورة 2",
                   firstImagePath:
-                  controller.inspectionData['Electrical.form3_الاضاءة صورة واحد'],
+                  controller.inspectionData['Electrical.form3_الاضاءة صورة واحد']?['path'],
                   secondImagePath:
-                  controller.inspectionData['Electrical.form3_الاضاءة صورة اثنين'],
+                  controller.inspectionData['Electrical.form3_الاضاءة صورة اثنين']?['path'],
                   onPickFirstImage: () =>
                       controller.pickImage(context, 'Electrical.form3', 'الاضاءة صورة واحد'),
                   onPickSecondImage: () =>
@@ -166,9 +166,9 @@ class ElectricalInspectionView extends GetView<ElectricalInspectionControllerImp
                   firstImageLabel: "صورة 1",
                   secondImageLabel: "صورة 2",
                   firstImagePath:
-                  controller.inspectionData['Electrical.form4_المآخذ صورة واحد'],
+                  controller.inspectionData['Electrical.form4_المآخذ صورة واحد']?['path'],
                   secondImagePath:
-                  controller.inspectionData['Electrical.form4_المآخذ صورة اثنين'],
+                  controller.inspectionData['Electrical.form4_المآخذ صورة اثنين']?['path'],
                   onPickFirstImage: () =>
                       controller.pickImage(context, 'Electrical.form4', 'المآخذ صورة واحد'),
                   onPickSecondImage: () =>
@@ -223,9 +223,9 @@ class ElectricalInspectionView extends GetView<ElectricalInspectionControllerImp
                   firstImageLabel: "صورة 1",
                   secondImageLabel: "صورة 2",
                   firstImagePath:
-                  controller.inspectionData['Electrical.form5_المفاتيح صورة واحد'],
+                  controller.inspectionData['Electrical.form5_المفاتيح صورة واحد']?['path'],
                   secondImagePath:
-                  controller.inspectionData['Electrical.form5_المفاتيح صورة اثنين'],
+                  controller.inspectionData['Electrical.form5_المفاتيح صورة اثنين']?['path'],
                   onPickFirstImage: () =>
                       controller.pickImage(context, 'Electrical.form5', 'المفاتيح صورة واحد'),
                   onPickSecondImage: () =>
@@ -280,9 +280,9 @@ class ElectricalInspectionView extends GetView<ElectricalInspectionControllerImp
                   firstImageLabel: "صورة 1",
                   secondImageLabel: "صورة 2",
                   firstImagePath:
-                  controller.inspectionData['Electrical.form6_اللوحات الرئيسية صورة واحد'],
+                  controller.inspectionData['Electrical.form6_اللوحات الرئيسية صورة واحد']?['path'],
                   secondImagePath:
-                  controller.inspectionData['Electrical.form6_اللوحات الرئيسية صورة اثنين'],
+                  controller.inspectionData['Electrical.form6_اللوحات الرئيسية صورة اثنين']?['path'],
                   onPickFirstImage: () =>
                       controller.pickImage(context, 'Electrical.form6', 'اللوحات الرئيسية صورة واحد'),
                   onPickSecondImage: () =>
@@ -337,9 +337,9 @@ class ElectricalInspectionView extends GetView<ElectricalInspectionControllerImp
                   firstImageLabel: "صورة 1",
                   secondImageLabel: "صورة 2",
                   firstImagePath:
-                  controller.inspectionData['Electrical.form7_اللوحات الفرعية صورة واحد'],
+                  controller.inspectionData['Electrical.form7_اللوحات الفرعية صورة واحد']?['path'],
                   secondImagePath:
-                  controller.inspectionData['Electrical.form7_اللوحات الفرعية صورة اثنين'],
+                  controller.inspectionData['Electrical.form7_اللوحات الفرعية صورة اثنين']?['path'],
                   onPickFirstImage: () =>
                       controller.pickImage(context, 'Electrical.form7', 'اللوحات الفرعية صورة واحد'),
                   onPickSecondImage: () =>
@@ -394,9 +394,9 @@ class ElectricalInspectionView extends GetView<ElectricalInspectionControllerImp
                   firstImageLabel: "صورة 1",
                   secondImageLabel: "صورة 2",
                   firstImagePath:
-                  controller.inspectionData['Electrical.form8_القواطع صورة واحد'],
+                  controller.inspectionData['Electrical.form8_القواطع صورة واحد']?['path'],
                   secondImagePath:
-                  controller.inspectionData['Electrical.form8_القواطع صورة اثنين'],
+                  controller.inspectionData['Electrical.form8_القواطع صورة اثنين']?['path'],
                   onPickFirstImage: () =>
                       controller.pickImage(context, 'Electrical.form8', 'القواطع صورة واحد'),
                   onPickSecondImage: () =>
@@ -451,9 +451,9 @@ class ElectricalInspectionView extends GetView<ElectricalInspectionControllerImp
                   firstImageLabel: "صورة 1",
                   secondImageLabel: "صورة 2",
                   firstImagePath:
-                  controller.inspectionData['Electrical.form9_الكيبلات الرئيسية صورة واحد'],
+                  controller.inspectionData['Electrical.form9_الكيبلات الرئيسية صورة واحد']?['path'],
                   secondImagePath:
-                  controller.inspectionData['Electrical.form9_الكيبلات الرئيسية صورة اثنين'],
+                  controller.inspectionData['Electrical.form9_الكيبلات الرئيسية صورة اثنين']?['path'],
                   onPickFirstImage: () =>
                       controller.pickImage(context, 'Electrical.form9', 'الكيبلات الرئيسية صورة واحد'),
                   onPickSecondImage: () =>
@@ -507,9 +507,9 @@ class ElectricalInspectionView extends GetView<ElectricalInspectionControllerImp
                   firstImageLabel: "صورة 1",
                   secondImageLabel: "صورة 2",
                   firstImagePath:
-                  controller.inspectionData['Electrical.form10_الاسلاك صورة واحد'],
+                  controller.inspectionData['Electrical.form10_الاسلاك صورة واحد']?['path'],
                   secondImagePath:
-                  controller.inspectionData['Electrical.form10_الاسلاك صورة اثنين'],
+                  controller.inspectionData['Electrical.form10_الاسلاك صورة اثنين']?['path'],
                   onPickFirstImage: () =>
                       controller.pickImage(context, 'Electrical.form10', 'الاسلاك صورة واحد'),
                   onPickSecondImage: () =>
@@ -564,9 +564,9 @@ class ElectricalInspectionView extends GetView<ElectricalInspectionControllerImp
                   firstImageLabel: "صورة 1",
                   secondImageLabel: "صورة 2",
                   firstImagePath:
-                  controller.inspectionData['Electrical.form11_نظام التأريض صورة واحد'],
+                  controller.inspectionData['Electrical.form11_نظام التأريض صورة واحد']?['path'],
                   secondImagePath:
-                  controller.inspectionData['Electrical.form11_نظام التأريض صورة اثنين'],
+                  controller.inspectionData['Electrical.form11_نظام التأريض صورة اثنين']?['path'],
                   onPickFirstImage: () =>
                       controller.pickImage(context, 'Electrical.form11', 'نظام التأريض صورة واحد'),
                   onPickSecondImage: () =>
@@ -596,9 +596,9 @@ class ElectricalInspectionView extends GetView<ElectricalInspectionControllerImp
                   firstImageLabel: "صورة 1",
                   secondImageLabel: "صورة 2",
                   firstImagePath:
-                  controller.inspectionData['Electrical.form12_نظام السخانات صورة واحد'],
+                  controller.inspectionData['Electrical.form12_نظام السخانات صورة واحد']?['path'],
                   secondImagePath:
-                  controller.inspectionData['Electrical.form12_نظام السخانات صورة اثنين'],
+                  controller.inspectionData['Electrical.form12_نظام السخانات صورة اثنين']?['path'],
                   onPickFirstImage: () =>
                       controller.pickImage(context, 'Electrical.form12', 'نظام السخانات صورة واحد'),
                   onPickSecondImage: () =>

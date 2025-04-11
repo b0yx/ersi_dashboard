@@ -46,9 +46,9 @@ class GeotechnicalInspectionView extends GetView<GeotechnicalInspectionControlle
                   firstImageLabel: "صورة ",
                   secondImageLabel: "صورة ",
                   firstImagePath:
-                  controller.inspectionData['Geotechnical.form1_التقرير مخطط'],
+                  controller.inspectionData['Geotechnical.form1_التقرير مخطط']?['path'],
                   secondImagePath:
-                  controller.inspectionData['Geotechnical.form1_التقرير منفذ'],
+                  controller.inspectionData['Geotechnical.form1_التقرير منفذ']?['path'],
                   onPickFirstImage: () =>
                       controller.pickImage(context, 'Geotechnical.form1', 'التقرير مخطط'),
                   onPickSecondImage: () =>

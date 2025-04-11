@@ -47,10 +47,8 @@ class SurveyWorksInspectionView extends GetView<SurveyWorksInspectionControllerI
                   formName: "مطابقة المخطط مع المنفذ 1",
                   firstImageLabel: "صورة ",
                   secondImageLabel: "صورة ",
-                  firstImagePath:
-                  controller.inspectionData['SurveyWorks.form1_التقرير مخطط'],
-                  secondImagePath:
-                  controller.inspectionData['SurveyWorks.form1_التقرير منفذ'],
+                  firstImagePath: controller.inspectionData['SurveyWorks.form1_التقرير مخطط']?['path'],
+                  secondImagePath: controller.inspectionData['SurveyWorks.form1_التقرير منفذ']?['path'],
                   onPickFirstImage: () =>
                       controller.pickImage(context, 'SurveyWorks.form1', 'التقرير مخطط'),
                   onPickSecondImage: () =>

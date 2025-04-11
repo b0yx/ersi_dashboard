@@ -1,9 +1,18 @@
+import 'dart:convert';
+
 import 'package:ersei/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:get/get.dart';
+import 'package:path/path.dart' as path;
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
 
-abstract class MechanicalInspectionController extends GetxController {}
+
+abstract class MechanicalInspectionController extends GetxController {
+
+
+}
 
 class MechanicalInspectionControllerImp extends MechanicalInspectionController {
   final ImagePicker picker = ImagePicker();
@@ -38,14 +47,47 @@ class MechanicalInspectionControllerImp extends MechanicalInspectionController {
         ],
       ),
     );
+
     if (source != null) {
       final pickedImage = await picker.pickImage(source: source);
       if (pickedImage != null) {
-        inspectionData['${formKey}_$imageKey'] = pickedImage.path;
+        try {
+          // استخراج الامتداد من الصورة الأصلية
+          final extension = path.extension(pickedImage.path);
+
+          // توليد اسم جديد للصورة باستخدام formKey و imageKey
+          final fileName = '$formKey\_$imageKey$extension';
+
+          // تحديد المسار لحفظ الصورة
+          final appDir = await getApplicationDocumentsDirectory();
+          final photosDir = Directory(path.join(appDir.path, 'photos'));
+          if (!await photosDir.exists()) {
+            await photosDir.create(recursive: true);
+          }
+
+          final savedImagePath = path.join(photosDir.path, fileName);
+          final savedImage = await File(pickedImage.path).copy(savedImagePath);
+
+          // تحويل الصورة إلى base64
+          final imageBytes = await savedImage.readAsBytes();
+          final base64Image = base64Encode(imageBytes);
+          final base64WithHeader = "data:image/${extension.replaceFirst('.', '')};base64,$base64Image";
+
+          // تخزين البيانات
+          inspectionData['${formKey}_$imageKey'] = {
+            "path": savedImage.path,
+            "fileName": fileName,
+            "extension": extension,
+            "base64": base64WithHeader
+          };
+
+          print("✅ تم حفظ الصورة بنجاح باسم: $fileName");
+        } catch (e) {
+          print("❌ فشل حفظ الصورة: $e");
+        }
       }
     }
   }
-
   // ------------------- Value Updating -------------------
   /// Update dropdowns and checkboxes.
   /// For dropdowns: store both the selected text (for display) and its numeric value (for calculation).
@@ -97,11 +139,14 @@ class MechanicalInspectionControllerImp extends MechanicalInspectionController {
 
   // ------------------- Form Submission -------------------
   void submitForm() {
-    // طباعة البيانات المدخلة في الصفحة الحالية
     print("📌 البيانات المدخلة في الصفحة الحالية:");
     inspectionData.forEach((key, value) {
       print("$key: $value");
     });
+
+    // تحويل `reportData` إلى `Map<String, dynamic>` بشكل صريح
+    Map<String, dynamic> previousData =
+        (Get.arguments?['reportData'] as Map?)?.cast<String, dynamic>() ?? {};
 
     // حساب الإجمالي والمتوسط
     int total = computeTotal();
@@ -109,21 +154,18 @@ class MechanicalInspectionControllerImp extends MechanicalInspectionController {
     print("✅ الإجمالي: $total");
     print("✅ المتوسط: $average");
 
-    // استرجاع البيانات السابقة
-    Map<String, dynamic> previousData = Get.arguments?['reportData'] ?? {};
-
     // دمج البيانات الحالية مع البيانات السابقة
     previousData.addAll(inspectionData);
-    previousData['total'] = total;       // تخزين الإجمالي
-    previousData['average'] = average;   // تخزين المتوسط
+    previousData['total'] = total;       // إضافة الإجمالي
+    previousData['average'] = average;   // إضافة المتوسط
 
-    // استرجاع قائمة الصفحات المتبقية
-    List<String> remainingPages = Get.arguments?['remainingPages'] ?? [];
+    // استرجاع قائمة الصفحات المتبقية وتحويلها إلى `List<String>`
+    List<String> remainingPages =
+        (Get.arguments?['remainingPages'] as List?)?.cast<String>() ?? [];
 
     // استرجاع نوع الفحص
     final String inspectionCategory = Get.arguments?['inspectionCategory'] ?? 'غير محدد';
 
-    // طباعة البيانات بعد التحديث
     print("📌 البيانات المجمعة بعد التحديث:");
     previousData.forEach((key, value) {
       print("$key: $value");
@@ -148,9 +190,5 @@ class MechanicalInspectionControllerImp extends MechanicalInspectionController {
   }
 
 
-  @override
-  void onClose() {
-    inspectionData.close();
-    super.onClose();
-  }
+
 }

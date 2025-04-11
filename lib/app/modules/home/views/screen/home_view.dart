@@ -95,7 +95,7 @@ class HomeView extends GetView<HomeControllerImp> {
               Center(
                 child:customtextbutton.textButton(label: 'فحص جديد',
                     icon:customIcons.icon(Icons.add_circle_outline),
-                    onPressed: () => Get.toNamed(Routes.CREATE_PROJECT,)
+                    onPressed: controller.createProject,),
         
                 // TextButton(
                 //   onPressed: () => Get.toNamed(Routes.CREATE_PROJECT),
@@ -116,8 +116,9 @@ class HomeView extends GetView<HomeControllerImp> {
                 //     ],
                 //   ),
                 // ),
-              ),
-              ),],
+              )
+
+      ,],
           ),
         ),
       ),
