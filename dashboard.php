@@ -1,7 +1,27 @@
 
 <?php
-session_start();
 require_once 'connection.php';
+session_start();
+echo "<pre>";
+print_r($  $user);
+echo "</pre>";
+if (isset($_GET['admin_added']) && $_GET['admin_added'] == 1): 
+?>
+<div id="successMessage" class="fixed top-5 right-5 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 transition-opacity duration-500 flex justify-between items-center gap-4">
+    ✅ تمت إضافة المشرف بنجاح!
+    <button onclick="document.getElementById('successMessage').remove();" class="text-white text-xl font-bold hover:text-red-300">&times;</button>
+</div>
+<script>
+    setTimeout(() => {
+        const msg = document.getElementById('successMessage');
+        if (msg) {
+            msg.style.opacity = '0';
+            setTimeout(() => msg.remove(), 500);
+        }
+    }, 3000);
+</script>
+<?php endif;
+
 
 // تسجيل الخروج
 if (isset($_POST['logout'])) {
@@ -15,6 +35,17 @@ if (!isset($_SESSION['email'])) {
     header("Location: login.php");
     exit();
 }
+
+
+// التحقق من حالة الموافقة
+try {
+   
+    
+} catch (PDOException $e) {
+    echo '<div class="bg-red-100 text-red-700 p-3 mb-4 rounded">خطأ في التحقق من حالة المستخدم: ' . $e->getMessage() . '</div>';
+    exit();
+}
+
 
 // جلب بيانات المشرف
 try {
@@ -55,6 +86,9 @@ try {
 } catch (PDOException $e) {
     die("فشل في جلب المستخدمين: " . $e->getMessage());
 }
+
+    
+
 ?>
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
@@ -240,7 +274,6 @@ try {
                         </div>
                         <!-- Filter -->
                         <div class="relative flex items-center w-full md:w-auto">
-                            <span class="absolute right-10 text-gray-500 hidden md:block">الترتيب بواسطة:</span>
                             <select name="filter" id="filter" class="p-2 pl-8 bg-gray-100 border border-gray-200 rounded-lg shadow-sm text-left appearance-none w-full focus:outline-none">
                                 <option value="id-asc">ID تصاعدي</option>
                                 <option value="id-desc">ID تنازلي</option>
@@ -328,11 +361,12 @@ try {
                     $stmt->execute([$user_id]);
 
                     echo "<script>
-                        setTimeout(() => {
-                            document.getElementById('adminForm').classList.add('hidden');
-                            alert('تمت إضافة المشرف بنجاح!');
-                        }, 100);
-                    </script>";
+                    setTimeout(() => {
+                        document.getElementById('adminForm').classList.add('hidden');
+                        alert('تمت إضافة المشرف بنجاح!');
+                        window.location.href = 'dashboard.php';
+                    }, 100);
+                </script>";
                 } catch (PDOException $e) {
                     echo '<div class="bg-red-100 text-red-700 p-3 mb-4 rounded">خطأ: ' . $e->getMessage() . '</div>';
                 }

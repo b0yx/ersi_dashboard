@@ -25,9 +25,9 @@ $error_message = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = $_POST['name'] ?? $admin['name'];
     $phone = $_POST['phone'] ?? $admin['phone'];
-    $oldPassword = $_POST['old_password'] ?? '';
-    $newPassword = $_POST['new_password'] ?? '';
-    $confirmPassword = $_POST['confirm_password'] ?? '';
+    $oldPassword = md5($_POST['old_password']) ?? '';
+    $newPassword = md5($_POST['new_password']) ?? '';
+    $confirmPassword = md5($_POST['confirm_password']) ?? '';
 
     try {
         // Update name and phone
@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body class="bg-gray-100">
 <div class="flex min-h-screen bg-gray-100 font-sans">
-    <aside class="w-64 bg-white shadow-lg p-6">
+    <aside >
         <?php include 'sidebar.php'; ?>
     </aside>
     <main class="flex-1 p-10 space-y-6 overflow-x-auto">
@@ -106,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <div>
                 <label class="block mb-1 text-sm font-semibold">رقم الجوال</label>
-                <input type="text" name="phone" pattern="^05\d{8}$" title="يجب أن يبدأ الرقم بـ 05 ويتكون من 10 أرقام" value="<?php echo htmlspecialchars($admin['phone']); ?>"
+                <input type="text" name="phone"  value="<?php echo htmlspecialchars($admin['phone']); ?>"
                        class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-teal-500">
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">

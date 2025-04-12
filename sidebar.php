@@ -6,6 +6,7 @@ if (isset($_POST['logout'])) {
     header("Location: login.php");
     exit();
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -231,6 +232,14 @@ if (isset($_POST['logout'])) {
                             <span class="tooltip">سجل الأنشطة</span>
                         </a>
                     </li>
+
+                    <!-- <li class="nav-item">
+                        <a href="logs.php" class="flex items-center px-3 py-2 text-blue-600 bg-blue-50 rounded-lg font-medium group nav-link">
+                            <i class="fas fa-clipboard-list nav-icon ml-3"></i>
+                            <span class="sidebar-content">إدارة المشرفين</span>
+                            <span class="tooltip">سجل الأنشطة</span>
+                        </a>
+                    </li> -->
                 </ul>
             </nav>
         </div>
@@ -243,7 +252,6 @@ if (isset($_POST['logout'])) {
                         <img src="Static/IMG/user.png" alt="صورة المستخدم" class="rounded-full border-2 border-teal-400 w-10 h-10 object-cover profile-avatar" />
                         <div class="mr-3 profile-info">
                             <p class="text-sm font-medium text-gray-800"><?php echo htmlspecialchars($admin['name'] ?? ''); ?></p>
-                            <p class="text-xs text-gray-500">مدير النظام</p>
                         </div>
                     </div>
                     <i class="fas fa-chevron-down text-gray-500 text-xs transition-transform duration-200 dropdown-arrow"></i>
