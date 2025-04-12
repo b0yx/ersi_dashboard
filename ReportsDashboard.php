@@ -20,7 +20,7 @@ if (!isset($_SESSION['email'])) {
 }
 
 try {
-    $stmt = $pdo->query("SELECT id, name, reportOwner FROM project");
+    $stmt = $pdo->query("SELECT * FROM project");
     $stmt->execute();
     $reports = $stmt->fetchAll();
 
@@ -37,7 +37,7 @@ try {
         u.phone, 
         u.users_approve,
         COALESCE(a.is_superAdmin, 0) AS is_superadmin,
-        (SELECT COUNT(*) FROM project WHERE user_id = u.id) AS report_count
+        (SELECT COUNT(*) FROM report WHERE user_id = u.id) AS report_count
     FROM 
         user u
     LEFT JOIN 
@@ -183,12 +183,34 @@ try {
     <!-- جدول التقارير -->
     <div class="bg-white shadow rounded-xl p-6 overflow-x-auto">
         <h3 class="text-xl font-semibold text-gray-800 mb-4">قائمة التقارير</h3>
+    <!-- شريط البحث وخيارات الترتيب -->
+    <div class="flex flex-col sm:flex-row justify-between items-center mb-4 gap-4">
+        <div class="relative w-full sm:w-1/2">
+            <input
+                type="search"
+                id="searchInput"
+                placeholder="ابحث عن تقرير أو مهندس"
+                class="w-full p-2 pl-10 bg-gray-100 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+            <i class="fas fa-search absolute right-3 top-3 text-gray-400"></i>
+        </div>
+        <select id="sortSelect" class="w-full sm:w-1/3 p-2 bg-gray-100 border border-gray-300 rounded-lg shadow-sm">
+            <option value="id-desc">الأحدث أولاً</option>
+            <option value="id-asc">الأقدم أولاً</option>
+            <option value="name-asc">اسم التقرير (أ-ي)</option>
+            <option value="name-desc">اسم التقرير (ي-أ)</option>
+            <option value="owner-asc">اسم المهندس (أ-ي)</option>
+            <option value="owner-desc">اسم المهندس (ي-أ)</option>
+        </select>
+    </div>
+
         <table class="min-w-full text-sm text-right border border-gray-200 divide-y divide-gray-100">
             <thead class="bg-gray-100 text-gray-600">
                 <tr>
                     <th class="p-3">رقم التقرير</th>
                     <th class="p-3">اسم التقرير</th>
                     <th class="p-3">اسم المهندس</th>
+<th class="p-3">رقم الجوال</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-100">
@@ -196,7 +218,8 @@ try {
                 <tr class="hover:bg-gray-50">
                     <td class="p-3"><?php echo htmlspecialchars($report['id']); ?></td>
                     <td class="p-3 font-medium text-teal-700"><?php echo htmlspecialchars($report['name']); ?></td>
-                    <td class="p-3"><?php echo htmlspecialchars($report['reportOwner']); ?></td>
+                    <td class="p-3"><?php echo htmlspecialchars($report['reportOwner']); ?> </td>
+                    <td class="p-3"><?php echo htmlspecialchars($report['phone']); ?></td>
                 </tr>
                 <?php endforeach; ?>
             </tbody>
@@ -434,5 +457,49 @@ try {
         document.getElementById('filter').addEventListener('change', filterUsers);
     });
     </script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const searchInput = document.getElementById('searchInput');
+        const sortSelect = document.getElementById('sortSelect');
+        const table = document.querySelector('table');
+        const tbody = table.querySelector('tbody');
+
+        function normalize(text) {
+            return text.toLowerCase().trim();
+        }
+
+        function sortRows(rows, key, direction) {
+            return rows.sort((a, b) => {
+                const valA = normalize(a.querySelector(`td[data-key="${key}"]`).textContent);
+                const valB = normalize(b.querySelector(`td[data-key="${key}"]`).textContent);
+                if (!isNaN(valA) && !isNaN(valB)) {
+                    return direction === 'asc' ? valA - valB : valB - valA;
+                }
+                return direction === 'asc' ? valA.localeCompare(valB, 'ar') : valB.localeCompare(valA, 'ar');
+            });
+        }
+
+        function filterAndSort() {
+            const searchTerm = normalize(searchInput.value);
+            const rows = Array.from(tbody.querySelectorAll('tr'));
+
+            let [sortKey, sortDirection] = sortSelect.value.split('-');
+
+            const visibleRows = rows.filter(row => {
+                return Array.from(row.querySelectorAll('td')).some(td => normalize(td.textContent).includes(searchTerm));
+            });
+
+            const sortedRows = sortRows(visibleRows, sortKey, sortDirection);
+
+            tbody.innerHTML = '';
+            sortedRows.forEach(row => tbody.appendChild(row));
+        }
+
+        searchInput.addEventListener('input', filterAndSort);
+        sortSelect.addEventListener('change', filterAndSort);
+    });
+    </script>
+
 </body>
 </html>

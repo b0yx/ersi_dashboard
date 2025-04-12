@@ -2,9 +2,7 @@
 <?php
 require_once 'connection.php';
 session_start();
-echo "<pre>";
-print_r($  $user);
-echo "</pre>";
+
 if (isset($_GET['admin_added']) && $_GET['admin_added'] == 1): 
 ?>
 <div id="successMessage" class="fixed top-5 right-5 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 transition-opacity duration-500 flex justify-between items-center gap-4">
@@ -76,12 +74,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_status'])) {
 
 // جلب المستخدمين
 try {
-    $stmt = $pdo->query("SELECT 
-        u.id, u.name, u.phone, u.users_approve,
-        COALESCE(a.is_superAdmin, 0) AS is_superadmin,
-        (SELECT COUNT(*) FROM project WHERE user_id = u.id) AS report_count
-        FROM user u
-        LEFT JOIN administrator a ON u.id = a.user_id");
+    // First check the current user's admin status from session
+    $current_user_id = $_SESSION['user_id'] ?? null;
+    $is_superadmin = $_SESSION['is_superAdmin'] ?? false;
+    
+    if ($is_superadmin) {
+        // Superadmin gets all users
+        $stmt = $pdo->query("SELECT 
+            u.id, u.name, u.phone, u.users_approve,
+            COALESCE(a.is_superAdmin, 0) AS is_superadmin,
+            (SELECT COUNT(*) FROM project WHERE user_id = u.id) AS report_count
+            FROM user u
+            LEFT JOIN administrator a ON u.id = a.user_id");
+    } else {
+        // Regular admin gets only engineers (non-admin users)
+        $stmt = $pdo->prepare("SELECT 
+            u.id, u.name, u.phone, u.users_approve,
+            0 AS is_superadmin,  -- Engineers are never superadmins
+            (SELECT COUNT(*) FROM project WHERE user_id = u.id) AS report_count
+            FROM user u
+            LEFT JOIN administrator a ON u.id = a.user_id
+            WHERE a.user_id IS NULL");  // Only non-admin users
+        $stmt->execute();
+    }
+    
     $users = $stmt->fetchAll();
 } catch (PDOException $e) {
     die("فشل في جلب المستخدمين: " . $e->getMessage());
@@ -533,6 +549,28 @@ document.addEventListener('DOMContentLoaded', function () {
                 localStorage.setItem('sidebarMini', sidebar.classList.contains('sidebar-mini'));
             });
             
+});
+</script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const sortOrder = document.getElementById('sortOrder');
+    const table = document.querySelector('table');
+    const tbody = table.querySelector('tbody');
+
+    function sortRows(order) {
+        const rows = Array.from(tbody.querySelectorAll('tr'));
+        const sorted = rows.sort((a, b) => {
+            const nameA = a.querySelector('td:nth-child(2)').textContent.trim().toLowerCase();
+            const nameB = b.querySelector('td:nth-child(2)').textContent.trim().toLowerCase();
+            return order === 'asc' ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA);
+        });
+        tbody.innerHTML = '';
+        sorted.forEach(row => tbody.appendChild(row));
+    }
+
+    sortOrder.addEventListener('change', () => sortRows(sortOrder.value));
 });
 </script>
 

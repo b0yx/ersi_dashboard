@@ -12,44 +12,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     try {
         // 1. Find user with administrator privileges
-        $stmt = $pdo->prepare("SELECT u.id, u.email, u.name, u.password, u.users_approve , a.* FROM user u JOIN administrator a ON u.id = a.user_id WHERE u.email = :email");
+        $stmt = $pdo->prepare("SELECT u.id, u.email, u.name, u.password, u.users_approve, a.* 
+                              FROM user u 
+                              JOIN administrator a ON u.id = a.user_id 
+                              WHERE u.email = :email");
     
         $stmt->execute([':email' => $email]);
         $user = $stmt->fetch();
     
-        // 2. Verify user exists and password matches (using MD5 as in your system)
+        // 2. Verify user exists and password matches
         if ($user && $user['email'] == $email && md5($password) == $user['password']) {
-            session_regenerate_id(delete_old_session: true);
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['email'] = $user['email'];
-            $_SESSION['name'] = $user['name'];
-            $_SESSION['last_login'] = time();
-            $_SESSION['is_admin'] = $user['is_admin'];
-            $_SESSION['is_superAdmin'] = $user['is_superAdmin'];
-            $_SESSION['users_approve'] = $user['users_approve'];
-        
-            if ($user['users_approve'] == 0) {
-                $login_error = "حسابك غير مفعل بعد. يرجى التواصل مع المسؤول لتفعيل حسابك.";
+            // Check account approval status and admin privileges
+            if (!$user['users_approve']) {
+                $login_error = "🚫 حسابك غير مفعل بعد. يرجى التواصل مع المشرف لتفعيل الحساب.";
                 $error_class = "error-highlight";
-            }
-            if ($user['is_admin'] == 0 && $user['is_superAdmin'] == 0) {
-                    $login_error = "ليست لديك الصلاحية الكافية للولوج إلى لوحة التحكم";
-                    $error_class = "error-highlight";
+            } elseif (!$user['is_admin'] && !$user['is_superAdmin']) {
+                $login_error = "⚠️ ليست لديك الصلاحية الكافية للدخول إلى لوحة التحكم.";
+                $error_class = "error-highlight";
             } else {
+                // Successful login - set session and redirect
+                session_regenerate_id(true);
+                $_SESSION = [
+                    'user_id' => $user['id'],
+                    'email' => $user['email'],
+                    'name' => $user['name'],
+                    'last_login' => time(),
+                    'is_admin' => $user['is_admin'],
+                    'is_superAdmin' => $user['is_superAdmin'],
+                    'users_approve' => $user['users_approve']
+                ];
                 header("Location: dashboard.php");
                 exit();
             }
         } else {
-            $login_error = "Invalid email or password";
+            $login_error = "البريد الإلكتروني أو كلمة المرور غير صحيحة";
             $error_class = "error-highlight";
         }
     } catch (PDOException $e) {
         error_log("Login error: " . $e->getMessage());
-        $login_error = "Login failed. Please try again.";
+        $login_error = "حدث خطأ أثناء محاولة تسجيل الدخول. يرجى المحاولة مرة أخرى.";
         $error_class = "error-highlight";
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
